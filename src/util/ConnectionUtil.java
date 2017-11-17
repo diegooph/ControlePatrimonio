@@ -12,7 +12,7 @@ public class ConnectionUtil {
         try { 
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/controlepatrimonio";
-            con = DriverManager.getConnection(url,"root","");
+            con = DriverManager.getConnection(url,"root","admim");
             con.setAutoCommit(true);
             return con;
         } catch ( ClassNotFoundException e){
