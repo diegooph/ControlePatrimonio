@@ -38,4 +38,12 @@ public class RequisicaoController implements IRequisicaoControler {
 
 	}
 
+
+
+	@Override
+	public List<Requisicao> listarRequisicoesUsuario() {
+		RequisicaoDAO udao = new RequisicaoDAO();
+		return udao.listarTodos();
+	}
+
 }

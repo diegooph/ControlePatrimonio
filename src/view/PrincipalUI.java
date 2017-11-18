@@ -100,6 +100,15 @@ public class PrincipalUI extends JFrame {
 		
 				JMenuItem mntmMeusPatrimonios = new JMenuItem("Requisic\u00F5es");
 				mnRequerimentos.add(mntmMeusPatrimonios);
+				
+				JMenuItem mntmMeusRequerimentos = new JMenuItem("Meus Requerimentos");
+				mntmMeusRequerimentos.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+						
+					}
+				});
+				mnRequerimentos.add(mntmMeusRequerimentos);
 				mntmMeusPatrimonios.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI();

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.impl.UsuarioController;
 import entity.Categoria;
 import entity.Local;
 import entity.Patrimonio;
@@ -18,7 +19,7 @@ import entity.Usuario;
 import util.ConnectionUtil;
 
 public class RequisicaoDAO {
-
+	UsuarioController userControler;
 	private static RequisicaoDAO instancia;
 	public ArrayList<Requisicao> listaRequisicaos = new ArrayList<>();
 	private Connection con = ConnectionUtil.getConnection();
@@ -61,11 +62,13 @@ public class RequisicaoDAO {
 	public List<Requisicao> listarTodos() {
 		try {
 			Statement stmt = con.createStatement();
+			
 			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
 				+" join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 				+" join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 				+" join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
                 +" join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria";
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -113,7 +116,63 @@ public class RequisicaoDAO {
 
 		return listaRequisicaos;
 	}
+	public List<Requisicao> listarRequisicoesUsuarios() {
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+				+" join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
+				+" join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
+				+" join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
+                +" join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria where usuario.idUsuario= ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,userControler.getUsuario().getIdUsuario());
+			ResultSet rs = stmt.executeQuery(sql);
 
+			while (rs.next()) {
+				Requisicao requisicao = new Requisicao();
+				requisicao.setIdRequisicao(rs.getInt("idRequisicao"));
+				requisicao.setStatusRequerimento(
+				StatusRequerimentoEnum.getStatusRequerimentoEnumByCodigo(rs.getInt("statusrequerimento")));
+				requisicao.setTitulo(rs.getString("titulo"));
+				requisicao.setMensagem(rs.getString("mensagem"));
+
+				// selecionar patrimonio
+				Patrimonio patrimonio = new Patrimonio();
+				patrimonio.setIdPatrimonio(rs.getInt("idPatrimonio"));
+				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
+				patrimonio.setCodigo(rs.getString("codigo"));
+				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
+				
+				// selecionar Categoria
+
+				Categoria categoria = new Categoria();
+				categoria.setIdCategoria(rs.getInt("idcategoria"));
+				categoria.setDescricao(rs.getString("descricao"));
+				categoria.setModelo(rs.getString("modelo"));
+				// Concatenar patrimonio com categoria
+				patrimonio.setCategoria(categoria);
+
+				// concatenar requisicao com patrimonio
+				requisicao.setPatrimonio(patrimonio);
+
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+				usuario.setSenha(rs.getString("senhaUsuario"));
+				usuario.setUsername(rs.getString("username"));
+
+				requisicao.setUsuarioRequerente(usuario);
+				
+				listaRequisicaos.add(requisicao);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaRequisicaos;
+	}
 	private void update(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? WHERE `idRequisicao`=?";

@@ -15,4 +15,5 @@ public interface IRequisicaoControler {
 
 	public List<Requisicao> listarRequisicoes();
 
+	public List<Requisicao> listarRequisicoesUsuario();
 }

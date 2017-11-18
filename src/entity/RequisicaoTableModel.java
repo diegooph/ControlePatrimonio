@@ -13,18 +13,18 @@ public class RequisicaoTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Requisicao> listaDeRequisicaos;
-	private String[] colunas = new String[]{"Titulo" , "Patrimonio" ,"Status"};
+	private String[] colunas = new String[] { "Titulo", "Patrimonio", "Status" };
 
 	public RequisicaoTableModel() {
-		
+
 		listarRequisicaos();
-		
+
 	}
 
 	public void listarRequisicaos() {
 		RequisicaoController rdao = new RequisicaoController();
 		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes();
-System.out.println(listaDeRequisicaos.get(0).getTitulo());
+
 	}
 
 	@Override
@@ -62,8 +62,8 @@ System.out.println(listaDeRequisicaos.get(0).getTitulo());
 
 		return colunas[column];
 	}
-	
-	public Requisicao getRequisicao(int index){
+
+	public Requisicao getRequisicao(int index) {
 		return listaDeRequisicaos.get(index);
 	}
 }
