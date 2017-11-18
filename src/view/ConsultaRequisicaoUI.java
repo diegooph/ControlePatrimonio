@@ -36,8 +36,9 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 	 * e.printStackTrace(); } } }); }
 	 * 
 	 * /** Create the frame.
+	 * @param isAll 
 	 */
-	public ConsultaRequisicaoUI() {
+	public ConsultaRequisicaoUI(boolean isAll) {
 		setClosable(true);
 		setTitle("Consulta de Requisi\u00E7\u00F5es");
 		setBounds(100, 100, 753, 552);
@@ -79,7 +80,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 					.addContainerGap())
 		);
 
-		requisicaoTableModel = new RequisicaoTableModel();
+		requisicaoTableModel = new RequisicaoTableModel(isAll);
 
 		JScrollPane jspTabelaRequisicao = new JScrollPane();
 

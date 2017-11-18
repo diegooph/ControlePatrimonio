@@ -104,6 +104,8 @@ public class PrincipalUI extends JFrame {
 				JMenuItem mntmMeusRequerimentos = new JMenuItem("Meus Requerimentos");
 				mntmMeusRequerimentos.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(false);
+						contentPane.add(consultaRequisicaoUI);
 						
 						
 					}
@@ -111,7 +113,7 @@ public class PrincipalUI extends JFrame {
 				mnRequerimentos.add(mntmMeusRequerimentos);
 				mntmMeusPatrimonios.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI();
+						ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
 						contentPane.add(consultaRequisicaoUI);
 					}
 				});

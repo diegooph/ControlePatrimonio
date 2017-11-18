@@ -15,15 +15,25 @@ public class RequisicaoTableModel extends AbstractTableModel {
 	private ArrayList<Requisicao> listaDeRequisicaos;
 	private String[] colunas = new String[] { "Titulo", "Patrimonio", "Status" };
 
-	public RequisicaoTableModel() {
+	public RequisicaoTableModel(boolean isAll) {
 
-		listarRequisicaos();
+		if (isAll) {
+			listarRequisicoes();
+		} else {
+			listarRequisicoesUsuario();
+		}
 
 	}
 
-	public void listarRequisicaos() {
+	public void listarRequisicoes() {
 		RequisicaoController rdao = new RequisicaoController();
 		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes();
+
+	}
+
+	public void listarRequisicoesUsuario() {
+		RequisicaoController rdao = new RequisicaoController();
+		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoesUsuario();
 
 	}
 
