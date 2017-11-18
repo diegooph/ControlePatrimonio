@@ -14,6 +14,7 @@ public class ConnectionUtil {
             String url = "jdbc:mysql://localhost:3306/controlepatrimonio";
             con = DriverManager.getConnection(url,"root","admin");
             con.setAutoCommit(true);
+            
             return con;
         } catch ( ClassNotFoundException e){
             e.printStackTrace();
