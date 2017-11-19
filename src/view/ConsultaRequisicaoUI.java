@@ -64,10 +64,15 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		JButton btnEditarPatrimonio = new JButton("Editar Requisição");
 		btnEditarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-				LoginUsuarioUi.principalUI.contentPane
-						.add(new CadastrarRequisicaoUI(LoginUsuarioUi.usuario, req.getPatrimonio(), req, null), 0);
-
+				if (isAll) {
+					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
+					LoginUsuarioUi.principalUI.contentPane.add(
+							new EditarStatusRequisicaoUI(LoginUsuarioUi.usuario, req.getPatrimonio(), req, null), 0);
+				} else {
+					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
+					LoginUsuarioUi.principalUI.contentPane
+							.add(new CadastrarRequisicaoUI(LoginUsuarioUi.usuario, req.getPatrimonio(), req, null), 0);
+				}
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

@@ -20,7 +20,7 @@ import entity.Usuario;
 import util.ConnectionUtil;
 
 public class RequisicaoDAO {
-	
+
 	UsuarioController userControler;
 	private static RequisicaoDAO instancia;
 	public ArrayList<Requisicao> listaRequisicaos = new ArrayList<>();
@@ -82,62 +82,60 @@ public class RequisicaoDAO {
 	public List<Requisicao> listarTodos(boolean indeferido, boolean pendente, boolean deferido, boolean devoluo,
 			boolean relatarProblema, boolean requererPatrimonio) {
 		try {
-			String filtros="";
+			String filtros = "";
 			boolean isOrEnable = false;
 			boolean isAndEnable = false;
-if (indeferido || pendente ||  deferido || devoluo ||  relatarProblema ||  requererPatrimonio) {
-	
+			if (indeferido || pendente || deferido || devoluo || relatarProblema || requererPatrimonio) {
 
-			filtros = "Where ((";
-			if (indeferido) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.INDEFERIDO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
+				filtros = "Where ((";
+				if (indeferido) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.INDEFERIDO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				if (deferido) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.DEFERIDO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				if (pendente) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.PENDENTE.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				isOrEnable = false;
+				if (devoluo) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.DEVOLUCAO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				if (relatarProblema) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				if (requererPatrimonio) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.REQUERERPATRIMONIO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				filtros += "))";
 			}
-			if (deferido) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.DEFERIDO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
-			}
-			if (pendente) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.PENDENTE.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
-			}
-			isOrEnable = false;
-			if (devoluo) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.DEVOLUCAO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			if (relatarProblema) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			if (requererPatrimonio) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.REQUERERPATRIMONIO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			filtros+= "))";
-}
 			Statement stmt = con.createStatement();
 
-			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`tiporequerimento`,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
 					+ " join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ " join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ " join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
-					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "+ filtros;
-			
+					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria " + filtros;
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -148,7 +146,8 @@ if (indeferido || pendente ||  deferido || devoluo ||  relatarProblema ||  reque
 						StatusRequerimentoEnum.getStatusRequerimentoEnumByCodigo(rs.getInt("statusrequerimento")));
 				requisicao.setTitulo(rs.getString("titulo"));
 				requisicao.setMensagem(rs.getString("mensagem"));
-
+				requisicao.setTipoRequerimento(
+						TipoRequerimentoEnum.getTipoRequerimentoEnumByCodigo(rs.getInt("tiporequerimento")));
 				// selecionar patrimonio
 				Patrimonio patrimonio = new Patrimonio();
 				patrimonio.setIdPatrimonio(rs.getInt("idPatrimonio"));
@@ -190,59 +189,59 @@ if (indeferido || pendente ||  deferido || devoluo ||  relatarProblema ||  reque
 	public List<Requisicao> listarRequisicoesUsuarios(boolean indeferido, boolean pendente, boolean deferido,
 			boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
 		try {
-			String filtros="";
+			String filtros = "";
 			boolean isOrEnable = false;
 			boolean isAndEnable = false;
-if (indeferido || pendente ||  deferido || devoluo ||  relatarProblema ||  requererPatrimonio) {
-	
+			if (indeferido || pendente || deferido || devoluo || relatarProblema || requererPatrimonio) {
 
-			filtros = "And ((";
-			if (indeferido) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.INDEFERIDO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
+				filtros = "And ((";
+				if (indeferido) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.INDEFERIDO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				if (deferido) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.DEFERIDO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				if (pendente) {
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.PENDENTE.getCodigo();
+					isOrEnable = true;
+					isAndEnable = true;
+				}
+				isOrEnable = false;
+				if (devoluo) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.DEVOLUCAO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				if (relatarProblema) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				if (requererPatrimonio) {
+					filtros += contatenarAnd(isAndEnable);
+					filtros += contatenarOr(isOrEnable);
+					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.REQUERERPATRIMONIO.getCodigo();
+					isOrEnable = true;
+					isAndEnable = false;
+				}
+				filtros += "))";
 			}
-			if (deferido) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.DEFERIDO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
-			}
-			if (pendente) {
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.statusrequerimento = " + StatusRequerimentoEnum.PENDENTE.getCodigo();
-				isOrEnable = true;
-				isAndEnable = true;
-			}
-			isOrEnable = false;
-			if (devoluo) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.DEVOLUCAO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			if (relatarProblema) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			if (requererPatrimonio) {
-				filtros += contatenarAnd(isAndEnable);
-				filtros += contatenarOr(isOrEnable);
-				filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.REQUERERPATRIMONIO.getCodigo();
-				isOrEnable = true;
-				isAndEnable = false;
-			}
-			filtros+= "))";
-}
-			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+			String sql = "SELECT `idRequisicao` ,`idcategoria` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`statusrequerimento`,`tiporequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
 					+ " join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ " join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ " join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
-					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria where usuario.idUsuario= ? "+ filtros;
+					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria where usuario.idUsuario= ? "
+					+ filtros;
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, UsuarioController.getUsuario().getIdUsuario());
 
@@ -253,6 +252,8 @@ if (indeferido || pendente ||  deferido || devoluo ||  relatarProblema ||  reque
 				requisicao.setIdRequisicao(rs.getInt("idRequisicao"));
 				requisicao.setStatusRequerimento(
 						StatusRequerimentoEnum.getStatusRequerimentoEnumByCodigo(rs.getInt("statusrequerimento")));
+				requisicao.setTipoRequerimento(
+						TipoRequerimentoEnum.getTipoRequerimentoEnumByCodigo(rs.getInt("tiporequerimento")));
 				requisicao.setTitulo(rs.getString("titulo"));
 				requisicao.setMensagem(rs.getString("mensagem"));
 
