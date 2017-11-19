@@ -66,9 +66,7 @@ public class Requisicao {
 		this.idRequisicao = idRequisicao;
 	}
 
-	public StatusRequerimentoEnum getTipo() {
-		return statusRequerimento;
-	}
+
 
 	public void setTipoRequerimento(TipoRequerimentoEnum tipoRequerimentoEnumByCodigo) {
 		this.tipoRequerimento = tipoRequerimentoEnumByCodigo;

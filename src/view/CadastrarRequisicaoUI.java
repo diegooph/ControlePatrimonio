@@ -40,7 +40,6 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField jtfTitulo;
 
-	
 	private Requisicao requisicaoUpdate;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	JRadioButton rdbtnDevolucao;
@@ -64,7 +63,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		setClosable(true);
 		setTitle("Requisi\u00E7\u00E3o");
 		setBounds(100, 100, 661, 389);
-		
+
 		setVisible(true);
 
 		JPanel jpNovoModeloPatrimonio = new JPanel();
@@ -77,13 +76,14 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 				RequisicaoController rcon = new RequisicaoController();
 
 				requisicaoUpdate.setPatrimonio(patrimonio);
-				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
 				requisicaoUpdate.setTitulo(jtfTitulo.getText());
 				requisicaoUpdate.setUsuarioRequerente(usuario);
 				requisicaoUpdate.setTipoRequerimento(RadioButonSelect());
 				requisicaoUpdate.setMensagem(jtfMensagem.getText());
+				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
+
 				rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
-				
+
 				JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				dispose();
 			}
@@ -193,19 +193,18 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	}
 
 	public TipoRequerimentoEnum RadioButonSelect() {
-		
+
 		if (rdbtnDevolucao.isSelected()) {
-			System.out.println(TipoRequerimentoEnum.DEVOLUCAO.getDescricao());
+
 			return TipoRequerimentoEnum.DEVOLUCAO;
 		} else if (rdbtnRelatarProblemaCom.isSelected()) {
-			System.out.println(TipoRequerimentoEnum.RELATARPROBLEMA.getDescricao());
 
 			return TipoRequerimentoEnum.RELATARPROBLEMA;
-		} 
-		System.out.println(TipoRequerimentoEnum.REQUERERPATRIMONIO.getDescricao());
+		} else {
 
 			return TipoRequerimentoEnum.REQUERERPATRIMONIO;
-		
+		}
+
 	}
 
 	public void RadioButonSelected() {

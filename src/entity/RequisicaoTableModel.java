@@ -15,25 +15,25 @@ public class RequisicaoTableModel extends AbstractTableModel {
 	private ArrayList<Requisicao> listaDeRequisicaos;
 	private String[] colunas = new String[] { "Titulo", "Patrimonio", "Status" };
 
-	public RequisicaoTableModel(boolean isAll) {
+	public RequisicaoTableModel(boolean isAll, boolean inderefido , boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
 
 		if (isAll) {
-			listarRequisicoes();
+			listarRequisicoes( inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
 		} else {
-			listarRequisicoesUsuario();
+			listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
 		}
 
 	}
 
-	public void listarRequisicoes() {
+	public void listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
 		RequisicaoController rdao = new RequisicaoController();
-		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes();
+		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
 
 	}
 
-	public void listarRequisicoesUsuario() {
+	public void listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
 		RequisicaoController rdao = new RequisicaoController();
-		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoesUsuario();
+		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
 
 	}
 
@@ -51,6 +51,7 @@ public class RequisicaoTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		
 		switch (columnIndex) {
 		case 0:
 			return this.listaDeRequisicaos.get(rowIndex).getTitulo();
@@ -59,7 +60,7 @@ public class RequisicaoTableModel extends AbstractTableModel {
 			return this.listaDeRequisicaos.get(rowIndex).getPatrimonio().getNomePatrimonio();
 
 		case 2:
-			return this.listaDeRequisicaos.get(rowIndex).getStatusRequerimento();
+			return this.listaDeRequisicaos.get(rowIndex).getStatusRequerimento().getDescricao();
 
 		default:
 			break;
