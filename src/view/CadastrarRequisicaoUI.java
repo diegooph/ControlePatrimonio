@@ -75,19 +75,20 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
-				requisicaoUpdate.setPatrimonio(patrimonio);
-				requisicaoUpdate.setTitulo(jtfTitulo.getText());
-				requisicaoUpdate.setUsuarioRequerente(usuario);
-				requisicaoUpdate.setTipoRequerimento(RadioButonSelect());
-				requisicaoUpdate.setMensagem(jtfMensagem.getText());
-				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
 
 				try {
+					rcon.verificarEdicao(requisicao);
+					requisicaoUpdate.setPatrimonio(patrimonio);
+					requisicaoUpdate.setTitulo(jtfTitulo.getText());
+					requisicaoUpdate.setUsuarioRequerente(usuario);
+					requisicaoUpdate.setTipoRequerimento(RadioButonSelect());
+					requisicaoUpdate.setMensagem(jtfMensagem.getText());
+					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
 					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
-		
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					
 				}
 
 				dispose();
