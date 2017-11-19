@@ -75,12 +75,19 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
+
+				try {
+					rcon.verificarEdicao(requisicaoUpdate);
+					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
+					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+
+				}
+
 			
-				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
-
-				rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
-
-				JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				dispose();
 			}
 		});
@@ -91,52 +98,50 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 				dispose();
 			}
 		});
-		
+
 		JButton btnIndeferir = new JButton("Indeferir");
 		btnIndeferir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
-				
-				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.INDEFERIDO);
 
-				rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+				try {
+					rcon.verificarEdicao(requisicaoUpdate);
+					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.INDEFERIDO);
+					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 
-				JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+				}
+
 				dispose();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(btnSalvar)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnIndeferir, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-							.addGap(19))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(jpNovoModeloPatrimonio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addContainerGap())))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpNovoModeloPatrimonio, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancelar)
-						.addComponent(btnSalvar)
-						.addComponent(btnIndeferir))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSalvar, btnCancelar});
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, groupLayout
+								.createSequentialGroup().addGap(10).addComponent(btnSalvar)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(btnIndeferir, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+								.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addGap(19))
+						.addGroup(
+								groupLayout
+										.createSequentialGroup().addComponent(jpNovoModeloPatrimonio,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addContainerGap()))));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addContainerGap()
+				.addComponent(jpNovoModeloPatrimonio, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnCancelar)
+						.addComponent(btnSalvar).addComponent(btnIndeferir))
+				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnSalvar, btnCancelar });
 
 		JLabel lblNome = new JLabel("Titulo:");
 

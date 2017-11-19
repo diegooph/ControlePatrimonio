@@ -9,7 +9,7 @@ import entity.Usuario;
 
 public interface IRequisicaoControler {
 
-	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao,Local local);
+	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao,Local local) throws Exception;
 
 	public void remover(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao,Local local);
 

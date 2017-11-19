@@ -82,9 +82,14 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 				requisicaoUpdate.setMensagem(jtfMensagem.getText());
 				requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
 
-				rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+				try {
+					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+				} catch (Exception e) {
+		
+					e.printStackTrace();
+				}
 
-				JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				dispose();
 			}
 		});
