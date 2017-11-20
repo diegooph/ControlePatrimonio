@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 public class Requisicao {
 	private int idRequisicao;
 	private String titulo;
@@ -8,6 +10,33 @@ public class Requisicao {
 	private Patrimonio patrimonio;
 	private String mensagem;
 	private TipoRequerimentoEnum tipoRequerimento;
+	private Date dataRequisicao;
+	private Date dataParecer;
+	private Date dataFinalizacao;
+
+	public Date getDataRequisicao() {
+		return dataRequisicao;
+	}
+
+	public void setDataRequisicao(Date dataRequisicao) {
+		this.dataRequisicao = dataRequisicao;
+	}
+
+	public Date getDataParecer() {
+		return dataParecer;
+	}
+
+	public void setDataParecer(Date dataParecer) {
+		this.dataParecer = dataParecer;
+	}
+
+	public Date getDataFinalizacao() {
+		return dataFinalizacao;
+	}
+
+	public void setDataFinalizacao(Date dataFinalizacao) {
+		this.dataFinalizacao = dataFinalizacao;
+	}
 
 	public Requisicao() {
 		super();
@@ -65,8 +94,6 @@ public class Requisicao {
 	public void setIdRequisicao(int idRequisicao) {
 		this.idRequisicao = idRequisicao;
 	}
-
-
 
 	public void setTipoRequerimento(TipoRequerimentoEnum tipoRequerimentoEnumByCodigo) {
 		this.tipoRequerimento = tipoRequerimentoEnumByCodigo;

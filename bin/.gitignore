@@ -1,6 +1,2 @@
-/util/
-/controler/
-/controller/
-/dao/
 /entity/
-/view/
+/dao/

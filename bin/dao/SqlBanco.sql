@@ -23,10 +23,10 @@ USE `controlepatrimonio` ;
 CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `idCategoria` INT(11) NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(45) NULL DEFAULT NULL,
-  `modelo` VARCHAR(45) NULL DEFAULT NULL,
+  `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 55
+AUTO_INCREMENT = 57
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`usuario` (
   `username` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -50,7 +50,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local` (
   `idLocal` INT(11) NOT NULL AUTO_INCREMENT,
-  `nomeLocal` VARCHAR(45) NULL DEFAULT NULL,
+  `nomeLocal` VARCHAR(45) NOT NULL,
   `Usuario_idUsuario` INT(11) NOT NULL,
   PRIMARY KEY (`idLocal`),
   INDEX `fk_Local_Usuario1_idx` (`Usuario_idUsuario` ASC),
@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -69,7 +68,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
   `idPatrimonio` INT(11) NOT NULL AUTO_INCREMENT,
-  `nomePatrimonio` VARCHAR(200) NULL DEFAULT NULL,
+  `nomePatrimonio` VARCHAR(200) NOT NULL,
   `codigo` VARCHAR(45) NOT NULL,
   `detalhamentoTecnico` VARCHAR(200) NULL DEFAULT NULL,
   `Categoria_idCategoria` INT(11) NOT NULL,
@@ -81,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -90,13 +89,16 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
   `idRequisicao` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(45) NULL DEFAULT NULL,
+  `titulo` VARCHAR(500) NOT NULL,
   `mensagem` VARCHAR(500) NULL DEFAULT NULL,
-  `statusrequerimento` INT(11) NULL DEFAULT NULL,
-  `tipoRequerimento` INT(11) NULL DEFAULT NULL,
+  `statusrequerimento` INT(11) NOT NULL,
+  `tipoRequerimento` INT(11) NOT NULL,
+  `dataRequisicao` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataParecer` DATETIME NULL DEFAULT NULL,
+  `dataFinalizacao` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`idRequisicao`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -166,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio_has_usuario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
