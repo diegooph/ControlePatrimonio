@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +44,46 @@ public class RequisicaoDAO {
 		}
 	}
 
+	private void update(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+		try {
+			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
+	
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, requisicao.getTitulo());
+			pstmt.setString(2, requisicao.getMensagem());
+			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
+			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
+			
+			if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
+				pstmt.setTimestamp(5, new Timestamp(requisicao.getDataParecer().getTime()));
+				if (requisicao.getStatusRequerimento() == StatusRequerimentoEnum.INDEFERIDO) {
+					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));
+				} else {
+					pstmt.setDate(6, null);
+				}
+			} else {
+				pstmt.setDate(5, null);
+				pstmt.setDate(6, null);
+	
+			}
+	
+			pstmt.setInt(7, requisicao.getIdRequisicao());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void insert(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
-			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento`) VALUES (?, ? , ?, ?)";
+			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento`) VALUES (?, ? ,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, requisicao.getTitulo());
 			pstmt.setString(2, requisicao.getMensagem());
 			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
+
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
 
 			pstmt.execute();
@@ -142,11 +174,21 @@ public class RequisicaoDAO {
 			while (rs.next()) {
 				Requisicao requisicao = new Requisicao();
 				requisicao.setIdRequisicao(rs.getInt("idRequisicao"));
-				requisicao.setDataParecer(rs.getDate("dataParecer"));
-				requisicao.setDataFinalizacao(rs.getDate("dataFinalizacao"));
-				requisicao.setDataRequisicao(rs.getDate("dataRequisicao"));
 				requisicao.setStatusRequerimento(
 						StatusRequerimentoEnum.getStatusRequerimentoEnumByCodigo(rs.getInt("statusrequerimento")));
+				requisicao.setDataRequisicao(new java.util.Date(rs.getTimestamp("dataRequisicao").getTime()));
+
+				System.out.println(requisicao.getDataRequisicao());
+				if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
+					requisicao.setDataParecer(new java.util.Date(rs.getTimestamp("dataParecer").getTime()));
+					if (rs.getDate("dataFinalizacao") != null) {
+						requisicao.setDataFinalizacao(new java.util.Date(rs.getTimestamp("dataFinalizacao").getTime()));
+					}
+
+				} else {
+					requisicao.setDataParecer(null);
+					requisicao.setDataFinalizacao(null);
+				}
 				requisicao.setTitulo(rs.getString("titulo"));
 				requisicao.setMensagem(rs.getString("mensagem"));
 				requisicao.setTipoRequerimento(
@@ -253,12 +295,20 @@ public class RequisicaoDAO {
 			while (rs.next()) {
 				Requisicao requisicao = new Requisicao();
 				requisicao.setIdRequisicao(rs.getInt("idRequisicao"));
-				requisicao.setDataParecer(rs.getDate("dataParecer"));
-				requisicao.setDataFinalizacao(rs.getDate("dataFinalizacao"));
-				requisicao.setDataRequisicao(rs.getDate("dataRequisicao"));
-
 				requisicao.setStatusRequerimento(
 						StatusRequerimentoEnum.getStatusRequerimentoEnumByCodigo(rs.getInt("statusrequerimento")));
+				requisicao.setDataRequisicao(new java.util.Date(rs.getTimestamp("dataRequisicao").getTime()));
+				System.out.println(requisicao.getDataRequisicao());
+				if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
+					requisicao.setDataParecer(new java.util.Date(rs.getTimestamp("dataParecer").getTime()));
+					if (rs.getDate("dataFinalizacao") != null) {
+						requisicao.setDataFinalizacao(new java.util.Date(rs.getTimestamp("dataFinalizacao").getTime()));
+					}
+
+				} else {
+					requisicao.setDataParecer(null);
+					requisicao.setDataFinalizacao(null);
+				}
 				requisicao.setTipoRequerimento(
 						TipoRequerimentoEnum.getTipoRequerimentoEnumByCodigo(rs.getInt("tiporequerimento")));
 				requisicao.setTitulo(rs.getString("titulo"));
@@ -300,22 +350,6 @@ public class RequisicaoDAO {
 		}
 
 		return listaRequisicaos;
-	}
-
-	private void update(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
-		try {
-			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? WHERE `idRequisicao`=?";
-
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, requisicao.getTitulo());
-			pstmt.setString(2, requisicao.getMensagem());
-			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
-			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
-			pstmt.setInt(5, requisicao.getIdRequisicao());
-			pstmt.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void excluir(Requisicao requisicao) {

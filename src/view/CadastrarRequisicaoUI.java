@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -83,12 +84,13 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 					requisicaoUpdate.setUsuarioRequerente(usuario);
 					requisicaoUpdate.setTipoRequerimento(RadioButonSelect());
 					requisicaoUpdate.setMensagem(jtfMensagem.getText());
+					requisicaoUpdate.setDataRequisicao(new Date());
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
 					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
-					
+					e.printStackTrace();
 				}
 
 				dispose();

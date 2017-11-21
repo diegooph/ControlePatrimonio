@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
@@ -75,19 +76,18 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
-
 				try {
 					rcon.verificarEdicao(requisicaoUpdate);
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
+					requisicaoUpdate.setDataParecer(new Date());
 					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-					
+
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
-
+					e.printStackTrace();
 				}
 
-			
 				dispose();
 			}
 		});
@@ -104,15 +104,16 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
-
 				try {
 					rcon.verificarEdicao(requisicaoUpdate);
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.INDEFERIDO);
+					requisicaoUpdate.setDataParecer(new Date());
+					requisicaoUpdate.setDataFinalizacao(new Date());
 					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
-
+					e.printStackTrace();
 				}
 
 				dispose();

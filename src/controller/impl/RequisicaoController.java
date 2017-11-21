@@ -14,7 +14,7 @@ public class RequisicaoController implements IRequisicaoControler {
 
 
 	public void verificarEdicao(Requisicao requisicao) throws Exception {
-		if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
+		if (requisicao.getStatusRequerimento() == StatusRequerimentoEnum.INDEFERIDO || requisicao.getStatusRequerimento() == StatusRequerimentoEnum.DEFERIDO) {
 			throw new Exception("Apenas requisições pendentes podem ser alteradas!");
 
 		}
@@ -22,7 +22,7 @@ public class RequisicaoController implements IRequisicaoControler {
 	}
 
 	@Override
-	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) throws Exception {
+	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
 
 		RequisicaoDAO udao = new RequisicaoDAO();
 		udao.salvar(usuario, patrimonio, requisicao, local);
