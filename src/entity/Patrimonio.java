@@ -6,9 +6,16 @@ public class Patrimonio {
 	private String detalhamentoTecnico;
 	private String codigo;
 	private Categoria categoria;
+	private boolean ocupado;
 
-	
-	
+	public boolean isOcupado() {
+		return ocupado;
+	}
+
+	public void setOcupado(boolean ocupado) {
+		this.ocupado = ocupado;
+	}
+
 	public Patrimonio() {
 		super();
 		this.idPatrimonio = 0;
