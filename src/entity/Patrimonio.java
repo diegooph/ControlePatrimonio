@@ -7,6 +7,15 @@ public class Patrimonio {
 	private String codigo;
 	private Categoria categoria;
 	private boolean ocupado;
+	private Usuario	usuario;
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public boolean isOcupado() {
 		return ocupado;

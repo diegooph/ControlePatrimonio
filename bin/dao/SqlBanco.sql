@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
   `codigo` VARCHAR(45) NOT NULL,
   `detalhamentoTecnico` VARCHAR(200) NULL DEFAULT NULL,
   `Categoria_idCategoria` INT(11) NOT NULL,
-  `ocupado` TINYINT(1) NULL DEFAULT NULL,
+  `ocupado` TINYINT(1) NOT NULL DEFAULT 0,
   `usuario_idUsuario` INT(11) NOT NULL,
   PRIMARY KEY (`idPatrimonio`),
   INDEX `fk_Patrimonio_Categoria_idx` (`Categoria_idCategoria` ASC),

@@ -8,8 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.impl.UsuarioController;
 import entity.Categoria;
 import entity.Patrimonio;
+import entity.PermisaoEnum;
+import entity.Usuario;
 import util.ConnectionUtil;
 
 public class PatrimonioDAO {
@@ -37,13 +40,14 @@ public class PatrimonioDAO {
 
 	private void insert(Patrimonio patrimonio) {
 		try {
-			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`,usuario_idUsuario) VALUES (?, ?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
 			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
-
+			pstmt.setInt(5,UsuarioController.getUsuario().getIdUsuario());
+			
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,7 +57,11 @@ public class PatrimonioDAO {
 	public List<Patrimonio> listarTodos() {
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select `idPatrimonio`, `nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria` `idCategoria`, `descricao`, `modelo` from patrimonio join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria";
+			String sql = "select `idPatrimonio`, `nomePatrimonio`, `codigo`,ocupado, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,"
+					+ " `idCategoria`, `descricao`, `modelo`"
+					+ " from patrimonio"
+					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria"
+					+ " join usuario on usuario.idUsuario = Patrimonio.usuario_idUsuario";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -64,6 +72,7 @@ public class PatrimonioDAO {
 				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
 				patrimonio.setCodigo(rs.getString("codigo"));
 				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
+				patrimonio.setOcupado(rs.getBoolean("ocupado"));
 
 				// selecionar Categoria
 
@@ -73,7 +82,18 @@ public class PatrimonioDAO {
 				categoria.setModelo(rs.getString("modelo"));
 				// Concatenar patrimonio com categoria
 				patrimonio.setCategoria(categoria);
-
+				
+				
+				
+				// selecionar e concatenar usuario
+				
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+				usuario.setSenha(rs.getString("senhaUsuario"));
+				usuario.setUsername(rs.getString("username"));
+				patrimonio.setUsuario(usuario);
 				listaPatrimonios.add(patrimonio);
 			}
 

@@ -13,7 +13,7 @@ public class PatrimonioTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Patrimonio> listaDePatrimonios;
-	private String[] colunas = new String[]{"nome" , "Modelo" ,"Código"};
+	private String[] colunas = new String[]{"nome" , "Modelo" ,"Código", "Disponibilidade"};
 
 	public PatrimonioTableModel() {
 		
@@ -50,6 +50,14 @@ public class PatrimonioTableModel extends AbstractTableModel {
 
 		case 2:
 			return this.listaDePatrimonios.get(rowIndex).getCodigo();
+
+		case 3:
+		if (listaDePatrimonios.get(rowIndex).isOcupado()) {
+			return "Ocupado";
+		} else {
+			return "Disponivel";
+		}
+			
 
 		default:
 			break;
