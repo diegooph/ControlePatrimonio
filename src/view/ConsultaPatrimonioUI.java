@@ -9,6 +9,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.PatrimonioController;
+import entity.Patrimonio;
 import entity.PatrimonioTableModel;
 import entity.Requisicao;
 import entity.Usuario;
@@ -55,19 +57,32 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 		JButton btnSolicitarPatrimonio = new JButton("Solicitar Patrimonio");
 		btnSolicitarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoginUsuarioUi.principalUI.contentPane.add(new CadastrarRequisicaoUI(usuario,
-						pModel.getPatrimonio(jtListaClientes.getSelectedRow()), new Requisicao(), null), 0);
-
+				PatrimonioController pcon = new PatrimonioController();
+				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
+				try {
+					pcon.verificarDisponibilidade(patrimonio);
+					LoginUsuarioUi.principalUI.contentPane.add(new CadastrarRequisicaoUI(usuario,patrimonio, new Requisicao(), null), 0);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
+				
+				}
 			}
 		});
 
 		btnEditarPatrimonio = new JButton("Editar Patrimonio");
 		btnEditarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				PatrimonioController pcon = new PatrimonioController();
+				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
+				try {
+					pcon.verificarDisponibilidade(patrimonio);
+					LoginUsuarioUi.principalUI.contentPane.add(new CadastrarPatrimonioUI(usuario, patrimonio), 0);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Apenas Pratrimonios Disponiveis podem ser alterados !");
+					e.printStackTrace();
 
-				LoginUsuarioUi.principalUI.contentPane.add(
-						new CadastrarPatrimonioUI(usuario, pModel.getPatrimonio(jtListaClientes.getSelectedRow())), 0);
-
+				}
 			}
 		});
 
@@ -80,45 +95,42 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(jpPatrimonios, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(75)
-							.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnSolicitarPatrimonio)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExcluirPatrimonio, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-					.addGap(8)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnExcluirPatrimonio, Alignment.TRAILING)
-						.addComponent(btnSolicitarPatrimonio, Alignment.TRAILING)
-						.addComponent(btnEditarPatrimonio, Alignment.TRAILING))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] {btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio});
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio});
+						.addGroup(groupLayout
+								.createParallelGroup(Alignment.LEADING).addGroup(
+										groupLayout.createSequentialGroup().addContainerGap().addComponent(
+												jpPatrimonios, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(75)
+										.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 95,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(btnSolicitarPatrimonio)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnExcluirPatrimonio,
+												GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+						.addGap(8)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnExcluirPatrimonio, Alignment.TRAILING)
+								.addComponent(btnSolicitarPatrimonio, Alignment.TRAILING)
+								.addComponent(btnEditarPatrimonio, Alignment.TRAILING))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		groupLayout.linkSize(SwingConstants.VERTICAL,
+				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
+		groupLayout.linkSize(SwingConstants.HORIZONTAL,
+				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
 
 		jspTabelaPatrimonio = new JScrollPane();
 
 		jtListaClientes = new JTable();
 		jtListaClientes.setModel(AtualizarTablemodel());
-		if (pModel.getRowCount()>0) {
+		if (pModel.getRowCount() > 0) {
 			jtListaClientes.setRowSelectionInterval(0, 0);
 		}
-		
+
 		jspTabelaPatrimonio.setViewportView(jtListaClientes);
 		GroupLayout gl_jpPatrimonios = new GroupLayout(jpPatrimonios);
 		gl_jpPatrimonios.setHorizontalGroup(gl_jpPatrimonios.createParallelGroup(Alignment.LEADING).addGroup(
@@ -135,7 +147,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 
 	private TableModel AtualizarTablemodel() {
 		pModel = new PatrimonioTableModel();
-		
+
 		return pModel;
 	}
 }
