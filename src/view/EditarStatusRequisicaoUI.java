@@ -24,7 +24,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import controller.impl.PatrimonioController;
 import controller.impl.RequisicaoController;
+import controller.impl.UsuarioController;
 import entity.Local;
 import entity.Patrimonio;
 import entity.Requisicao;
@@ -75,13 +77,25 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
+				PatrimonioController pcon = new PatrimonioController();
 
 				try {
-					rcon.verificarEdicao(requisicaoUpdate);
-					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
-					requisicaoUpdate.setDataParecer(new Date());
-					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
-					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+					if (rdbtnRequirirPatrimonio.isSelected()) {
+
+						rcon.verificarEdicao(requisicaoUpdate);
+						pcon.verificarDisponibilidade(patrimonio);
+						requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
+						requisicaoUpdate.setDataParecer(new Date());
+						rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+						patrimonio.setOcupado(true);
+						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
+						pcon.salvar(patrimonio);
+						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+					} else if(rdbtnDevolucao.isSelected()) {
+						
+					}else{
+							
+					}
 
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

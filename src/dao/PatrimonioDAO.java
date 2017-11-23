@@ -40,13 +40,14 @@ public class PatrimonioDAO {
 
 	private void insert(Patrimonio patrimonio) {
 		try {
-			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`,usuario_idUsuario) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, usuario_idUsuario , ocupado) VALUES (?, ?, ?, ?, ? ,? )";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
 			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
 			pstmt.setInt(5,UsuarioController.getUsuario().getIdUsuario());
+			pstmt.setBoolean(6, patrimonio.isOcupado());
 			
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -106,14 +107,17 @@ public class PatrimonioDAO {
 
 	private void update(Patrimonio patrimonio) {
 		try {
-			String sql = "UPDATE `controlepatrimonio`.`patrimonio` SET `nomePatrimonio`=?, `codigo`=?, `detalhamentoTecnico`=?, `Categoria_idCategoria`=? WHERE `idPatrimonio`=?";
+			String sql = "UPDATE `controlepatrimonio`.`patrimonio` SET `nomePatrimonio`=?, `codigo`=?, `detalhamentoTecnico`=?, `Categoria_idCategoria`=? , `ocupado`=? , `Usuario_idUsuario`=? WHERE `idPatrimonio`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
 			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
-			pstmt.setInt(5, patrimonio.getIdPatrimonio());
+			pstmt.setBoolean(5, patrimonio.isOcupado());
+			pstmt.setInt(6,UsuarioController.getUsuario().getIdUsuario());
+			
+			pstmt.setInt(7, patrimonio.getIdPatrimonio());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

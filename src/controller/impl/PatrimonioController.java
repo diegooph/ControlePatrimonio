@@ -1,11 +1,12 @@
 package controller.impl;
 
-
 import java.util.List;
 
 import controler.IPatrimonioControler;
 import dao.PatrimonioDAO;
 import entity.Patrimonio;
+import entity.Requisicao;
+import entity.StatusRequerimentoEnum;
 
 public class PatrimonioController implements IPatrimonioControler {
 
@@ -13,20 +14,24 @@ public class PatrimonioController implements IPatrimonioControler {
 
 	@Override
 	public void salvar(Patrimonio patrimonio) {
-	PatrimonioDAO udao = new PatrimonioDAO();
-	udao.salvar(patrimonio);
-		
+		PatrimonioDAO udao = new PatrimonioDAO();
+		udao.salvar(patrimonio);
+
 	}
 
-	
-	
+	public void verificarDisponibilidade(Patrimonio patrimonio) throws Exception {
+		if (patrimonio.isOcupado()) {
+			throw new Exception("Este patrimonio estã indisponivel no momento !");
+
+		}
+
+	}
+
 	@Override
 	public List<Patrimonio> listarPatrimonios() {
-	PatrimonioDAO udao = new PatrimonioDAO();
+		PatrimonioDAO udao = new PatrimonioDAO();
 		return udao.listarTodos();
 	}
-
-
 
 	@Override
 	public void remover(Patrimonio patrimonio) {

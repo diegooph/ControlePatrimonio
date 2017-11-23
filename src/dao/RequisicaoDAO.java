@@ -163,7 +163,7 @@ public class RequisicaoDAO {
 			}
 			Statement stmt = con.createStatement();
 
-			String sql = "SELECT `idRequisicao` ,`idcategoria`,`dataParecer`,`dataFinalizacao`,`dataRequisicao` ,`descricao` ,`modelo` ,"
+			String sql = "SELECT `idRequisicao`,statusrequerimento, `titulo`, `mensagem` ,`idcategoria`,`dataParecer`,`dataFinalizacao`,`dataRequisicao` ,`descricao` ,`modelo` ,`tiporequerimento`,"
 					+ "`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
 					+ " join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ " join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
