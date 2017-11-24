@@ -26,6 +26,10 @@ import entity.Requisicao;
 import entity.Usuario;
 
 public class ConsultaPatrimonioUI extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTable jtListaClientes;
 	private JScrollPane jspTabelaPatrimonio;
 	private JButton btnEditarPatrimonio;
