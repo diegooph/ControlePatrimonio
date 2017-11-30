@@ -87,7 +87,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
 						requisicaoUpdate.setDataParecer(new Date());
 						rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
-						patrimonio.setOcupado(true);
+					
 						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
 						pcon.salvar(patrimonio);
 						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
@@ -98,7 +98,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 					}
 
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
+					JOptionPane.showInternalMessageDialog(null, e.getMessage());
 					e.printStackTrace();
 				}
 

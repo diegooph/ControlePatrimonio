@@ -66,7 +66,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 		setTitle("Editar Conta ");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 451, 400);
+		setBounds(100, 100, 511, 462);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 204, 204));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -77,36 +77,36 @@ public class EditarUsuarioUi extends JInternalFrame {
 		panel.setBackground(new Color(204, 204, 204));
 		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Cadastro",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 11, 422, 348);
+		panel.setBounds(10, 11, 475, 410);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
 		JLabel lblUsurio = new JLabel("Usu\u00E1rio:");
 		lblUsurio.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblUsurio.setBounds(129, 97, 73, 24);
+		lblUsurio.setBounds(109, 97, 73, 24);
 		panel.add(lblUsurio);
 
 		JLabel lblSenha = new JLabel("Nova Senha:");
 		lblSenha.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblSenha.setBounds(89, 165, 113, 24);
+		lblSenha.setBounds(69, 165, 113, 24);
 		panel.add(lblSenha);
 
 		JLabel lblConfimeSuaSenha = new JLabel("Confime sua Senha:");
 		lblConfimeSuaSenha.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblConfimeSuaSenha.setBounds(40, 200, 162, 24);
+		lblConfimeSuaSenha.setBounds(20, 200, 162, 24);
 		panel.add(lblConfimeSuaSenha);
 
 		jtfUsuario = new JTextField();
-		jtfUsuario.setBounds(212, 102, 130, 20);
+		jtfUsuario.setBounds(192, 102, 253, 20);
 		panel.add(jtfUsuario);
 		jtfUsuario.setColumns(10);
 
 		jtfsSenha = new JPasswordField();
-		jtfsSenha.setBounds(212, 170, 130, 20);
+		jtfsSenha.setBounds(192, 170, 253, 20);
 		panel.add(jtfsSenha);
 
 		jtfsConfima = new JPasswordField();
-		jtfsConfima.setBounds(212, 202, 130, 20);
+		jtfsConfima.setBounds(192, 202, 253, 20);
 		panel.add(jtfsConfima);
 
 		JButton btnCadastrarse = new JButton("Editar Conta");
@@ -121,7 +121,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 					} else {
 						usuarioSec.setPermisaoUsuario(PermisaoEnum.USUARIO);
 					}
-
+					usuarioController.salvar(usuarioSec);
 				} else {
 					if (jtfsSenhaUsuarioField.getText().equals(usuarioSec.getSenha())) {
 
@@ -139,7 +139,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 
 			}
 		});
-		btnCadastrarse.setBounds(65, 302, 113, 23);
+		btnCadastrarse.setBounds(83, 322, 113, 23);
 		panel.add(btnCadastrarse);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -148,7 +148,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(243, 302, 113, 23);
+		btnCancelar.setBounds(279, 322, 113, 23);
 		panel.add(btnCancelar);
 
 		JLabel lblDgm = new JLabel("DGM");
@@ -158,37 +158,80 @@ public class EditarUsuarioUi extends JInternalFrame {
 
 		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
 		lblNomeCompleto.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNomeCompleto.setBounds(69, 64, 133, 31);
+		lblNomeCompleto.setBounds(49, 64, 133, 31);
 		panel.add(lblNomeCompleto);
 
 		jtfNomeCompleto = new JTextField();
-		jtfNomeCompleto.setBounds(212, 71, 130, 20);
+		jtfNomeCompleto.setBounds(192, 71, 253, 20);
 		panel.add(jtfNomeCompleto);
 		jtfNomeCompleto.setColumns(10);
 
 		JLabel lblSenha_1 = new JLabel("Senha:");
 		lblSenha_1.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblSenha_1.setBounds(141, 132, 61, 24);
+		lblSenha_1.setBounds(121, 132, 61, 24);
 		panel.add(lblSenha_1);
 
 		jtfsSenhaUsuarioField = new JPasswordField();
-		jtfsSenhaUsuarioField.setBounds(212, 137, 130, 20);
+		jtfsSenhaUsuarioField.setBounds(192, 137, 253, 20);
 		panel.add(jtfsSenhaUsuarioField);
 
 		JLabel lblPermissao = new JLabel("Permiss\u00E3o :");
 		lblPermissao.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblPermissao.setBounds(108, 235, 94, 24);
+		lblPermissao.setBounds(88, 235, 94, 24);
 		panel.add(lblPermissao);
 
-		rdbtnAdmin = new JRadioButton("Admin");
+		rdbtnAdmin = new JRadioButton("Administrador");
 		buttonGroup.add(rdbtnAdmin);
-		rdbtnAdmin.setBounds(212, 238, 55, 23);
+		rdbtnAdmin.setBounds(192, 236, 94, 23);
 		panel.add(rdbtnAdmin);
 
 		rdbtnUsuario = new JRadioButton("Usuario");
 		buttonGroup.add(rdbtnUsuario);
-		rdbtnUsuario.setBounds(281, 238, 61, 23);
+		rdbtnUsuario.setBounds(323, 236, 61, 23);
 		panel.add(rdbtnUsuario);
+		
+		JButton button = new JButton("Excluir Usuario");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				UsuarioController pcont = new UsuarioController();
+				Usuario usuariosel = usuarioSec;
+			String mensagemConfirmacao ; 
+			boolean autodelete;	
+			if (usuariosel.getIdUsuario() == UsuarioController.getUsuario().getIdUsuario()) {
+				autodelete = true;
+				mensagemConfirmacao = "Você deseja Excluir Sua Conta?";
+				
+			} else {
+				autodelete = false;
+			mensagemConfirmacao = 	"Deseja realmente Excluir: " + usuariosel.getNomeUsuario() + "?";
+			}
+				
+				if (JOptionPane.showInternalConfirmDialog(LoginUsuarioUi.principalUI.contentPane,
+					mensagemConfirmacao) == 0) {
+					
+						try {
+							pcont.verificarExclusao(usuariosel);
+							pcont.remover(usuariosel);
+								
+							if (autodelete) {
+								LoginUsuarioUi.principalUI.dispose();
+							}
+						} catch (Exception es) {
+							// TODO Auto-generated catch block
+							es.printStackTrace();
+							JOptionPane.showMessageDialog(LoginUsuarioUi.principalUI.contentPane, es.getMessage());
+						}
+					
+					
+					
+					
+				}
+			}
+			
+		});
+		button.setBounds(161, 356, 154, 23);
+		panel.add(button);
 		if (usuarioSec.getIdUsuario() != UsuarioController.getUsuario().getIdUsuario()) {
 			listarAdminConfig();
 		} else {
@@ -228,9 +271,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 	private void preencherValores() {
 		jtfNomeCompleto.setText(usuarioSec.getNomeUsuario());
 		jtfUsuario.setText(usuarioSec.getNomeUsuario());
-		jtfsSenhaUsuarioField.setText(usuarioSec.getSenha());
-		jtfsSenha.setText(usuarioSec.getSenha());
-		jtfsConfima.setText(usuarioSec.getSenha());
+		
 		SelecionarPermissao();
 	}
 }

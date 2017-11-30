@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.impl.UsuarioController;
 import entity.Categoria;
 import entity.Patrimonio;
 import entity.PermisaoEnum;
@@ -45,12 +44,65 @@ public class PatrimonioDAO {
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
-			pstmt.setBoolean(6, patrimonio.isOcupado());
+			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
 
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Patrimonio buscarPatrimonioPorId(Patrimonio patrimonio) {
+		try {
+			String sql = "select `idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`, "
+					+ " `idCategoria`, `descricao`, `modelo`" + "from patrimonio "
+					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
+					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) where idpatrimonio = ?;";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(0, patrimonio.getIdPatrimonio());
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				// selecionar patrimonio
+				patrimonio = new Patrimonio();
+				patrimonio.setIdPatrimonio(rs.getInt("idPatrimonio"));
+				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
+				patrimonio.setCodigo(rs.getString("codigo"));
+				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
+
+				// selecionar Categoria
+
+				Categoria categoria = new Categoria();
+				categoria.setIdCategoria(rs.getInt("idCategoria"));
+				categoria.setDescricao(rs.getString("descricao"));
+				categoria.setModelo(rs.getString("modelo"));
+				// Concatenar patrimonio com categoria
+				patrimonio.setCategoria(categoria);
+
+				// selecionar e concatenar usuario
+				if (rs.getInt("idUsuario") > 0) {
+					Usuario usuario = new Usuario();
+					usuario.setIdUsuario(rs.getInt("idUsuario"));
+					usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+					usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+					usuario.setSenha(rs.getString("senhaUsuario"));
+					usuario.setUsername(rs.getString("username"));
+					patrimonio.setUsuario(usuario);
+
+					patrimonio.setOcupado(true);
+				} else {
+					// selecionar estado patrimonio
+					patrimonio.setOcupado(false);
+				}
+			
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return patrimonio;
 	}
 
 	public List<Patrimonio> listarTodos() {
@@ -70,7 +122,6 @@ public class PatrimonioDAO {
 				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
 				patrimonio.setCodigo(rs.getString("codigo"));
 				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
-			
 
 				// selecionar Categoria
 
@@ -82,7 +133,7 @@ public class PatrimonioDAO {
 				patrimonio.setCategoria(categoria);
 
 				// selecionar e concatenar usuario
-				if (rs.getInt("idUsuario") >=0) {
+				if (rs.getInt("idUsuario") > 0) {
 					Usuario usuario = new Usuario();
 					usuario.setIdUsuario(rs.getInt("idUsuario"));
 					usuario.setNomeUsuario(rs.getString("nomeUsuario"));
@@ -90,7 +141,7 @@ public class PatrimonioDAO {
 					usuario.setSenha(rs.getString("senhaUsuario"));
 					usuario.setUsername(rs.getString("username"));
 					patrimonio.setUsuario(usuario);
-					
+
 					patrimonio.setOcupado(true);
 				} else {
 					// selecionar estado patrimonio
@@ -115,9 +166,8 @@ public class PatrimonioDAO {
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
 			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
-			
 
-			pstmt.setInt(7, patrimonio.getIdPatrimonio());
+			pstmt.setInt(5, patrimonio.getIdPatrimonio());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -167,12 +167,12 @@ public class UsuarioDAO {
 	public Usuario validarUsuario(Usuario usuario) {
 
 		try {
-	
+
 			String sql = "select `idUsuario`, `nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username` from usuario where username = ? and senhaUsuario = ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, usuario.getUsername());
 			pstmt.setString(2, usuario.getSenha());
-			
+
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -190,5 +190,29 @@ public class UsuarioDAO {
 		}
 
 		return usuario;
+	}
+
+	public boolean verificarexcluir(Usuario usuario) {
+
+		boolean verificacao = false;
+		try {
+		
+			String sql = " call controlepatrimonio.VerificarExclusaoUsuario( @verificarexclusao , ? ) ";
+
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, usuario.getIdUsuario());
+		
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				verificacao = rs.getBoolean("verificarexclusao");
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return verificacao;
 	}
 }

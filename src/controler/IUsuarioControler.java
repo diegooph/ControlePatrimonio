@@ -8,7 +8,7 @@ public interface IUsuarioControler {
 
 	public void salvar(Usuario usuario);
 
-	public void remover(Usuario usuario);
+	public void remover(Usuario usuario) ;
 
 	public List<Usuario> listarUsuarios();
 

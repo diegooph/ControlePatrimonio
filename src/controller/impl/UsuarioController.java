@@ -22,12 +22,24 @@ public class UsuarioController implements IUsuarioControler {
 		UsuarioDAO udao = new UsuarioDAO();
 		return udao.listarTodos();
 	}
-
+	public void verificarExclusao(Usuario usuario) throws Exception{
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		if(usuarioDAO.verificarexcluir(usuario)){
+			System.out.println("deu erro no verifExcluir");
+			throw new Exception("Este Usuario Já Possui Registros no Sistema \n Impossivel ser Removido");
+			
+		}
+				
+				
+				
+		
+	}
 	@Override
 	public void remover(Usuario usuario) {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		usuarioDAO.excluir(usuario);
-
+		
+			usuarioDAO.excluir(usuario);
+			
 	}
 
 	@Override
