@@ -58,7 +58,7 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				LoginUsuarioUi.principalUI.contentPane.add(
-						new CadastroUsuarioUi( pModel.getUsuario(jtListaUsuario.getSelectedRow())), 0);
+						new EditarUsuarioUi( pModel.getUsuario(jtListaUsuario.getSelectedRow())), 0);
 
 			}
 		});

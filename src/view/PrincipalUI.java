@@ -130,18 +130,26 @@ public class PrincipalUI extends JFrame {
 				login.setVisible(true);
 			}
 		});
-
-		JMenuItem mntmConfiguracoes = new JMenuItem("Configura\u00E7\u00F5es");
-		mntmConfiguracoes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				// Alterar para Configuracao do usuario normal e criar uma lista
-				// de usuarios onde voce poderar so observar os usuarios
-				ConsultaUsuarioUI consultaUsuario = new ConsultaUsuarioUI();
-				contentPane.add(consultaUsuario);
+		
+		JMenuItem mntmConfiguraes = new JMenuItem("Configura\u00E7\u00F5es");
+		mntmConfiguraes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditarUsuarioUi editarUsuarioUi = new  EditarUsuarioUi();
+				contentPane.add(editarUsuarioUi);
+				
 			}
 		});
-		mnUsuario.add(mntmConfiguracoes);
+		mnUsuario.add(mntmConfiguraes);
+		
+		JMenuItem mntmListaDeUsuarios = new JMenuItem("Lista de Usuarios");
+		mntmListaDeUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ConsultaUsuarioUI consultaUsuarioUI = new ConsultaUsuarioUI();
+				contentPane.add( consultaUsuarioUI);
+			}
+		});
+		mnUsuario.add(mntmListaDeUsuarios);
 		mnUsuario.add(mntmSair);
 
 		JMenu mnSobre = new JMenu("Sobre");
