@@ -87,14 +87,14 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
 						requisicaoUpdate.setDataParecer(new Date());
 						rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
-					
+
 						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
 						pcon.salvar(patrimonio);
 						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-					} else if(rdbtnDevolucao.isSelected()) {
-						
-					}else{
-							
+					} else if (rdbtnDevolucao.isSelected()) {
+
+					} else {
+
 					}
 
 				} catch (Exception e) {
@@ -259,15 +259,15 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 	public void RadioButonSelected() {
 		if (TipoRequerimentoEnum.DEVOLUCAO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnDevolucao.setSelected(true);
-			System.out.println("11111sakfo");
+
 		} else if (TipoRequerimentoEnum.RELATARPROBLEMA == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnRelatarProblemaCom.setSelected(true);
-			System.out.println("des2");
+
 		} else if (TipoRequerimentoEnum.REQUERERPATRIMONIO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnRequirirPatrimonio.setSelected(true);
-			System.out.println("elseif3");
+
 		}
-		System.out.println("saioFora");
+
 	}
 
 	public void preencherCamposParaEdicao() {

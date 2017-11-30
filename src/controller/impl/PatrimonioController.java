@@ -20,6 +20,8 @@ public class PatrimonioController implements IPatrimonioControler {
 	}
 
 	public void verificarDisponibilidade(Patrimonio patrimonio) throws Exception {
+		PatrimonioDAO pdao = new PatrimonioDAO();
+		patrimonio = pdao.buscarPatrimonioPorId(patrimonio);
 		if (patrimonio.isOcupado()) {
 			throw new Exception("Este patrimonio estã indisponivel no momento !");
 
