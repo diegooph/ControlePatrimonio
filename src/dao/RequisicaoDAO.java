@@ -145,13 +145,7 @@ public class RequisicaoDAO {
 					isOrEnable = true;
 					isAndEnable = false;
 				}
-				if (relatarProblema) {
-					filtros += contatenarAnd(isAndEnable);
-					filtros += contatenarOr(isOrEnable);
-					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
-					isOrEnable = true;
-					isAndEnable = false;
-				}
+				
 				if (requererPatrimonio) {
 					filtros += contatenarAnd(isAndEnable);
 					filtros += contatenarOr(isOrEnable);
@@ -266,13 +260,7 @@ public class RequisicaoDAO {
 					isOrEnable = true;
 					isAndEnable = false;
 				}
-				if (relatarProblema) {
-					filtros += contatenarAnd(isAndEnable);
-					filtros += contatenarOr(isOrEnable);
-					filtros += "requisicao.tipoRequerimento = " + TipoRequerimentoEnum.RELATARPROBLEMA.getCodigo();
-					isOrEnable = true;
-					isAndEnable = false;
-				}
+				
 				if (requererPatrimonio) {
 					filtros += contatenarAnd(isAndEnable);
 					filtros += contatenarOr(isOrEnable);

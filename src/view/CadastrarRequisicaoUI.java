@@ -76,7 +76,6 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				RequisicaoController rcon = new RequisicaoController();
 
-
 				try {
 					rcon.verificarEdicao(requisicao);
 					requisicaoUpdate.setPatrimonio(patrimonio);
@@ -205,9 +204,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		if (rdbtnDevolucao.isSelected()) {
 
 			return TipoRequerimentoEnum.DEVOLUCAO;
-		} else if (rdbtnRelatarProblemaCom.isSelected()) {
-
-			return TipoRequerimentoEnum.RELATARPROBLEMA;
+		
 		} else {
 
 			return TipoRequerimentoEnum.REQUERERPATRIMONIO;
@@ -218,15 +215,12 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	public void RadioButonSelected() {
 		if (TipoRequerimentoEnum.DEVOLUCAO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnDevolucao.setSelected(true);
-			System.out.println("11111sakfo");
-		} else if (TipoRequerimentoEnum.RELATARPROBLEMA == requisicaoUpdate.getTipoRequerimento()) {
-			rdbtnRelatarProblemaCom.setSelected(true);
-			System.out.println("des2");
+
 		} else if (TipoRequerimentoEnum.REQUERERPATRIMONIO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnRequirirPatrimonio.setSelected(true);
-			System.out.println("elseif3");
+
 		}
-		System.out.println("saioFora");
+
 	}
 
 	public void preencherCamposParaEdicao() {

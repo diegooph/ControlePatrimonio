@@ -2,9 +2,9 @@ package entity;
 
 public enum TipoRequerimentoEnum {
 
-	RELATARPROBLEMA ("Relatar Problema",0),
-	DEVOLUCAO ("Devolução",1),
-	REQUERERPATRIMONIO ("Requerer Patrimonio",2);
+	
+	DEVOLUCAO ("Devolução",0),
+	REQUERERPATRIMONIO ("Requerer Patrimonio",1);
 
 	private final String descricao;
 	private final int codigo;
@@ -22,11 +22,10 @@ public enum TipoRequerimentoEnum {
 	public static TipoRequerimentoEnum getTipoRequerimentoEnumByCodigo(int codigo){
 		switch (codigo) {
 		case 0:
-			return TipoRequerimentoEnum.RELATARPROBLEMA;
+			return TipoRequerimentoEnum.DEVOLUCAO;			
 		case 1:
-			return TipoRequerimentoEnum.DEVOLUCAO;
-		case 2:
 			return TipoRequerimentoEnum.REQUERERPATRIMONIO;
+
 		default:
 			return null;
 		}

@@ -46,7 +46,6 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 	private Requisicao requisicaoUpdate;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	JRadioButton rdbtnDevolucao;
-	JRadioButton rdbtnRelatarProblemaCom;
 	JRadioButton rdbtnRequirirPatrimonio;
 	private JEditorPane jtfMensagem;
 
@@ -91,7 +90,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
 						pcon.salvar(patrimonio);
 						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-					} else if (rdbtnDevolucao.isSelected()) {
+				
 
 					} else {
 
@@ -174,10 +173,6 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		rdbtnDevolucao.setEnabled(false);
 		buttonGroup.add(rdbtnDevolucao);
 
-		rdbtnRelatarProblemaCom = new JRadioButton("Relatar Problema com Patrimonio");
-		rdbtnRelatarProblemaCom.setEnabled(false);
-		buttonGroup.add(rdbtnRelatarProblemaCom);
-
 		rdbtnRequirirPatrimonio = new JRadioButton("Requirir Patrimonio");
 		rdbtnRequirirPatrimonio.setEnabled(false);
 		rdbtnRequirirPatrimonio.setSelected(true);
@@ -186,55 +181,49 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		JLabel lblTipoDeRequisio = new JLabel("Tipo de Requisi\u00E7\u00E3o:");
 		GroupLayout gl_jpNovoModeloPatrimonio = new GroupLayout(jpNovoModeloPatrimonio);
 		gl_jpNovoModeloPatrimonio.setHorizontalGroup(
-				gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING).addGroup(gl_jpNovoModeloPatrimonio
-						.createSequentialGroup().addGroup(gl_jpNovoModeloPatrimonio
-								.createParallelGroup(Alignment.LEADING).addGroup(gl_jpNovoModeloPatrimonio
-										.createSequentialGroup().addGap(48)
-										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-												.addComponent(lblNome).addComponent(lblMensagem)))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
-										.addComponent(lblTipoDeRequisio)))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(rdbtnDevolucao)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(rdbtnRelatarProblemaCom)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(rdbtnRequirirPatrimonio)
-										.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(jtfMensagem,
-												GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)))
-						.addGap(19)));
-		gl_jpNovoModeloPatrimonio.setVerticalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
-						.addGroup(gl_jpNovoModeloPatrimonio
-								.createParallelGroup(Alignment.TRAILING).addGroup(gl_jpNovoModeloPatrimonio
-										.createSequentialGroup().addComponent(lblNome).addGap(41))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-										.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(18)
-										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_jpNovoModeloPatrimonio
-														.createParallelGroup(Alignment.BASELINE)
-														.addComponent(rdbtnRelatarProblemaCom)
-														.addComponent(rdbtnRequirirPatrimonio))
-												.addGroup(gl_jpNovoModeloPatrimonio
-														.createParallelGroup(Alignment.BASELINE)
-														.addComponent(rdbtnDevolucao)
-														.addComponent(lblTipoDeRequisio)))))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblMensagem))
-						.addGap(32)));
+			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addGap(48)
+							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblNome)
+								.addComponent(lblMensagem)))
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblTipoDeRequisio)))
+					.addGap(4)
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+						.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addComponent(rdbtnDevolucao)
+							.addGap(185)
+							.addComponent(rdbtnRequirirPatrimonio))
+						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE))
+					.addGap(19))
+		);
+		gl_jpNovoModeloPatrimonio.setVerticalGroup(
+			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addComponent(lblNome)
+							.addGap(41))
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+								.addComponent(rdbtnRequirirPatrimonio)
+								.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
+									.addComponent(rdbtnDevolucao)
+									.addComponent(lblTipoDeRequisio)))))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMensagem))
+					.addGap(32))
+		);
 		jpNovoModeloPatrimonio.setLayout(gl_jpNovoModeloPatrimonio);
 		getContentPane().setLayout(groupLayout);
 		preencherCamposParaEdicao();
@@ -246,9 +235,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		if (rdbtnDevolucao.isSelected()) {
 
 			return TipoRequerimentoEnum.DEVOLUCAO;
-		} else if (rdbtnRelatarProblemaCom.isSelected()) {
-
-			return TipoRequerimentoEnum.RELATARPROBLEMA;
+	
 		} else {
 
 			return TipoRequerimentoEnum.REQUERERPATRIMONIO;
@@ -259,9 +246,6 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 	public void RadioButonSelected() {
 		if (TipoRequerimentoEnum.DEVOLUCAO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnDevolucao.setSelected(true);
-
-		} else if (TipoRequerimentoEnum.RELATARPROBLEMA == requisicaoUpdate.getTipoRequerimento()) {
-			rdbtnRelatarProblemaCom.setSelected(true);
 
 		} else if (TipoRequerimentoEnum.REQUERERPATRIMONIO == requisicaoUpdate.getTipoRequerimento()) {
 			rdbtnRequirirPatrimonio.setSelected(true);
