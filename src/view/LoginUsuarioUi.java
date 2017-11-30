@@ -110,7 +110,7 @@ public class LoginUsuarioUi extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Usuario ou Senha Incorreto");
 				} else {
-					principalUI = new PrincipalUI(usuario);
+					principalUI = new PrincipalUI();
 					dispose();
 					principalUI.setVisible(true);
 

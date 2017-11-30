@@ -40,15 +40,13 @@ public class PatrimonioDAO {
 
 	private void insert(Patrimonio patrimonio) {
 		try {
-			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, usuario_idUsuario , ocupado) VALUES (?, ?, ?, ?, ? ,? )";
+			String sql = "INSERT INTO `controlepatrimonio`.`patrimonio` (`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`) VALUES (?, ?, ?, ? )";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
-			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
-			pstmt.setInt(5,UsuarioController.getUsuario().getIdUsuario());
 			pstmt.setBoolean(6, patrimonio.isOcupado());
-			
+
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,11 +56,10 @@ public class PatrimonioDAO {
 	public List<Patrimonio> listarTodos() {
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select `idPatrimonio`, `nomePatrimonio`, `codigo`,ocupado, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,"
-					+ " `idCategoria`, `descricao`, `modelo`"
-					+ " from patrimonio"
-					+ " join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria"
-					+ " join usuario on usuario.idUsuario = Patrimonio.usuario_idUsuario";
+			String sql = "select `idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`, "
+					+ " `idCategoria`, `descricao`, `modelo`" + "from patrimonio "
+					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
+					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio);";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -73,7 +70,7 @@ public class PatrimonioDAO {
 				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
 				patrimonio.setCodigo(rs.getString("codigo"));
 				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
-				patrimonio.setOcupado(rs.getBoolean("ocupado"));
+			
 
 				// selecionar Categoria
 
@@ -83,18 +80,22 @@ public class PatrimonioDAO {
 				categoria.setModelo(rs.getString("modelo"));
 				// Concatenar patrimonio com categoria
 				patrimonio.setCategoria(categoria);
-				
-				
-				
+
 				// selecionar e concatenar usuario
-				
-				Usuario usuario = new Usuario();
-				usuario.setIdUsuario(rs.getInt("idUsuario"));
-				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
-				usuario.setSenha(rs.getString("senhaUsuario"));
-				usuario.setUsername(rs.getString("username"));
-				patrimonio.setUsuario(usuario);
+				if (rs.getInt("idUsuario") >=0) {
+					Usuario usuario = new Usuario();
+					usuario.setIdUsuario(rs.getInt("idUsuario"));
+					usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+					usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+					usuario.setSenha(rs.getString("senhaUsuario"));
+					usuario.setUsername(rs.getString("username"));
+					patrimonio.setUsuario(usuario);
+					
+					patrimonio.setOcupado(true);
+				} else {
+					// selecionar estado patrimonio
+					patrimonio.setOcupado(false);
+				}
 				listaPatrimonios.add(patrimonio);
 			}
 
@@ -107,16 +108,15 @@ public class PatrimonioDAO {
 
 	private void update(Patrimonio patrimonio) {
 		try {
-			String sql = "UPDATE `controlepatrimonio`.`patrimonio` SET `nomePatrimonio`=?, `codigo`=?, `detalhamentoTecnico`=?, `Categoria_idCategoria`=? , `ocupado`=? , `Usuario_idUsuario`=? WHERE `idPatrimonio`=?";
+			String sql = "UPDATE `controlepatrimonio`.`patrimonio` SET `nomePatrimonio`=?, `codigo`=?, `detalhamentoTecnico`=?, `Categoria_idCategoria`=?   WHERE `idPatrimonio`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, patrimonio.getNomePatrimonio());
 			pstmt.setString(2, patrimonio.getCodigo());
 			pstmt.setString(3, (patrimonio.getDetalhamentoTecnico()));
 			pstmt.setInt(4, patrimonio.getCategoria().getIdCategoria());
-			pstmt.setBoolean(5, patrimonio.isOcupado());
-			pstmt.setInt(6,UsuarioController.getUsuario().getIdUsuario());
 			
+
 			pstmt.setInt(7, patrimonio.getIdPatrimonio());
 			pstmt.execute();
 		} catch (SQLException e) {

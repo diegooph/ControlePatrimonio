@@ -41,8 +41,9 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 	 * 
 	 * @param usuario
 	 */
-	public ConsultaUsuarioUI(Usuario usuario) {
-
+	
+	public ConsultaUsuarioUI() {
+		
 		setClosable(true);
 		setTitle("Consulta de Usuarios");
 		setBounds(100, 100, 630, 468);
