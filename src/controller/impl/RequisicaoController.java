@@ -32,7 +32,7 @@ public class RequisicaoController implements IRequisicaoControler {
 	@Override
 	public List<Requisicao> listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo,boolean requererPatrimonio) {
 		RequisicaoDAO udao = new RequisicaoDAO();
-		return udao.listarTodos(inderefido, pendente, deferido, devoluo, , requererPatrimonio);
+		return udao.listarTodos(inderefido, pendente, deferido, devoluo,  requererPatrimonio);
 	}
 
 	@Override
