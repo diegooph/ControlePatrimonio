@@ -169,7 +169,7 @@ public class CadastrarLocalUI extends JInternalFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				SelecionarUsuarioLocalUI ccUsuario = new SelecionarUsuarioLocalUI(usuario, local);
-				LoginUsuarioUi.principalUI.contentPane.add(ccUsuario,0);
+				getParent().add(ccUsuario,0);
 			}
 		});
 		

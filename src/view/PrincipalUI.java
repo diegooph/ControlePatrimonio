@@ -27,7 +27,7 @@ public class PrincipalUI extends JFrame {
 	 * 
 	 */
 
-	public JPanel contentPane;
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -46,6 +46,7 @@ public class PrincipalUI extends JFrame {
 	private JMenu mnLocais;
 
 	private JMenu mnCategorias;
+	public static JMenuItem mntmSair;
 
 	public PrincipalUI() {
 		usuario = UsuarioController.getUsuario();
@@ -64,7 +65,7 @@ public class PrincipalUI extends JFrame {
 		mntmListaPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaPatrimonioUI cadastrarPatrimonioUI = new ConsultaPatrimonioUI(usuario);
-				contentPane.add(cadastrarPatrimonioUI);
+				contentPane.add(cadastrarPatrimonioUI,0);
 			}
 		});
 		mnPatrimonios.add(mntmListaPatrimonios);
@@ -76,13 +77,12 @@ public class PrincipalUI extends JFrame {
 		mntmListaDeCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaCategoriaUI consultaCategoriaUI = new ConsultaCategoriaUI();
-				contentPane.add(consultaCategoriaUI);
+				contentPane.add(consultaCategoriaUI,0);
 
 			}
 		});
 		mnCategorias.add(mntmListaDeCategoria);
 
-	
 		JMenu mnRequerimentos = new JMenu("Requerimentos");
 		menuBar.add(mnRequerimentos);
 
@@ -93,7 +93,7 @@ public class PrincipalUI extends JFrame {
 		mntmMeusRequerimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(false);
-				contentPane.add(consultaRequisicaoUI);
+				contentPane.add(consultaRequisicaoUI,0);
 
 			}
 		});
@@ -101,19 +101,18 @@ public class PrincipalUI extends JFrame {
 		mntmRequisiccoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
-				contentPane.add(consultaRequisicaoUI);
+				contentPane.add(consultaRequisicaoUI,0);
 			}
 		});
 
 		mnLocais = new JMenu("Locais");
 		menuBar.add(mnLocais);
 
-
 		JMenuItem mntmListaDeLocais = new JMenuItem("Lista de Locais");
 		mntmListaDeLocais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SelecionarUsuarioLocalUI consulta = new SelecionarUsuarioLocalUI(usuario);
-				LoginUsuarioUi.principalUI.contentPane.add(consulta, 0);
+				contentPane.add(consulta, 0);
 			}
 		});
 		mnLocais.add(mntmListaDeLocais);
@@ -121,7 +120,7 @@ public class PrincipalUI extends JFrame {
 		JMenu mnUsuario = new JMenu("Usuario");
 		menuBar.add(mnUsuario);
 
-		JMenuItem mntmSair = new JMenuItem("Sair");
+		mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				usuario = new Usuario();
@@ -130,23 +129,27 @@ public class PrincipalUI extends JFrame {
 				login.setVisible(true);
 			}
 		});
-		
+
 		JMenuItem mntmConfiguraes = new JMenuItem("Configura\u00E7\u00F5es");
 		mntmConfiguraes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarUsuarioUi editarUsuarioUi = new  EditarUsuarioUi();
-				contentPane.add(editarUsuarioUi);
+				EditarUsuarioUi editarUsuarioUi = new EditarUsuarioUi();
+				contentPane.add(editarUsuarioUi,0);
 				
+				if (UsuarioController.getUsuario()==null) {
+					mntmSair.doClick();
+				}
+
 			}
 		});
 		mnUsuario.add(mntmConfiguraes);
-		
+
 		JMenuItem mntmListaDeUsuarios = new JMenuItem("Lista de Usuarios");
 		mntmListaDeUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				ConsultaUsuarioUI consultaUsuarioUI = new ConsultaUsuarioUI();
-				contentPane.add( consultaUsuarioUI);
+				contentPane.add(consultaUsuarioUI,0);
 			}
 		});
 		mnUsuario.add(mntmListaDeUsuarios);
@@ -185,13 +188,12 @@ public class PrincipalUI extends JFrame {
 		mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CadastrarPatrimonioUI cadastrarPatrimonioUI = new CadastrarPatrimonioUI(usuario);
-				contentPane.add(cadastrarPatrimonioUI);
+				contentPane.add(cadastrarPatrimonioUI,0);
 
 			}
 		});
 		mnPatrimonios.add(mntmAdicionarNovoPatrimonio);
 
-	
 		JMenuItem mntmAdicionarLocal = new JMenuItem("Adicionar Local");
 		mntmAdicionarLocal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -204,13 +206,19 @@ public class PrincipalUI extends JFrame {
 		mntmAdicionarNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CadastrarCategoriaUI cadastrarCategoriaUI = new CadastrarCategoriaUI(usuario);
-				contentPane.add(cadastrarCategoriaUI);
+				contentPane.add(cadastrarCategoriaUI,0);
 
 			}
 
 		});
-		mnCategorias.add(mntmAdicionarNovaCategoria);
+		mnCategorias.add(mntmAdicionarNovaCategoria,0);
 
 	}
+
+	public JMenuItem getMntmSair() {
+		return mntmSair;
+	}
+
+
 
 }

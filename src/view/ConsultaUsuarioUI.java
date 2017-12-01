@@ -59,33 +59,23 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 		btnEditarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				LoginUsuarioUi.principalUI.contentPane
-						.add(new EditarUsuarioUi(pModel.getUsuario(jtListaUsuario.getSelectedRow())), 0);
+				getParent().add(new EditarUsuarioUi(pModel.getUsuario(jtListaUsuario.getSelectedRow())), 0);
 
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(jpUsuarios, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(223)
-							.addComponent(btnEditarUsuario, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpUsuarios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-					.addGap(8)
-					.addComponent(btnEditarUsuario)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(jpUsuarios,
+										GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
+								.addGroup(groupLayout.createSequentialGroup().addGap(223).addComponent(btnEditarUsuario,
+										GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(jpUsuarios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE).addGap(8)
+						.addComponent(btnEditarUsuario).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jspTabelaUsuario = new JScrollPane();
 
@@ -103,9 +93,9 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 				.createSequentialGroup().addContainerGap().addComponent(jspTabelaUsuario).addContainerGap()));
 		jpUsuarios.setLayout(gl_jpUsuarios);
 		getContentPane().setLayout(groupLayout);
-if (UsuarioController.getUsuario().getPermisaoUsuario()==PermisaoEnum.USUARIO) {
-	btnEditarUsuario.setVisible(false);
-}
+		if (UsuarioController.getUsuario().getPermisaoUsuario() == PermisaoEnum.USUARIO) {
+			btnEditarUsuario.setVisible(false);
+		}
 	}
 
 	UsuarioTableModel pModel;

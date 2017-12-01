@@ -59,7 +59,7 @@ public class PatrimonioDAO {
 					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
 					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) where idpatrimonio = ?;";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(0, patrimonio.getIdPatrimonio());
+			pstmt.setInt(1, patrimonio.getIdPatrimonio());
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {

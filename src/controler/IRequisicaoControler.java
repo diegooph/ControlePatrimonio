@@ -13,7 +13,7 @@ public interface IRequisicaoControler {
 
 	public void remover(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao,Local local);
 
-	public List<Requisicao> listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio);
+	public List<Requisicao> listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo , boolean requererPatrimonio);
 
-	public List<Requisicao> listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio);
+	public List<Requisicao> listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo , boolean requererPatrimonio);
 }

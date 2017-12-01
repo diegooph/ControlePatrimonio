@@ -22,6 +22,7 @@ import javax.swing.table.TableModel;
 
 import controller.impl.CategoriaController;
 import controller.impl.PatrimonioController;
+import controller.impl.UsuarioController;
 import entity.CategoriaTableModel;
 
 public class ConsultaCategoriaUI extends JInternalFrame {
@@ -61,8 +62,8 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				LoginUsuarioUi.principalUI.contentPane.add(
-						new CadastrarCategoriaUI(LoginUsuarioUi.usuario, pModel.getCategoria(jtListaCategoria.getSelectedRow())),
+				getParent().add(
+						new CadastrarCategoriaUI(UsuarioController.getUsuario(), pModel.getCategoria(jtListaCategoria.getSelectedRow())),
 						0);
 
 			}

@@ -30,10 +30,9 @@ public class RequisicaoController implements IRequisicaoControler {
 	}
 
 	@Override
-	public List<Requisicao> listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo,
-			boolean relatarProblema, boolean requererPatrimonio) {
+	public List<Requisicao> listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo,boolean requererPatrimonio) {
 		RequisicaoDAO udao = new RequisicaoDAO();
-		return udao.listarTodos(inderefido, pendente, deferido, devoluo, relatarProblema, requererPatrimonio);
+		return udao.listarTodos(inderefido, pendente, deferido, devoluo, , requererPatrimonio);
 	}
 
 	@Override
@@ -45,9 +44,9 @@ public class RequisicaoController implements IRequisicaoControler {
 
 	@Override
 	public List<Requisicao> listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido,
-			boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
+			boolean devoluo,  boolean requererPatrimonio) {
 		RequisicaoDAO udao = new RequisicaoDAO();
-		return udao.listarRequisicoesUsuarios(inderefido, pendente, deferido, devoluo, relatarProblema,
+		return udao.listarRequisicoesUsuarios(inderefido, pendente, deferido, devoluo,
 				requererPatrimonio);
 	}
 

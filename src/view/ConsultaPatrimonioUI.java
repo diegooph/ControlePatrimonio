@@ -65,7 +65,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
 					pcon.verificarDisponibilidade(patrimonio);
-					LoginUsuarioUi.principalUI.contentPane.add(new CadastrarRequisicaoUI(usuario,patrimonio, new Requisicao(), null), 0);
+					getParent().add(new CadastrarRequisicaoUI(usuario,patrimonio, new Requisicao(), null), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
@@ -81,7 +81,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
 					pcon.verificarDisponibilidade(patrimonio);
-					LoginUsuarioUi.principalUI.contentPane.add(new CadastrarPatrimonioUI(usuario, patrimonio), 0);
+					getParent().add(new CadastrarPatrimonioUI(usuario, patrimonio), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Apenas Pratrimonios Disponiveis podem ser alterados !");
 					e.printStackTrace();

@@ -15,25 +15,25 @@ public class RequisicaoTableModel extends AbstractTableModel {
 	private ArrayList<Requisicao> listaDeRequisicaos;
 	private String[] colunas = new String[] { "Titulo", "Patrimonio", "Status" };
 
-	public RequisicaoTableModel(boolean isAll, boolean inderefido , boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
+	public RequisicaoTableModel(boolean isAll, boolean inderefido , boolean pendente, boolean deferido, boolean devoluo, boolean requererPatrimonio) {
 
 		if (isAll) {
-			listarRequisicoes( inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
+			listarRequisicoes( inderefido , pendente,  deferido, devoluo,   requererPatrimonio);
 		} else {
-			listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
+			listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo,   requererPatrimonio);
 		}
 
 	}
 
-	public void listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
+	public void listarRequisicoes(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo,  boolean requererPatrimonio) {
 		RequisicaoController rdao = new RequisicaoController();
-		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
+		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoes(inderefido , pendente,  deferido, devoluo,  requererPatrimonio);
 
 	}
 
-	public void listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
+	public void listarRequisicoesUsuario(boolean inderefido, boolean pendente, boolean deferido, boolean devoluo, boolean requererPatrimonio) {
 		RequisicaoController rdao = new RequisicaoController();
-		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo,  relatarProblema,  requererPatrimonio);
+		listaDeRequisicaos = (ArrayList<Requisicao>) rdao.listarRequisicoesUsuario(inderefido , pendente,  deferido, devoluo ,  requererPatrimonio);
 
 	}
 

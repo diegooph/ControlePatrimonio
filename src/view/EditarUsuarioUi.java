@@ -18,6 +18,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import controller.impl.UsuarioController;
+import entity.Patrimonio;
 import entity.PermisaoEnum;
 import entity.Usuario;
 import javax.swing.JRadioButton;
@@ -189,46 +190,45 @@ public class EditarUsuarioUi extends JInternalFrame {
 		buttonGroup.add(rdbtnUsuario);
 		rdbtnUsuario.setBounds(323, 236, 61, 23);
 		panel.add(rdbtnUsuario);
-		
+
 		JButton button = new JButton("Excluir Usuario");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				UsuarioController pcont = new UsuarioController();
 				Usuario usuariosel = usuarioSec;
-			String mensagemConfirmacao ; 
-			boolean autodelete;	
-			if (usuariosel.getIdUsuario() == UsuarioController.getUsuario().getIdUsuario()) {
-				autodelete = true;
-				mensagemConfirmacao = "Você deseja Excluir Sua Conta?";
-				
-			} else {
-				autodelete = false;
-			mensagemConfirmacao = 	"Deseja realmente Excluir: " + usuariosel.getNomeUsuario() + "?";
-			}
-				
-				if (JOptionPane.showInternalConfirmDialog(LoginUsuarioUi.principalUI.contentPane,
-					mensagemConfirmacao) == 0) {
-					
-						try {
-							pcont.verificarExclusao(usuariosel);
-							pcont.remover(usuariosel);
-								
-							if (autodelete) {
-								LoginUsuarioUi.principalUI.dispose();
-							}
-						} catch (Exception es) {
-							// TODO Auto-generated catch block
-							es.printStackTrace();
-							JOptionPane.showMessageDialog(LoginUsuarioUi.principalUI.contentPane, es.getMessage());
+				String mensagemConfirmacao;
+				boolean autodelete;
+				if (usuariosel.getIdUsuario() == UsuarioController.getUsuario().getIdUsuario()) {
+					autodelete = true;
+					mensagemConfirmacao = "Você deseja Excluir Sua Conta?";
+
+				} else {
+					autodelete = false;
+					mensagemConfirmacao = "Deseja realmente Excluir: " + usuariosel.getNomeUsuario() + "?";
+				}
+
+				if (JOptionPane.showInternalConfirmDialog(getParent(), mensagemConfirmacao) == 0) {
+
+					try {
+						pcont.verificarExclusao(usuariosel);
+						pcont.remover(usuariosel);
+
+						if (autodelete) {
+							JOptionPane.showInternalMessageDialog(getParent(),
+									"Você Deletou Sua conta \n Fassa Outro cadastro para Acessar novamente o Sistema!");
+							UsuarioController.setUsuario(null);
+						PrincipalUI.mntmSair.doClick();
 						}
-					
-					
-					
-					
+					} catch (Exception es) {
+
+						es.printStackTrace();
+						JOptionPane.showMessageDialog(getParent(), es.getMessage());
+					}
+
 				}
 			}
-			
+
 		});
 		button.setBounds(161, 356, 154, 23);
 		panel.add(button);
@@ -271,7 +271,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 	private void preencherValores() {
 		jtfNomeCompleto.setText(usuarioSec.getNomeUsuario());
 		jtfUsuario.setText(usuarioSec.getNomeUsuario());
-		
+
 		SelecionarPermissao();
 	}
 }

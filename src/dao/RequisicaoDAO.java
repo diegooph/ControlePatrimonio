@@ -47,13 +47,13 @@ public class RequisicaoDAO {
 	private void update(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
-	
+
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, requisicao.getTitulo());
 			pstmt.setString(2, requisicao.getMensagem());
 			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
-			
+
 			if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
 				pstmt.setTimestamp(5, new Timestamp(requisicao.getDataParecer().getTime()));
 				if (requisicao.getStatusRequerimento() == StatusRequerimentoEnum.INDEFERIDO) {
@@ -64,9 +64,9 @@ public class RequisicaoDAO {
 			} else {
 				pstmt.setDate(5, null);
 				pstmt.setDate(6, null);
-	
+
 			}
-	
+
 			pstmt.setInt(7, requisicao.getIdRequisicao());
 			pstmt.execute();
 		} catch (SQLException e) {
@@ -112,12 +112,12 @@ public class RequisicaoDAO {
 	}
 
 	public List<Requisicao> listarTodos(boolean indeferido, boolean pendente, boolean deferido, boolean devoluo,
-			boolean relatarProblema, boolean requererPatrimonio) {
+			boolean requererPatrimonio) {
 		try {
 			String filtros = "";
 			boolean isOrEnable = false;
 			boolean isAndEnable = false;
-			if (indeferido || pendente || deferido || devoluo || relatarProblema || requererPatrimonio) {
+			if (indeferido || pendente || deferido || devoluo || requererPatrimonio) {
 
 				filtros = "Where ((";
 				if (indeferido) {
@@ -145,7 +145,7 @@ public class RequisicaoDAO {
 					isOrEnable = true;
 					isAndEnable = false;
 				}
-				
+
 				if (requererPatrimonio) {
 					filtros += contatenarAnd(isAndEnable);
 					filtros += contatenarOr(isOrEnable);
@@ -227,12 +227,12 @@ public class RequisicaoDAO {
 	}
 
 	public List<Requisicao> listarRequisicoesUsuarios(boolean indeferido, boolean pendente, boolean deferido,
-			boolean devoluo, boolean relatarProblema, boolean requererPatrimonio) {
+			boolean devoluo, boolean requererPatrimonio) {
 		try {
 			String filtros = "";
 			boolean isOrEnable = false;
 			boolean isAndEnable = false;
-			if (indeferido || pendente || deferido || devoluo || relatarProblema || requererPatrimonio) {
+			if (indeferido || pendente || deferido || devoluo || requererPatrimonio) {
 
 				filtros = "And ((";
 				if (indeferido) {
@@ -260,7 +260,7 @@ public class RequisicaoDAO {
 					isOrEnable = true;
 					isAndEnable = false;
 				}
-				
+
 				if (requererPatrimonio) {
 					filtros += contatenarAnd(isAndEnable);
 					filtros += contatenarOr(isOrEnable);

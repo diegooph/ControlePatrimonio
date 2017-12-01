@@ -28,8 +28,8 @@ public class LoginUsuarioUi extends JFrame {
 	private JPanel contentPane;
 	private static JPasswordField jtfsSenha;
 	private static JTextField jtfUsername;
-	public static PrincipalUI principalUI;
-	public static Usuario usuario;
+	
+	private Usuario usuario;
 
 	/**
 	 * Launch the application.
@@ -110,7 +110,7 @@ public class LoginUsuarioUi extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Usuario ou Senha Incorreto");
 				} else {
-					principalUI = new PrincipalUI();
+					PrincipalUI principalUI = new PrincipalUI();
 					dispose();
 					principalUI.setVisible(true);
 

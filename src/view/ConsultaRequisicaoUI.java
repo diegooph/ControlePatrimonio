@@ -26,6 +26,9 @@ import javax.swing.UIManager;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
+
+import controller.impl.UsuarioController;
+
 import javax.swing.event.ChangeEvent;
 
 public class ConsultaRequisicaoUI extends JInternalFrame {
@@ -36,7 +39,6 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 	private JCheckBox chckbxPendente;
 	private JCheckBox chckbxRequererPatrimonio;
 	private JCheckBox chckbxDevoluo;
-	private JCheckBox chckbxRelatarProblema;
 	private JScrollPane jspTabelaRequisicao;
 
 	/**
@@ -66,43 +68,34 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (isAll) {
 					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-					LoginUsuarioUi.principalUI.contentPane.add(
-							new EditarStatusRequisicaoUI(LoginUsuarioUi.usuario, req.getPatrimonio(), req, null), 0);
+					getParent().add(
+							new EditarStatusRequisicaoUI(UsuarioController.getUsuario(), req.getPatrimonio(), req, null), 0);
 				} else {
 					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-					LoginUsuarioUi.principalUI.contentPane
-							.add(new CadastrarRequisicaoUI(LoginUsuarioUi.usuario, req.getPatrimonio(), req, null), 0);
+					getParent().add(new CadastrarRequisicaoUI(UsuarioController.getUsuario(), req.getPatrimonio(), req, null),
+							0);
 				}
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(279)
-							.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(jtRequisicao, GroupLayout.PREFERRED_SIZE, 777, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(51, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(42)
-					.addComponent(jtRequisicao, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnEditarPatrimonio)
-					.addGap(18))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addGap(279).addComponent(btnEditarPatrimonio,
+								GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(jtRequisicao,
+								GroupLayout.PREFERRED_SIZE, 777, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(51, Short.MAX_VALUE)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(42)
+						.addComponent(jtRequisicao, GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnEditarPatrimonio).addGap(18)));
 		chckbxPendente = new JCheckBox("Pendente");
 		chckbxPendente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+						 chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -115,7 +108,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+				 chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -128,7 +121,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+						 chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -136,38 +129,25 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 
 		chckbxInderefido.setBounds(30, 94, 109, 23);
 
-		chckbxRelatarProblema = new JCheckBox("Relatar Problema");
-		chckbxRelatarProblema.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
-						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
-				jtListarRequisicao.setModel(requisicaoTableModel);
-				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
-			}
-		});
-
-		chckbxRelatarProblema.setBounds(14, 41, 153, 23);
-
 		chckbxDevoluo = new JCheckBox("Devolu\u00E7\u00E3o");
 		chckbxDevoluo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+						 chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
 		});
 
-		chckbxDevoluo.setBounds(28, 67, 139, 23);
+		chckbxDevoluo.setBounds(28, 32, 139, 23);
 
 		chckbxRequererPatrimonio = new JCheckBox("Requerer Patrimonio");
 		chckbxRequererPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+						 chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao = new JTable();
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
@@ -175,10 +155,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			}
 		});
 
-		chckbxRequererPatrimonio.setBounds(6, 93, 161, 23);
-		requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
-				chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-				chckbxRelatarProblema.isSelected(), chckbxRequererPatrimonio.isSelected());
+		chckbxRequererPatrimonio.setBounds(6, 58, 161, 23);
 
 		jspTabelaRequisicao = new JScrollPane();
 
@@ -190,25 +167,18 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Filtros", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GroupLayout gl_jpRequisicao = new GroupLayout(jtRequisicao);
-		gl_jpRequisicao.setHorizontalGroup(
-			gl_jpRequisicao.createParallelGroup(Alignment.LEADING)
+		gl_jpRequisicao.setHorizontalGroup(gl_jpRequisicao.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpRequisicao.createSequentialGroup().addContainerGap()
+						.addComponent(jspTabelaRequisicao, GroupLayout.PREFERRED_SIZE, 542, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE).addContainerGap()));
+		gl_jpRequisicao.setVerticalGroup(gl_jpRequisicao.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_jpRequisicao.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jspTabelaRequisicao, GroupLayout.PREFERRED_SIZE, 542, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_jpRequisicao.setVerticalGroup(
-			gl_jpRequisicao.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_jpRequisicao.createSequentialGroup()
-					.addGroup(gl_jpRequisicao.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_jpRequisicao.createSequentialGroup()
-							.addGap(11)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(jspTabelaRequisicao, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
-					.addGap(22))
-		);
+						.addGroup(gl_jpRequisicao.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_jpRequisicao.createSequentialGroup().addGap(11).addComponent(panel,
+										GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(jspTabelaRequisicao, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
+						.addGap(22)));
 		panel.setLayout(null);
 
 		JPanel panel_1 = new JPanel();
@@ -227,8 +197,6 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		panel_1.add(chckbxPendente);
 		panel_1.add(chckbxDeferido);
 		panel.add(panel_2);
-
-		panel_2.add(chckbxRelatarProblema);
 		panel_2.add(chckbxDevoluo);
 		panel_2.add(chckbxRequererPatrimonio);
 		jtRequisicao.setLayout(gl_jpRequisicao);
