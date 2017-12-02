@@ -210,6 +210,7 @@ END$$
 
 
 DELIMITER ;
+INSERT INTO `controlepatrimonio`.`usuario`(`nomeUsuario`,`permisaoUsuario`,`senhaUsuario`,`username`)VALUES('Administrador',0,'admin','admin');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
