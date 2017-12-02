@@ -18,7 +18,7 @@ public class PatrimonioController implements IPatrimonioControler {
 		udao.salvar(patrimonio);
 
 	}
-
+	@Override
 	public void verificarDisponibilidade(Patrimonio patrimonio) throws Exception {
 		PatrimonioDAO pdao = new PatrimonioDAO();
 		patrimonio = pdao.buscarPatrimonioPorId(patrimonio);
@@ -28,7 +28,14 @@ public class PatrimonioController implements IPatrimonioControler {
 		}
 
 	}
-
+	
+	
+	@Override
+	public List<Patrimonio> listarMeusPatrimonios() {
+		PatrimonioDAO udao = new PatrimonioDAO();
+		return udao.listarTodos();
+	}
+	
 	@Override
 	public List<Patrimonio> listarPatrimonios() {
 		PatrimonioDAO udao = new PatrimonioDAO();

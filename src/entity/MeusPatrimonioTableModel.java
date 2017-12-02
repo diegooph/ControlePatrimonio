@@ -13,29 +13,24 @@ public class MeusPatrimonioTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Patrimonio> listaDePatrimonios;
-	private String[] colunas = new String[]{"nome" , "Modelo" ,"Código", "Disponibilidade"};
+	private String[] colunas = new String[]{"nome" , "Modelo" ,"Código"};
 
 	public MeusPatrimonioTableModel() {
-		
 		listarPatrimonios();
-		
 	}
 
 	public void listarPatrimonios() {
 		PatrimonioController pdao = new PatrimonioController();
 		listaDePatrimonios = (ArrayList<Patrimonio>) pdao.listarPatrimonios();
-
 	}
 
 	@Override
 	public int getColumnCount() {
-
 		return colunas.length;
 	}
 
 	@Override
 	public int getRowCount() {
-
 		return listaDePatrimonios.size();
 	}
 
@@ -51,12 +46,7 @@ public class MeusPatrimonioTableModel extends AbstractTableModel {
 		case 2:
 			return this.listaDePatrimonios.get(rowIndex).getCodigo();
 
-		case 3:
-		if (listaDePatrimonios.get(rowIndex).isOcupado()) {
-			return "Ocupado";
-		} else {
-			return "Disponivel";
-		}
+		
 			
 
 		default:

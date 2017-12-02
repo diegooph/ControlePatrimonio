@@ -12,4 +12,8 @@ public interface IPatrimonioControler {
 
 	public List<Patrimonio> listarPatrimonios();
 
+	List<Patrimonio> listarMeusPatrimonios();
+
+	void verificarDisponibilidade(Patrimonio patrimonio) throws Exception;
+
 }
