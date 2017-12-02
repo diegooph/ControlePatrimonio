@@ -33,7 +33,7 @@ public class PatrimonioController implements IPatrimonioControler {
 	@Override
 	public List<Patrimonio> listarMeusPatrimonios() {
 		PatrimonioDAO udao = new PatrimonioDAO();
-		return udao.listarTodos();
+		return udao.listarMeusPatrimonios();
 	}
 	
 	@Override
