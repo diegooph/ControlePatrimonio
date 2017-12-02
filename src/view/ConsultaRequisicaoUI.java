@@ -57,6 +57,8 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 	 */
 	public ConsultaRequisicaoUI(boolean isAll) {
 		setClosable(true);
+
+
 		setTitle("Consulta de Requisi\u00E7\u00F5es");
 		setBounds(100, 100, 819, 576);
 
@@ -70,12 +72,11 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (isAll) {
 					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-					getParent().add(
-							new EditarStatusRequisicaoUI(UsuarioController.getUsuario(), req.getPatrimonio(), req, null), 0);
+					getParent().add(new EditarStatusRequisicaoUI( req.getPatrimonio(),req, null), 0);
 				} else {
 					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-					getParent().add(new CadastrarRequisicaoUI(req.getTipoRequerimento(), req.getPatrimonio(), req, null),
-							0);
+					getParent().add(
+							new CadastrarRequisicaoUI(req.getTipoRequerimento(), req.getPatrimonio(), req, null), 0);
 				}
 			}
 		});
@@ -97,7 +98,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						 chckbxRequererPatrimonio.isSelected());
+						chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -110,7 +111,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-				 chckbxRequererPatrimonio.isSelected());
+						chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -123,7 +124,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						 chckbxRequererPatrimonio.isSelected());
+						chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -136,7 +137,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						 chckbxRequererPatrimonio.isSelected());
+						chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 			}
@@ -149,7 +150,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				requisicaoTableModel = new RequisicaoTableModel(isAll, chckbxInderefido.isSelected(),
 						chckbxPendente.isSelected(), chckbxDeferido.isSelected(), chckbxDevoluo.isSelected(),
-						 chckbxRequererPatrimonio.isSelected());
+						chckbxRequererPatrimonio.isSelected());
 				jtListarRequisicao = new JTable();
 				jtListarRequisicao.setModel(requisicaoTableModel);
 				jspTabelaRequisicao.setViewportView(jtListarRequisicao);
@@ -162,9 +163,9 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		jspTabelaRequisicao = new JScrollPane();
 
 		jtListarRequisicao = new JTable();
-		
-		requisicaoTableModel = new RequisicaoTableModel(true, false,false, false, false,false);
-		
+
+		requisicaoTableModel = new RequisicaoTableModel(true, false, false, false, false, false);
+
 		jtListarRequisicao.setModel(requisicaoTableModel);
 		jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 

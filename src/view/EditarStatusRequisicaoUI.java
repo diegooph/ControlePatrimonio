@@ -59,10 +59,8 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 	 * 
 	 * /** Create the frame.
 	 */
-	public EditarStatusRequisicaoUI(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public EditarStatusRequisicaoUI( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		this.requisicaoUpdate = requisicao;
-		setMaximizable(true);
-		setClosable(true);
 		setTitle("Requisi\u00E7\u00E3o");
 		setBounds(100, 100, 661, 389);
 
@@ -79,7 +77,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 				PatrimonioController pcon = new PatrimonioController();
 
 				try {
-					if (rdbtnRequirirPatrimonio.isSelected()) {
+					if (requisicao.getTipoRequerimento() == TipoRequerimentoEnum.REQUERERPATRIMONIO) {
 
 						rcon.verificarEdicao(requisicaoUpdate);
 						pcon.verificarDisponibilidade(patrimonio);
@@ -87,13 +85,16 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						requisicaoUpdate.setDataParecer(new Date());
 						rcon.salvar(patrimonio, requisicaoUpdate, local);
 
-						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
-						pcon.salvar(patrimonio);
 						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				
 
 					} else {
-
+						requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
+						requisicaoUpdate.setDataParecer(new Date());
+						requisicaoUpdate.setDataFinalizacao(new Date());
+						rcon.salvar(patrimonio, requisicaoUpdate, local);
+						
+						JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 					}
 
 				} catch (Exception e) {

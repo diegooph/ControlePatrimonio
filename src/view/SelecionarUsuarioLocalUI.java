@@ -54,7 +54,6 @@ public class SelecionarUsuarioLocalUI extends JInternalFrame {
 	UsuarioTableModel pModel;
 	
 	private void criarTela(){
-			setClosable(true);
 			setTitle("Consulta Local");
 			setBounds(100, 100, 630, 468); 
 			AtualizarTablemodel();

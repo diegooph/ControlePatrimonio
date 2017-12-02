@@ -7,6 +7,7 @@ import entity.Local;
 import entity.Patrimonio;
 import entity.Requisicao;
 import entity.StatusRequerimentoEnum;
+import entity.TipoRequerimentoEnum;
 import entity.Usuario;
 
 public class RequisicaoController implements IRequisicaoControler {

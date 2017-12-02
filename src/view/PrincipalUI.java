@@ -57,7 +57,7 @@ public class PrincipalUI extends JFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-
+		
 		mnPatrimonios = new JMenu("Patrimonios");
 		menuBar.add(mnPatrimonios);
 
@@ -190,6 +190,8 @@ public class PrincipalUI extends JFrame {
 		if (usuario.getPermisaoUsuario() == PermisaoEnum.ADMIN) {
 			funcoesAdmin();
 		}
+		
+		
 	}
 
 	private void funcoesAdmin() {

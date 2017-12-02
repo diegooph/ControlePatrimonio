@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,20 +12,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.PatrimonioController;
-import controller.impl.UsuarioController;
+import entity.MeusPatrimonioTableModel;
 import entity.Patrimonio;
-import entity.PatrimonioTableModel;
-import entity.PermisaoEnum;
 import entity.Requisicao;
 import entity.TipoRequerimentoEnum;
-import entity.Usuario;
 
 public class ConsultaMeusPatrimonioUI extends JInternalFrame {
 	/**
@@ -118,10 +112,10 @@ public class ConsultaMeusPatrimonioUI extends JInternalFrame {
 
 	}
 
-	PatrimonioTableModel pModel;
+	MeusPatrimonioTableModel pModel;
 
 	private TableModel AtualizarTablemodel() {
-		pModel = new PatrimonioTableModel();
+		pModel = new MeusPatrimonioTableModel();
 
 		return pModel;
 	}

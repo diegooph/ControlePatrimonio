@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`usuario` (
   `username` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
   `dataFinalizacao` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`idRequisicao`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio_has_usuario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8;
 
 USE `controlepatrimonio` ;
@@ -190,6 +190,24 @@ set @id =(SELECT Usuario_idUsuario from patrimonio_has_usuario join requisicao o
 
 RETURN @id;
 END$$
+
+DELIMITER ;
+USE `controlepatrimonio`;
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `controlepatrimonio`.`requisicao_BEFORE_UPDATE`
+BEFORE UPDATE ON `controlepatrimonio`.`requisicao`
+FOR EACH ROW
+BEGIN
+if new.datafinalizacao is not null and new.tiporequerimento = 1 then
+set @idRequisisaoReferente = (select idrequisicao from patrimonio_has_usuario join requisicao on requisicao.idrequisicao = patrimonio_has_usuario.Requisicao_idRequisicao  where statusrequerimento = 0 and dataFinalizacao is null and patrimonio_has_usuario.Patrimonio_idPatrimonio = idpatrimonio order by dataparecer asc limit 1);
+UPDATE `controlepatrimonio`.`requisicao` SET `dataFinalizacao` = now() WHERE `idRequisicao` = @idRequisisaoReferente ;
+end if ;  
+END$$
+
 
 DELIMITER ;
 
