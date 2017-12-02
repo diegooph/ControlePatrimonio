@@ -131,9 +131,11 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		jtfMensagem = new JEditorPane();
 
 		rdbtnDevolucao = new JRadioButton("Devolu\u00E7\u00E3o");
+		rdbtnDevolucao.setEnabled(false);
 		buttonGroup.add(rdbtnDevolucao);
 
 		rdbtnRequirirPatrimonio = new JRadioButton("Requirir Patrimonio");
+		rdbtnRequirirPatrimonio.setEnabled(false);
 		rdbtnRequirirPatrimonio.setSelected(true);
 		buttonGroup.add(rdbtnRequirirPatrimonio);
 

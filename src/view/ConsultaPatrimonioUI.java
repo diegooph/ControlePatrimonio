@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.PatrimonioController;
+import controller.impl.UsuarioController;
 import entity.Patrimonio;
 import entity.PatrimonioTableModel;
 import entity.Requisicao;
@@ -47,7 +48,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 	 * 
 	 * @param usuario
 	 */
-	public ConsultaPatrimonioUI(Usuario usuario) {
+	public ConsultaPatrimonioUI() {
 
 		setClosable(true);
 		setTitle("Consulta de Patrimonios");
@@ -65,7 +66,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
 					pcon.verificarDisponibilidade(patrimonio);
-					getParent().add(new CadastrarRequisicaoUI(usuario,patrimonio, new Requisicao(), null), 0);
+					getParent().add(new CadastrarRequisicaoUI(UsuarioController.getUsuario(),patrimonio, new Requisicao(), null), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
@@ -81,7 +82,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
 					pcon.verificarDisponibilidade(patrimonio);
-					getParent().add(new CadastrarPatrimonioUI(usuario, patrimonio), 0);
+					getParent().add(new CadastrarPatrimonioUI(UsuarioController.getUsuario(), patrimonio), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Apenas Pratrimonios Disponiveis podem ser alterados !");
 					e.printStackTrace();
