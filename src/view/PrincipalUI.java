@@ -69,6 +69,15 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnPatrimonios.add(mntmListaPatrimonios);
+		
+		JMenuItem mntmMeusPatrimonios = new JMenuItem("Meus Patrimonios");
+		mntmMeusPatrimonios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultaMeusPatrimonioUI consultaMeusPatrimonioUI = new ConsultaMeusPatrimonioUI();
+				contentPane.add(consultaMeusPatrimonioUI, 0);
+			}
+		});
+		mnPatrimonios.add(mntmMeusPatrimonios);
 
 		mnCategorias = new JMenu("Categorias");
 		menuBar.add(mnCategorias);
