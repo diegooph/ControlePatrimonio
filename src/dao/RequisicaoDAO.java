@@ -35,17 +35,18 @@ public class RequisicaoDAO {
 		return instancia;
 	}
 
-	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public void salvar(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 
 		if (requisicao.getIdRequisicao() == 0) {
-			insert(usuario, patrimonio, requisicao, local);
+			insert( patrimonio, requisicao, local);
 		} else {
-			update(usuario, patrimonio, requisicao, local);
+			update( patrimonio, requisicao, local);
 		}
 	}
 
-	private void update(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	private void update( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
+			
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -74,7 +75,7 @@ public class RequisicaoDAO {
 		}
 	}
 
-	private void insert(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	private void insert( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
 			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento`) VALUES (?, ? ,?,?)";
@@ -87,7 +88,7 @@ public class RequisicaoDAO {
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
 
 			pstmt.execute();
-			insertTabelaPatrimonio_has(usuario, patrimonio, requisicao, local);
+			insertTabelaPatrimonio_has( patrimonio, requisicao, local);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -353,8 +354,9 @@ public class RequisicaoDAO {
 		}
 	}
 
-	private void insertTabelaPatrimonio_has(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao,
+	private void insertTabelaPatrimonio_has( Patrimonio patrimonio, Requisicao requisicao,
 			Local local) {
+		Usuario usuario = UsuarioController.getUsuario();
 		if (local == null) {
 			try {
 				String sql = "INSERT INTO `controlepatrimonio`.`patrimonio_has_usuario` (`Patrimonio_idPatrimonio`, "

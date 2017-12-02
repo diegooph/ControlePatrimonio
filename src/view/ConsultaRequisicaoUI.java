@@ -22,6 +22,8 @@ import javax.swing.border.TitledBorder;
 
 import entity.Requisicao;
 import entity.RequisicaoTableModel;
+import entity.TipoRequerimentoEnum;
+
 import javax.swing.UIManager;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -72,7 +74,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 							new EditarStatusRequisicaoUI(UsuarioController.getUsuario(), req.getPatrimonio(), req, null), 0);
 				} else {
 					Requisicao req = requisicaoTableModel.getRequisicao(jtListarRequisicao.getSelectedRow());
-					getParent().add(new CadastrarRequisicaoUI(UsuarioController.getUsuario(), req.getPatrimonio(), req, null),
+					getParent().add(new CadastrarRequisicaoUI(req.getTipoRequerimento(), req.getPatrimonio(), req, null),
 							0);
 				}
 			}
@@ -160,7 +162,9 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		jspTabelaRequisicao = new JScrollPane();
 
 		jtListarRequisicao = new JTable();
+		
 		requisicaoTableModel = new RequisicaoTableModel(true, false,false, false, false,false);
+		
 		jtListarRequisicao.setModel(requisicaoTableModel);
 		jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 

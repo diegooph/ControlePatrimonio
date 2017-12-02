@@ -25,6 +25,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import controller.impl.RequisicaoController;
+import controller.impl.UsuarioController;
 import entity.Local;
 import entity.Patrimonio;
 import entity.Requisicao;
@@ -40,7 +41,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField jtfTitulo;
-
+	private Usuario usuario;
 	private Requisicao requisicaoUpdate;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	JRadioButton rdbtnDevolucao;
@@ -57,13 +58,13 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	 * 
 	 * /** Create the frame.
 	 */
-	public CadastrarRequisicaoUI(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public CadastrarRequisicaoUI(TipoRequerimentoEnum tipoRequerimentoEnum , Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		this.requisicaoUpdate = requisicao;
 		setMaximizable(true);
 		setClosable(true);
 		setTitle("Requisi\u00E7\u00E3o");
 		setBounds(100, 100, 661, 389);
-
+		usuario = UsuarioController.getUsuario();
 		setVisible(true);
 
 		JPanel jpNovoModeloPatrimonio = new JPanel();
@@ -80,11 +81,11 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 					requisicaoUpdate.setPatrimonio(patrimonio);
 					requisicaoUpdate.setTitulo(jtfTitulo.getText());
 					requisicaoUpdate.setUsuarioRequerente(usuario);
-					requisicaoUpdate.setTipoRequerimento(RadioButonSelect());
+					requisicaoUpdate.setTipoRequerimento(tipoRequerimentoEnum);
 					requisicaoUpdate.setMensagem(jtfMensagem.getText());
 					requisicaoUpdate.setDataRequisicao(new Date());
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
-					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+					rcon.salvar(patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
@@ -141,49 +142,40 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 
 		JLabel lblTipoDeRequisio = new JLabel("Tipo de Requisi\u00E7\u00E3o:");
 		GroupLayout gl_jpNovoModeloPatrimonio = new GroupLayout(jpNovoModeloPatrimonio);
-		gl_jpNovoModeloPatrimonio.setHorizontalGroup(
-			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addGap(48)
-							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblNome)
-								.addComponent(lblMensagem)))
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblTipoDeRequisio)))
-					.addGap(4)
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-						.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(rdbtnDevolucao)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(rdbtnRequirirPatrimonio))
-						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE))
-					.addGap(19))
-		);
-		gl_jpNovoModeloPatrimonio.setVerticalGroup(
-			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(lblNome)
-							.addGap(41))
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
-								.addComponent(rdbtnDevolucao)
-								.addComponent(lblTipoDeRequisio)
-								.addComponent(rdbtnRequirirPatrimonio))))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblMensagem))
-					.addGap(32))
-		);
+		gl_jpNovoModeloPatrimonio.setHorizontalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(
+				Alignment.LEADING)
+				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGroup(
+						gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGap(48)
+										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+												.addComponent(lblNome).addComponent(lblMensagem)))
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
+										.addComponent(lblTipoDeRequisio)))
+						.addGap(4)
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+								.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addComponent(rdbtnDevolucao)
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(rdbtnRequirirPatrimonio))
+								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE))
+						.addGap(19)));
+		gl_jpNovoModeloPatrimonio.setVerticalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addComponent(lblNome)
+										.addGap(41))
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+										.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(18)
+										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
+												.addComponent(rdbtnDevolucao).addComponent(lblTipoDeRequisio)
+												.addComponent(rdbtnRequirirPatrimonio))))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblMensagem))
+						.addGap(32)));
 		jpNovoModeloPatrimonio.setLayout(gl_jpNovoModeloPatrimonio);
 		getContentPane().setLayout(groupLayout);
 		preencherCamposParaEdicao();
@@ -195,7 +187,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		if (rdbtnDevolucao.isSelected()) {
 
 			return TipoRequerimentoEnum.DEVOLUCAO;
-		
+
 		} else {
 
 			return TipoRequerimentoEnum.REQUERERPATRIMONIO;

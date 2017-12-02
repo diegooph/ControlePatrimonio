@@ -85,7 +85,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						pcon.verificarDisponibilidade(patrimonio);
 						requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.DEFERIDO);
 						requisicaoUpdate.setDataParecer(new Date());
-						rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+						rcon.salvar(patrimonio, requisicaoUpdate, local);
 
 						patrimonio.setUsuario(requisicao.getUsuarioRequerente());
 						pcon.salvar(patrimonio);
@@ -122,7 +122,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.INDEFERIDO);
 					requisicaoUpdate.setDataParecer(new Date());
 					requisicaoUpdate.setDataFinalizacao(new Date());
-					rcon.salvar(usuario, patrimonio, requisicaoUpdate, local);
+					rcon.salvar( patrimonio, requisicaoUpdate, local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());

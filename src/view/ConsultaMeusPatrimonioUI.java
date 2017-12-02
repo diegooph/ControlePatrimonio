@@ -28,14 +28,13 @@ import entity.Requisicao;
 import entity.TipoRequerimentoEnum;
 import entity.Usuario;
 
-public class ConsultaPatrimonioUI extends JInternalFrame {
+public class ConsultaMeusPatrimonioUI extends JInternalFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jtListaClientes;
 	private JScrollPane jspTabelaPatrimonio;
-	private JButton btnEditarPatrimonio;
 
 	/**
 	 * Launch the application.
@@ -50,7 +49,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 	 * 
 	 * @param usuario
 	 */
-	public ConsultaPatrimonioUI() {
+	public ConsultaMeusPatrimonioUI() {
 
 		setClosable(true);
 		setTitle("Consulta de Patrimonios");
@@ -61,14 +60,14 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JButton btnSolicitarPatrimonio = new JButton("Solicitar Patrimonio");
+		JButton btnSolicitarPatrimonio = new JButton("Solicitar Devolução");
 		btnSolicitarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcon = new PatrimonioController();
 				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
-					pcon.verificarDisponibilidade(patrimonio);
-					getParent().add(new CadastrarRequisicaoUI(TipoRequerimentoEnum.REQUERERPATRIMONIO,patrimonio, new Requisicao(), null), 0);
+				
+					getParent().add(new CadastrarRequisicaoUI(TipoRequerimentoEnum.DEVOLUCAO , patrimonio, new Requisicao(), null), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
@@ -76,59 +75,28 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 				}
 			}
 		});
-
-		btnEditarPatrimonio = new JButton("Editar Patrimonio");
-		btnEditarPatrimonio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PatrimonioController pcon = new PatrimonioController();
-				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
-				try {
-					pcon.verificarDisponibilidade(patrimonio);
-					getParent().add(new CadastrarPatrimonioUI(UsuarioController.getUsuario(), patrimonio), 0);
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Apenas Pratrimonios Disponiveis podem ser alterados !");
-					e.printStackTrace();
-
-				}
-			}
-		});
-
-		JButton btnExcluirPatrimonio = new JButton("Excluir Patrimonio");
-		btnExcluirPatrimonio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PatrimonioController pcont = new PatrimonioController();
-				pcont.remover(pModel.getPatrimonio(jtListaClientes.getSelectedRow()));
-				AtualizarTablemodel();
-			}
-		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout
-								.createParallelGroup(Alignment.LEADING).addGroup(
-										groupLayout.createSequentialGroup().addContainerGap().addComponent(
-												jpPatrimonios, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(75)
-										.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 95,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnSolicitarPatrimonio)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnExcluirPatrimonio,
-												GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-						.addGap(8)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnExcluirPatrimonio, Alignment.TRAILING)
-								.addComponent(btnSolicitarPatrimonio, Alignment.TRAILING)
-								.addComponent(btnEditarPatrimonio, Alignment.TRAILING))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		groupLayout.linkSize(SwingConstants.VERTICAL,
-				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
-		groupLayout.linkSize(SwingConstants.HORIZONTAL,
-				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(jpPatrimonios, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(193)
+							.addComponent(btnSolicitarPatrimonio, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addGap(8)
+					.addComponent(btnSolicitarPatrimonio)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 
 		jspTabelaPatrimonio = new JScrollPane();
 
@@ -147,10 +115,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 						.addContainerGap()));
 		jpPatrimonios.setLayout(gl_jpPatrimonios);
 		getContentPane().setLayout(groupLayout);
-if (UsuarioController.getUsuario().getPermisaoUsuario() == PermisaoEnum.USUARIO) {
-	btnExcluirPatrimonio.setVisible(false);
-	btnEditarPatrimonio.setVisible(false);
-}
+
 	}
 
 	PatrimonioTableModel pModel;

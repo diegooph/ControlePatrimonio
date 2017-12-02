@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.impl.UsuarioController;
 import entity.Categoria;
 import entity.Patrimonio;
 import entity.PermisaoEnum;
@@ -113,6 +114,61 @@ public class PatrimonioDAO {
 					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
 					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio);";
 			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+
+				// selecionar patrimonio
+				Patrimonio patrimonio = new Patrimonio();
+				patrimonio.setIdPatrimonio(rs.getInt("idPatrimonio"));
+				patrimonio.setNomePatrimonio(rs.getString("nomePatrimonio"));
+				patrimonio.setCodigo(rs.getString("codigo"));
+				patrimonio.setDetalhamentoTecnico(rs.getString("detalhamentoTecnico"));
+
+				// selecionar Categoria
+
+				Categoria categoria = new Categoria();
+				categoria.setIdCategoria(rs.getInt("idCategoria"));
+				categoria.setDescricao(rs.getString("descricao"));
+				categoria.setModelo(rs.getString("modelo"));
+				// Concatenar patrimonio com categoria
+				patrimonio.setCategoria(categoria);
+
+				// selecionar e concatenar usuario
+				if (rs.getInt("idUsuario") > 0) {
+					Usuario usuario = new Usuario();
+					usuario.setIdUsuario(rs.getInt("idUsuario"));
+					usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+					usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+					usuario.setSenha(rs.getString("senhaUsuario"));
+					usuario.setUsername(rs.getString("username"));
+					patrimonio.setUsuario(usuario);
+
+					patrimonio.setOcupado(true);
+				} else {
+					// selecionar estado patrimonio
+					patrimonio.setOcupado(false);
+				}
+				listaPatrimonios.add(patrimonio);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaPatrimonios;
+	}
+
+	public List<Patrimonio> listarMeusPatrimonios() {
+		try {
+	
+			String sql = "select `idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`, "
+					+ " `idCategoria`, `descricao`, `modelo`" + "from patrimonio "
+					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
+					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) where usuario.idUsuario = ? ;";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, UsuarioController.getUsuario().getIdUsuario());
+			
+			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 

@@ -22,10 +22,10 @@ public class RequisicaoController implements IRequisicaoControler {
 	}
 
 	@Override
-	public void salvar(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public void salvar( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 
 		RequisicaoDAO udao = new RequisicaoDAO();
-		udao.salvar(usuario, patrimonio, requisicao, local);
+		udao.salvar( patrimonio, requisicao, local);
 
 	}
 
@@ -36,7 +36,7 @@ public class RequisicaoController implements IRequisicaoControler {
 	}
 
 	@Override
-	public void remover(Usuario usuario, Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public void remover( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		RequisicaoDAO requisicaoDAO = new RequisicaoDAO();
 		requisicaoDAO.excluir(requisicao);
 
