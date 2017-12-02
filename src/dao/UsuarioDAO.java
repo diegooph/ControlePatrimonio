@@ -42,6 +42,7 @@ public class UsuarioDAO {
 
 	private void insert(Usuario usuario) {
 		try {
+		
 			String sql = "INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES (?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, usuario.getNomeUsuario());
@@ -168,7 +169,7 @@ public class UsuarioDAO {
 
 		try {
 
-			String sql = "select `idUsuario`, `nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username` from usuario where username = ? and senhaUsuario = ? ";
+			String sql = "select `idUsuario`, `nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username` from usuario where username = ? and senhaUsuario = ? limit 1";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, usuario.getUsername());
 			pstmt.setString(2, usuario.getSenha());

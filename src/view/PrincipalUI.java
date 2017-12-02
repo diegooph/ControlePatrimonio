@@ -187,7 +187,8 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimonio");
 		mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarPatrimonioUI cadastrarPatrimonioUI = new CadastrarPatrimonioUI(usuario);
+				CadastrarPatrimonioUI cadastrarPatrimonioUI
+				= new CadastrarPatrimonioUI(usuario);
 				contentPane.add(cadastrarPatrimonioUI,0);
 
 			}

@@ -160,6 +160,7 @@ public class ConsultaRequisicaoUI extends JInternalFrame {
 		jspTabelaRequisicao = new JScrollPane();
 
 		jtListarRequisicao = new JTable();
+		requisicaoTableModel = new RequisicaoTableModel(true, false,false, false, false,false);
 		jtListarRequisicao.setModel(requisicaoTableModel);
 		jspTabelaRequisicao.setViewportView(jtListarRequisicao);
 
