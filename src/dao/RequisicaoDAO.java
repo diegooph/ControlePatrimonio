@@ -54,13 +54,15 @@ public class RequisicaoDAO {
 			pstmt.setString(2, requisicao.getMensagem());
 			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
-
+			
 			if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
 				pstmt.setTimestamp(5, new Timestamp(requisicao.getDataParecer().getTime()));
 				if (requisicao.getStatusRequerimento() == StatusRequerimentoEnum.INDEFERIDO) {
 					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));
-				} else {
+				} else if (requisicao.getDataFinalizacao()==null){
 					pstmt.setDate(6, null);
+				}else{
+					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));					
 				}
 			} else {
 				pstmt.setDate(5, null);
@@ -78,7 +80,7 @@ public class RequisicaoDAO {
 	private void insert( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
-			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento`) VALUES (?, ? ,?,?)";
+			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento` ) VALUES (?, ? ,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, requisicao.getTitulo());

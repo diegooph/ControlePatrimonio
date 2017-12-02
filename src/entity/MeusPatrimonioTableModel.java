@@ -21,7 +21,7 @@ public class MeusPatrimonioTableModel extends AbstractTableModel {
 
 	public void listarPatrimonios() {
 		PatrimonioController pdao = new PatrimonioController();
-		listaDePatrimonios = (ArrayList<Patrimonio>) pdao.listarPatrimonios();
+		listaDePatrimonios = (ArrayList<Patrimonio>) pdao.listarMeusPatrimonios();
 	}
 
 	@Override
