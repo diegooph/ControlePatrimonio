@@ -65,6 +65,7 @@ public class PrincipalUI extends JFrame {
 		mntmListaPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaPatrimonioUI cadastrarPatrimonioUI = new ConsultaPatrimonioUI();
+				
 				contentPane.add(cadastrarPatrimonioUI,0);
 			}
 		});

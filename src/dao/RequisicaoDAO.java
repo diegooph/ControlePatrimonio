@@ -76,7 +76,9 @@ public class RequisicaoDAO {
 			e.printStackTrace();
 		}
 	}
+private void updateDatafinalizacaoRequisicao(){
 
+}
 	private void insert( Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
