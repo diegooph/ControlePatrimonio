@@ -33,7 +33,6 @@ import entity.Usuario;
 import javax.swing.border.EtchedBorder;
 
 public class CadastrarLocalUI extends JInternalFrame {
-	
 
 	/**
 	 * 
@@ -42,14 +41,13 @@ public class CadastrarLocalUI extends JInternalFrame {
 	private JPanel jpCadastroProdutos;
 	private Local local;
 	private JTextField jtfNomeLocal;
-	
-	//Dados em brancos
+	private ActionListener action ;
+	// Dados em brancos
 	private JLabel lblNNome;
 	private JLabel lblNId;
 	private JLabel lblNPermissao;
 	private Usuario usuario;
-	
-	
+
 	/**
 	 * Launch the application.
 	 *
@@ -72,23 +70,21 @@ public class CadastrarLocalUI extends JInternalFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	
-	//editor
-	public CadastrarLocalUI(Usuario usuario, Local local) {
+
+	// editor
+	public CadastrarLocalUI(Local local) {
 		construirTela();
 		this.local = local;
 		preencherFormulario();
 		setVisible(true);
 	}
 
-	private void preencherFormulario() {
+	public void preencherFormulario() {
 		jtfNomeLocal.setText(local.getNomeLocal());
 		lblNNome.setText(local.getUsuarioGestor().getNomeUsuario());
-		lblNId.setText(local.getIdLocal()+"");
+		lblNId.setText(local.getIdLocal() + "");
 		lblNPermissao.setText(local.getUsuarioGestor().getPermisaoUsuario().getDescricao());
 	}
-	
-	
 
 	private void construirTela() {
 		setClosable(true);
@@ -97,16 +93,15 @@ public class CadastrarLocalUI extends JInternalFrame {
 		setBounds(100, 100, 599, 378);
 
 		jpCadastroProdutos = new JPanel();
-		jpCadastroProdutos.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Cadastro Local", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jpCadastroProdutos.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
+				"Cadastro Local", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent arg0) {
 				LocalController locCont = new LocalController();
-
 				local.setNomeLocal(jtfNomeLocal.getText());
-				//local.setModelo(jtfModelo.getText());
-
 				locCont.salvar(local);
 				JOptionPane.showMessageDialog(null, "Categoria Salva com Sucesso");
 				dispose();
@@ -121,81 +116,87 @@ public class CadastrarLocalUI extends JInternalFrame {
 		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(157)
-					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnCancelar)
-					.addContainerGap(14, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(50, Short.MAX_VALUE)
-					.addComponent(jpCadastroProdutos, GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpCadastroProdutos, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-					.addGap(17)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnCancelar)
-						.addComponent(btnSalvar))
-					.addGap(21))
-		);
-		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] {btnSalvar, btnCancelar});
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSalvar, btnCancelar});
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(157)
+						.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnCancelar)
+						.addContainerGap(14, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING,
+						groupLayout.createSequentialGroup()
+								.addContainerGap(50, Short.MAX_VALUE).addComponent(jpCadastroProdutos,
+										GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap()));
+		groupLayout
+				.setVerticalGroup(
+						groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(
+										groupLayout.createSequentialGroup().addContainerGap()
+												.addComponent(jpCadastroProdutos, GroupLayout.DEFAULT_SIZE, 291,
+														Short.MAX_VALUE)
+												.addGap(17)
+												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+														.addComponent(btnCancelar).addComponent(btnSalvar))
+												.addGap(21)));
+		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] { btnSalvar, btnCancelar });
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnSalvar, btnCancelar });
 
 		JLabel lblNomeLocal = new JLabel("Nome do Local:");
 		lblNomeLocal.setBounds(156, 52, 101, 14);
-		
+
 		jtfNomeLocal = new JTextField();
 		jtfNomeLocal.setBounds(267, 49, 151, 20);
 		jtfNomeLocal.setColumns(10);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(119, 121, 361, 148);
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Usuario adm", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Usuario adm",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		jpCadastroProdutos.setLayout(null);
 		jpCadastroProdutos.add(lblNomeLocal);
 		jpCadastroProdutos.add(jtfNomeLocal);
 		jpCadastroProdutos.add(panel);
 		panel.setLayout(null);
-		
+
 		JButton btnSelecionarUsuario = new JButton("Selecionar Usuario");
 		btnSelecionarUsuario.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
-				SelecionarUsuarioLocalUI ccUsuario = new SelecionarUsuarioLocalUI(usuario, local);
-				getParent().add(ccUsuario,0);
+				SelecionarUsuarioLocalUI ccUsuario = new SelecionarUsuarioLocalUI(local, action);
+				getParent().add(ccUsuario, 0);
+
 			}
 		});
-		
+	
 		btnSelecionarUsuario.setBounds(197, 114, 154, 23);
 		panel.add(btnSelecionarUsuario);
-		
+
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 23, 46, 14);
 		panel.add(lblNome);
-		
+
 		JLabel lblId = new JLabel("ID:");
 		lblId.setBounds(20, 48, 47, 14);
 		panel.add(lblId);
-		
+
 		JLabel lblPermisso = new JLabel("Permiss\u00E3o:");
 		lblPermisso.setBounds(10, 69, 68, 14);
 		panel.add(lblPermisso);
-		
+
 		lblNNome = new JLabel("");
 		lblNNome.setBounds(61, 23, 46, 14);
 		panel.add(lblNNome);
-		
+
 		lblNId = new JLabel("");
 		lblNId.setBounds(61, 48, 46, 14);
 		panel.add(lblNId);
-		
+		action = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				preencherFormulario();
+
+			}
+		};
 		lblNPermissao = new JLabel("");
 		lblNPermissao.setBounds(71, 69, 46, 14);
 		panel.add(lblNPermissao);
