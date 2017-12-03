@@ -21,6 +21,7 @@ public class CategoriaDAO {
 		if (instancia == null) {
 			instancia = new CategoriaDAO();
 		}
+		//test2
 		return instancia;
 	}
 
