@@ -4,6 +4,7 @@ import java.util.List;
 
 import controler.IPatrimonioControler;
 import dao.PatrimonioDAO;
+import entity.Local;
 import entity.Patrimonio;
 import entity.Requisicao;
 import entity.StatusRequerimentoEnum;
@@ -34,6 +35,13 @@ public class PatrimonioController implements IPatrimonioControler {
 	public List<Patrimonio> listarMeusPatrimonios() {
 		PatrimonioDAO udao = new PatrimonioDAO();
 		return udao.listarMeusPatrimonios();
+	}	
+	
+	
+	@Override
+	public List<Patrimonio> listarPatrimoniosLocal(Local local) {
+		PatrimonioDAO udao = new PatrimonioDAO();
+		return udao.listarPatrimoniosLocal(local);
 	}
 
 	@Override

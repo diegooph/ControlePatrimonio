@@ -17,19 +17,20 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.PatrimonioController;
-import entity.MeusPatrimonioTableModel;
+import entity.Local;
+import entity.LocalPatrimonioTableModel;
 import entity.Patrimonio;
 import entity.Requisicao;
 import entity.TipoRequerimentoEnum;
 
-public class ConsultaLocalPatrimoniosUI extends JInternalFrame {
+public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTable jtListaClientes;
 	private JScrollPane jspTabelaPatrimonio;
-
+	private Local local;
 	/**
 	 * Launch the application.
 	 *
@@ -43,13 +44,14 @@ public class ConsultaLocalPatrimoniosUI extends JInternalFrame {
 	 * 
 	 * @param usuario
 	 */
-	public ConsultaLocalPatrimoniosUI() {
+	public ConsultaPatrimoniosLocalUI(Local local) {
 
 		setClosable(true);
 		setTitle("Consulta de Patrimonios");
 		setBounds(100, 100, 630, 468);
 		AtualizarTablemodel();
 		setVisible(true);
+		this.local = local;
 		JPanel jpPatrimonios = new JPanel();
 		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -58,7 +60,7 @@ public class ConsultaLocalPatrimoniosUI extends JInternalFrame {
 		btnSolicitarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcon = new PatrimonioController();
-				Patrimonio patrimonio = pModel.getPatrimonio(jtListaClientes.getSelectedRow());
+				Patrimonio patrimonio = lModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
 				
 					getParent().add(new CadastrarRequisicaoUI(TipoRequerimentoEnum.DEVOLUCAO , patrimonio, new Requisicao(), null), 0);
@@ -96,7 +98,7 @@ public class ConsultaLocalPatrimoniosUI extends JInternalFrame {
 
 		jtListaClientes = new JTable();
 		jtListaClientes.setModel(AtualizarTablemodel());
-		if (pModel.getRowCount() > 0) {
+		if (lModel.getRowCount() > 0) {
 			jtListaClientes.setRowSelectionInterval(0, 0);
 		}
 
@@ -112,11 +114,11 @@ public class ConsultaLocalPatrimoniosUI extends JInternalFrame {
 
 	}
 
-	MeusPatrimonioTableModel pModel;
+	LocalPatrimonioTableModel lModel;
 
 	private TableModel AtualizarTablemodel() {
-		pModel = new MeusPatrimonioTableModel();
+		lModel = new LocalPatrimonioTableModel(local);
 
-		return pModel;
+		return lModel;
 	}
 }

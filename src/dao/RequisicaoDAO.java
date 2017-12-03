@@ -46,7 +46,15 @@ public class RequisicaoDAO {
 
 	private void update(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
-
+			if (local!=null) {
+				String sqlLocal = "INSERT INTO `controlepatrimonio`.`local_has_patrimonio`"
+						+ "(`local_idLocal`,`patrimonio_idPatrimonio`)VALUES(?,?)";
+						PreparedStatement pstmtLocal = con.prepareStatement(sqlLocal);
+				pstmtLocal.setInt(2, local.getIdLocal());
+				pstmtLocal.setInt(1, requisicao.getPatrimonio().getIdPatrimonio());
+				pstmtLocal.execute();
+			}
+			
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
