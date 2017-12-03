@@ -21,13 +21,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.CategoriaController;
+import controller.impl.LocalController;
 import controller.impl.PatrimonioController;
 import controller.impl.UsuarioController;
 import entity.CategoriaTableModel;
 import entity.LocalTableModel;
 
 public class ConsultaLocalUI extends JInternalFrame {
-	private JTable jtListaCategoria;
+	private JTable jtListalocais;
 
 	private LocalTableModel tmodel;
 
@@ -52,11 +53,11 @@ public class ConsultaLocalUI extends JInternalFrame {
 	 */
 	public ConsultaLocalUI() {
 		setClosable(true);
-		setTitle("Consulta Categorias");
+		setTitle("Consulta Locais");
 		setBounds(100, 100, 684, 515);
 		setVisible(true);
 		JPanel jpPesquisa = new JPanel();
-		jpPesquisa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista Categorias",
+		jpPesquisa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista Locais",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		JButton btnEditar = new JButton("Editar");
@@ -64,7 +65,7 @@ public class ConsultaLocalUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				getParent().add(
-						new CadastrarCategoriaUI(tmodel.getCategoria(jtListaCategoria.getSelectedRow())),
+						new CadastrarLocalUI(tmodel.getLocal(jtListalocais.getSelectedRow())),
 						0);
 
 			}
@@ -73,36 +74,61 @@ public class ConsultaLocalUI extends JInternalFrame {
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CategoriaController Ccont = new CategoriaController();
-				Ccont.remover(tmodel.getCategoria(jtListaCategoria.getSelectedRow()));
+				LocalController lcont = new LocalController();
+				lcont.remover(tmodel.getLocal(jtListalocais.getSelectedRow()));
 				AtualizarTablemodel();
 				JOptionPane.showMessageDialog(null, "Local excluído com sucesso");
 			}
 		});
+		
+		JButton btnVisualizarPatrimonios = new JButton("Visualizar Patrimonios");
+		btnVisualizarPatrimonios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultaLocalPatrimoniosUI consultaMeusPatrimonioUI = new ConsultaLocalPatrimoniosUI();
+				getParent().add(consultaMeusPatrimonioUI,0);
+				
+			}
+		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(jpPesquisa,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup().addGap(154)
-								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnExcluir)))
-				.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE).addGap(18)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(btnExcluir)
-								.addComponent(btnEditar))
-						.addGap(25)));
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnEditar, btnExcluir });
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(146)
+							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+							.addGap(22)
+							.addComponent(btnExcluir)))
+					.addContainerGap())
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(269, Short.MAX_VALUE)
+					.addComponent(btnVisualizarPatrimonios)
+					.addGap(264))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnVisualizarPatrimonios)
+					.addGap(13)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEditar)
+						.addComponent(btnExcluir))
+					.addContainerGap())
+		);
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnEditar, btnExcluir});
 
 		JScrollPane jspTabelaProduto = new JScrollPane();
 
-		jtListaCategoria = new JTable();
-		jtListaCategoria.setModel(AtualizarTablemodel());
-		jspTabelaProduto.setViewportView(jtListaCategoria);
+		jtListalocais = new JTable();
+		jtListalocais.setModel(AtualizarTablemodel());
+		jspTabelaProduto.setViewportView(jtListalocais);
 		GroupLayout gl_jpPesquisa = new GroupLayout(jpPesquisa);
 		gl_jpPesquisa
 				.setHorizontalGroup(gl_jpPesquisa.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,

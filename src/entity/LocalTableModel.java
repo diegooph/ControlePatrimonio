@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import controller.impl.CategoriaController;
+import controller.impl.LocalController;
 
 public class LocalTableModel extends AbstractTableModel {
 
@@ -12,18 +12,18 @@ public class LocalTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Categoria> listaDeCategorias;
-	private String[] colunas = new String[]{"Modelo" , "Descrição"};
+	private ArrayList<Local> listaDeLocais;
+	private String[] colunas = new String[] { "Nome", "Gestor" };
 
 	public LocalTableModel() {
-		
-		listarCategorias();
-		
+
+		listarLocais();
+
 	}
 
-	public void listarCategorias() {
-		CategoriaController cctoler = new CategoriaController();
-		listaDeCategorias = (ArrayList<Categoria>) cctoler.listarCategorias();
+	public void listarLocais() {
+		LocalController cctoler = new LocalController();
+		listaDeLocais = (ArrayList<Local>) cctoler.listarLocais();
 
 	}
 
@@ -36,19 +36,17 @@ public class LocalTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 
-		return listaDeCategorias.size();
+		return listaDeLocais.size();
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return this.listaDeCategorias.get(rowIndex).getModelo();
+			return this.listaDeLocais.get(rowIndex).getNomeLocal();
 
 		case 1:
-			return this.listaDeCategorias.get(rowIndex).getDescricao();
-
-	
+			return this.listaDeLocais.get(rowIndex).getUsuarioGestor().getNomeUsuario();
 
 		default:
 			break;
@@ -61,8 +59,8 @@ public class LocalTableModel extends AbstractTableModel {
 
 		return colunas[column];
 	}
-	
-	public Categoria getCategoria(int index){
-		return listaDeCategorias.get(index);
+
+	public Local getLocal(int index) {
+		return listaDeLocais.get(index);
 	}
 }

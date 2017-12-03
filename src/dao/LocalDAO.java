@@ -67,7 +67,7 @@ public class LocalDAO {
 	public List<Local> listarTodos() {
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select `idLocal`, `nomeLocal`, `Usuario_idUsuario` from local";
+			String sql = "select * from local join usuario on usuario.idusuario = local.usuario_idusuario;";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -77,7 +77,7 @@ public class LocalDAO {
 				// Setar usuario
 
 				Usuario usuario = new Usuario();
-				usuario.setIdUsuario(rs.getInt("idUsuario"));
+				usuario.setIdUsuario(rs.getInt("Usuario_idUsuario"));
 				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
 				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
 				usuario.setSenha(rs.getString("senhaUsuario"));

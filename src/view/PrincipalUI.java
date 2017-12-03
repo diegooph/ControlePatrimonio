@@ -121,7 +121,8 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmListaDeLocais = new JMenuItem("Lista de Locais");
 		mntmListaDeLocais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+			ConsultaLocalUI consultaLocalUI = new ConsultaLocalUI();
+			contentPane.add(consultaLocalUI, 0);
 			}
 		});
 		mnLocais.add(mntmListaDeLocais);
