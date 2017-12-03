@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`usuario` (
   `username` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 25
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
   `dataFinalizacao` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`idRequisicao`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 19
+AUTO_INCREMENT = 47
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio_has_usuario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 19
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8;
 
 USE `controlepatrimonio` ;
@@ -192,25 +192,24 @@ RETURN @id;
 END$$
 
 DELIMITER ;
-USE `controlepatrimonio`;
+
+-- -----------------------------------------------------
+-- procedure upDataFinalizadoRequisisao
+-- -----------------------------------------------------
 
 DELIMITER $$
 USE `controlepatrimonio`$$
-CREATE
-DEFINER=`root`@`localhost`
-TRIGGER `controlepatrimonio`.`requisicao_BEFORE_UPDATE`
-BEFORE UPDATE ON `controlepatrimonio`.`requisicao`
-FOR EACH ROW
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upDataFinalizadoRequisisao`(in idrequisicaoinc int)
 BEGIN
-if new.datafinalizacao is not null and new.tiporequerimento = 1 then
-set @idRequisisaoReferente = (select idrequisicao from patrimonio_has_usuario join requisicao on requisicao.idrequisicao = patrimonio_has_usuario.Requisicao_idRequisicao  where statusrequerimento = 0 and dataFinalizacao is null and patrimonio_has_usuario.Patrimonio_idPatrimonio = idpatrimonio order by dataparecer asc limit 1);
-UPDATE `controlepatrimonio`.`requisicao` SET `dataFinalizacao` = now() WHERE `idRequisicao` = @idRequisisaoReferente ;
-end if ;  
+
+set @idPatrimonio = (select patrimonio_idpatrimonio from  patrimonio_has_usuario  join requisicao on idrequisicao = requisicao_idrequisicao where idrequisicao = idrequisicaoinc );
+set @idrequisicaoReferente = (select idrequisicao from  patrimonio_has_usuario  join requisicao on idrequisicao = requisicao_idrequisicao where tiporequerimento = 1 and datafinalizacao is null and patrimonio_idpatrimonio = @idPatrimonio order by dataparecer limit 1);
+UPDATE `controlepatrimonio`.`requisicao` SET `dataFinalizacao` = now() WHERE `idRequisicao` =  @idrequisicaoReferente ;
+
 END$$
 
-
 DELIMITER ;
-INSERT INTO `controlepatrimonio`.`usuario`(`nomeUsuario`,`permisaoUsuario`,`senhaUsuario`,`username`)VALUES('Administrador',0,'admin','admin');
+INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES ('Administrador', '0', 'admin', 'admin');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
