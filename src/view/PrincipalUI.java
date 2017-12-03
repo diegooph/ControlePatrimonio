@@ -121,7 +121,7 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmListaDeLocais = new JMenuItem("Lista de Locais");
 		mntmListaDeLocais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			;
+			
 			}
 		});
 		mnLocais.add(mntmListaDeLocais);
@@ -217,7 +217,7 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmAdicionarNovaCategoria = new JMenuItem("Adicionar Nova Categoria");
 		mntmAdicionarNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CadastrarCategoriaUI cadastrarCategoriaUI = new CadastrarCategoriaUI(usuario);
+				CadastrarCategoriaUI cadastrarCategoriaUI = new CadastrarCategoriaUI();
 				contentPane.add(cadastrarCategoriaUI,0);
 
 			}

@@ -24,11 +24,12 @@ import controller.impl.CategoriaController;
 import controller.impl.PatrimonioController;
 import controller.impl.UsuarioController;
 import entity.CategoriaTableModel;
+import entity.LocalTableModel;
 
-public class ConsultaCategoriaUI extends JInternalFrame {
+public class ConsultaLocalUI extends JInternalFrame {
 	private JTable jtListaCategoria;
 
-	private CategoriaTableModel pModel;
+	private LocalTableModel tmodel;
 
 	/**
 	 * Launch the application.
@@ -37,7 +38,7 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ConsultaCategoriaUI frame = new ConsultaCategoriaUI();
+					ConsultaLocalUI frame = new ConsultaLocalUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +50,7 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaCategoriaUI() {
+	public ConsultaLocalUI() {
 		setClosable(true);
 		setTitle("Consulta Categorias");
 		setBounds(100, 100, 684, 515);
@@ -63,7 +64,7 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				getParent().add(
-						new CadastrarCategoriaUI( pModel.getCategoria(jtListaCategoria.getSelectedRow())),
+						new CadastrarCategoriaUI(tmodel.getCategoria(jtListaCategoria.getSelectedRow())),
 						0);
 
 			}
@@ -73,9 +74,9 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CategoriaController Ccont = new CategoriaController();
-				Ccont.remover(pModel.getCategoria(jtListaCategoria.getSelectedRow()));
+				Ccont.remover(tmodel.getCategoria(jtListaCategoria.getSelectedRow()));
 				AtualizarTablemodel();
-				JOptionPane.showMessageDialog(null, "Produto excluído com sucesso");
+				JOptionPane.showMessageDialog(null, "Local excluído com sucesso");
 			}
 		});
 
@@ -118,8 +119,8 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 	}
 
 	private TableModel AtualizarTablemodel() {
-		pModel = new CategoriaTableModel();
+		tmodel = new LocalTableModel();
 
-		return pModel;
+		return tmodel;
 	}
 }

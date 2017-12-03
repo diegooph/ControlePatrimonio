@@ -53,7 +53,7 @@ public class CadastrarCategoriaUI extends JInternalFrame {
 	 * 
 	 * @param usuario
 	 */
-	public CadastrarCategoriaUI(Usuario usuario) {
+	public CadastrarCategoriaUI() {
 		construirTela();
 		this.categoria = new Categoria();
 		setVisible(true);
@@ -62,7 +62,7 @@ public class CadastrarCategoriaUI extends JInternalFrame {
 	/**
 	 * @wbp.parser.constructor
 	 */
-	public CadastrarCategoriaUI(Usuario usuario, Categoria categoria) {
+	public CadastrarCategoriaUI( Categoria categoria) {
 		construirTela();
 		this.categoria = categoria;
 		preencherFormulario();
