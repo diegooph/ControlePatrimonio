@@ -26,7 +26,7 @@ public class UsuarioDAO {
 	// Criar usuario caso seja nulo
 	public static UsuarioDAO obterInstancia() {
 		if (instancia == null) {
-			instancia =  new UsuarioDAO();
+			instancia = new UsuarioDAO();
 		}
 		return instancia;
 	}
