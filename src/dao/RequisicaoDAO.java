@@ -38,15 +38,15 @@ public class RequisicaoDAO {
 	public void salvar(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 
 		if (requisicao.getIdRequisicao() == 0) {
-			insert( patrimonio, requisicao, local);
+			insert(patrimonio, requisicao, local);
 		} else {
-			update( patrimonio, requisicao, local);
+			update(patrimonio, requisicao, local);
 		}
 	}
 
-	private void update( Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	private void update(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
-			
+
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -54,15 +54,16 @@ public class RequisicaoDAO {
 			pstmt.setString(2, requisicao.getMensagem());
 			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
-			
+
 			if (requisicao.getStatusRequerimento() != StatusRequerimentoEnum.PENDENTE) {
 				pstmt.setTimestamp(5, new Timestamp(requisicao.getDataParecer().getTime()));
 				if (requisicao.getStatusRequerimento() == StatusRequerimentoEnum.INDEFERIDO) {
 					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));
-				} else if (requisicao.getDataFinalizacao()==null){
+				} else if (requisicao.getDataFinalizacao() == null) {
 					pstmt.setDate(6, null);
-				}else{
-					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));					
+				} else {
+					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));
+					updateDatafinalizacaoRequisicao(patrimonio, requisicao, local);
 				}
 			} else {
 				pstmt.setDate(5, null);
@@ -76,10 +77,22 @@ public class RequisicaoDAO {
 			e.printStackTrace();
 		}
 	}
-private void updateDatafinalizacaoRequisicao(){
 
-}
-	private void insert( Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	private void updateDatafinalizacaoRequisicao(Patrimonio patrimonio, Requisicao requisicao, Local local) {
+		try {
+System.out.println("entro aki sapora");
+			String sql = "call upDataFinalizadoRequisisao(?)";
+
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, requisicao.getIdRequisicao());
+
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void insert(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
 			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento` ) VALUES (?, ? ,?,?)";
@@ -92,7 +105,7 @@ private void updateDatafinalizacaoRequisicao(){
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
 
 			pstmt.execute();
-			insertTabelaPatrimonio_has( patrimonio, requisicao, local);
+			insertTabelaPatrimonio_has(patrimonio, requisicao, local);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -358,8 +371,7 @@ private void updateDatafinalizacaoRequisicao(){
 		}
 	}
 
-	private void insertTabelaPatrimonio_has( Patrimonio patrimonio, Requisicao requisicao,
-			Local local) {
+	private void insertTabelaPatrimonio_has(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		Usuario usuario = UsuarioController.getUsuario();
 		if (local == null) {
 			try {
