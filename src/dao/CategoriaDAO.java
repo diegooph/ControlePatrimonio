@@ -18,7 +18,7 @@ public class CategoriaDAO {
 
 	// Criar categoria caso seja nulo
 	public static CategoriaDAO obterInstancia() {
-		if (instancia == null) {
+		if (instancia ==  null) {
 			instancia = new CategoriaDAO();
 		}
 		return instancia;
