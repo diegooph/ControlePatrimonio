@@ -216,13 +216,15 @@ public class PatrimonioDAO {
 	public List<Patrimonio> listarPatrimoniosLocal(Local local) {
 		try {
 	
-			String sql = "select `idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`, "
-					+ " `idCategoria`, `descricao`, `modelo`" + "from patrimonio "
-					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
-					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) join local_has_patrimonio on local_has_patrimonio.patrimonio_idpatrimonio = patrimonio.idpatrimonio "
-					+ " where local_has_patrimonio.local_idlocal = ? ;";
+			String sql = "SELECT `selecionarpatrimoniolocais`.`idPatrimonio`,"
+					+ " `selecionarpatrimoniolocais`.`nomePatrimonio`,"
+					+ " `selecionarpatrimoniolocais`.`codigo`, `selecionarpatrimoniolocais`.`detalhamentoTecnico`,"
+					+ "    `selecionarpatrimoniolocais`.`Categoria_idCategoria`,  "
+					+ "  `selecionarpatrimoniolocais`.`idCategoria`,    `selecionarpatrimoniolocais`.`descricao`, "
+					+ "   `selecionarpatrimoniolocais`.`modelo`FROM `controlepatrimonio`.`selecionarpatrimoniolocais`"
+					+ " where local_idlocal = ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, UsuarioController.getUsuario().getIdUsuario());
+			pstmt.setInt(1, local.getIdLocal());
 			
 			ResultSet rs = pstmt.executeQuery();
 
@@ -244,21 +246,7 @@ public class PatrimonioDAO {
 				// Concatenar patrimonio com categoria
 				patrimonio.setCategoria(categoria);
 
-				// selecionar e concatenar usuario
-				if (rs.getInt("idUsuario") > 0) {
-					Usuario usuario = new Usuario();
-					usuario.setIdUsuario(rs.getInt("idUsuario"));
-					usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-					usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
-					usuario.setSenha(rs.getString("senhaUsuario"));
-					usuario.setUsername(rs.getString("username"));
-					patrimonio.setUsuario(usuario);
-
-					patrimonio.setOcupado(true);
-				} else {
-					// selecionar estado patrimonio
-					patrimonio.setOcupado(false);
-				}
+			
 				listaPatrimonios.add(patrimonio);
 			}
 

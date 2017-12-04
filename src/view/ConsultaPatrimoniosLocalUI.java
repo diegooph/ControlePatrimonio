@@ -49,9 +49,9 @@ public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 		setClosable(true);
 		setTitle("Consulta de Patrimonios");
 		setBounds(100, 100, 630, 468);
+		this.local = local;
 		AtualizarTablemodel();
 		setVisible(true);
-		this.local = local;
 		JPanel jpPatrimonios = new JPanel();
 		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -118,7 +118,7 @@ public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 
 	private TableModel AtualizarTablemodel() {
 		lModel = new LocalPatrimonioTableModel(local);
-
+System.out.println(local.getIdLocal());
 		return lModel;
 	}
 }

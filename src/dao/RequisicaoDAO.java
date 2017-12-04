@@ -63,6 +63,7 @@ public class RequisicaoDAO {
 					pstmt.setDate(6, null);
 				} else {
 					pstmt.setTimestamp(6, new Timestamp(requisicao.getDataFinalizacao().getTime()));
+					System.out.println("chego na linha 66 consulta patrimonio local");
 					updateDatafinalizacaoRequisicao(patrimonio, requisicao, local);
 				}
 			} else {

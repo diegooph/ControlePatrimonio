@@ -101,10 +101,21 @@ public class CadastrarLocalUI extends JInternalFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				LocalController locCont = new LocalController();
+			try {
 				local.setNomeLocal(jtfNomeLocal.getText());
+				if (local.getNomeLocal()=="") {
+					throw new Exception("Preencha o formulario Nome do local ");
+				}
+				if (local.getUsuarioGestor()==null) {
+					throw new Exception("Selecione um usuario para Gestão deste Local ");
+				}
 				locCont.salvar(local);
-				JOptionPane.showMessageDialog(null, "Categoria Salva com Sucesso");
+				JOptionPane.showMessageDialog(null, "Local Salvo com Sucesso");
 				dispose();
+			} catch (Exception e) {
+				JOptionPane.showInternalMessageDialog(getParent(), e.getMessage());
+			}
+				
 			}
 		});
 
@@ -161,6 +172,8 @@ public class CadastrarLocalUI extends JInternalFrame {
 		btnSelecionarUsuario.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+				local.setNomeLocal(jtfNomeLocal.getText());
+				
 				SelecionarUsuarioLocalUI ccUsuario = new SelecionarUsuarioLocalUI(local, action);
 				getParent().add(ccUsuario, 0);
 
@@ -171,23 +184,26 @@ public class CadastrarLocalUI extends JInternalFrame {
 		panel.add(btnSelecionarUsuario);
 
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 23, 46, 14);
+		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNome.setBounds(32, 23, 46, 14);
 		panel.add(lblNome);
 
 		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(20, 48, 47, 14);
+		lblId.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblId.setBounds(43, 44, 35, 14);
 		panel.add(lblId);
 
 		JLabel lblPermisso = new JLabel("Permiss\u00E3o:");
+		lblPermisso.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPermisso.setBounds(10, 69, 68, 14);
 		panel.add(lblPermisso);
 
 		lblNNome = new JLabel("");
-		lblNNome.setBounds(61, 23, 46, 14);
+		lblNNome.setBounds(88, 23, 184, 14);
 		panel.add(lblNNome);
 
 		lblNId = new JLabel("");
-		lblNId.setBounds(61, 48, 46, 14);
+		lblNId.setBounds(88, 44, 184, 14);
 		panel.add(lblNId);
 		action = new ActionListener() {
 
@@ -198,7 +214,7 @@ public class CadastrarLocalUI extends JInternalFrame {
 			}
 		};
 		lblNPermissao = new JLabel("");
-		lblNPermissao.setBounds(71, 69, 46, 14);
+		lblNPermissao.setBounds(88, 69, 184, 14);
 		panel.add(lblNPermissao);
 		getContentPane().setLayout(groupLayout);
 	}

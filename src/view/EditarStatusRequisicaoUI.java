@@ -65,7 +65,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		this.local=local;
 		this.requisicaoUpdate = requisicao;
 		setTitle("Requisi\u00E7\u00E3o");
-		setBounds(100, 100, 661, 389);
+		setBounds(100, 100, 676, 389);
 
 		setVisible(true);
 
@@ -133,37 +133,45 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap().addGroup(groupLayout
-						.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, groupLayout
-								.createSequentialGroup().addGap(10).addComponent(btnSalvar)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnIndeferir, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-								.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-								.addGap(19))
-						.addGroup(
-								groupLayout
-										.createSequentialGroup().addComponent(jpNovoModeloPatrimonio,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addContainerGap()))));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addContainerGap()
-				.addComponent(jpNovoModeloPatrimonio, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnCancelar)
-						.addComponent(btnSalvar).addComponent(btnIndeferir))
-				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnSalvar, btnCancelar });
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(jpNovoModeloPatrimonio, GroupLayout.PREFERRED_SIZE, 632, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(20)
+							.addComponent(btnSalvar)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnIndeferir, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)))
+					.addGap(19))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jpNovoModeloPatrimonio, GroupLayout.PREFERRED_SIZE, 309, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCancelar)
+						.addComponent(btnSalvar)
+						.addComponent(btnIndeferir))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSalvar, btnCancelar});
 
 		JLabel lblNome = new JLabel("Titulo:");
+		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		jtfTitulo = new JTextField();
 		jtfTitulo.setEnabled(false);
 		jtfTitulo.setEditable(false);
 
 		JLabel lblMensagem = new JLabel("Mensagem:");
+		lblMensagem.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		jtfMensagem = new JEditorPane();
 		jtfMensagem.setEnabled(false);
@@ -179,64 +187,63 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		buttonGroup.add(rdbtnRequirirPatrimonio);
 
 		JLabel lblTipoDeRequisio = new JLabel("Tipo de Requisi\u00E7\u00E3o:");
+		lblTipoDeRequisio.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		JLabel label = new JLabel("Detinado \u00E0:");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		lblDestinado = new JLabel("Detinado \u00E0:");
 		GroupLayout gl_jpNovoModeloPatrimonio = new GroupLayout(jpNovoModeloPatrimonio);
 		gl_jpNovoModeloPatrimonio.setHorizontalGroup(
-			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+						.addComponent(lblTipoDeRequisio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblMensagem, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+							.addComponent(label, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addGap(73)
-							.addComponent(lblNome))
+							.addGap(4)
+							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(jtfTitulo, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+									.addComponent(rdbtnDevolucao)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(rdbtnRequirirPatrimonio))
+								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblTipoDeRequisio)))
-					.addGap(4)
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-						.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(rdbtnDevolucao)
-							.addGap(10)
-							.addComponent(rdbtnRequirirPatrimonio)))
-					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_jpNovoModeloPatrimonio.createSequentialGroup()
-					.addContainerGap(38, Short.MAX_VALUE)
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblMensagem))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDestinado, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE))
-					.addGap(21))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblDestinado, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)))
+					.addGap(20))
 		);
 		gl_jpNovoModeloPatrimonio.setVerticalGroup(
 			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(lblNome)
-							.addGap(41))
+							.addContainerGap()
+							.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
-								.addComponent(rdbtnDevolucao)
-								.addComponent(lblTipoDeRequisio)
-								.addComponent(rdbtnRequirirPatrimonio))))
-					.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+							.addGap(17)
+							.addComponent(lblNome)))
+					.addGap(18)
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
-						.addComponent(label)
-						.addComponent(lblDestinado))
+						.addComponent(rdbtnDevolucao)
+						.addComponent(lblTipoDeRequisio)
+						.addComponent(rdbtnRequirirPatrimonio))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDestinado)
+						.addComponent(label))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblMensagem)
 						.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+					.addGap(16))
 		);
 		jpNovoModeloPatrimonio.setLayout(gl_jpNovoModeloPatrimonio);
 		getContentPane().setLayout(groupLayout);

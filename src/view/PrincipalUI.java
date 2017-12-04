@@ -46,6 +46,8 @@ public class PrincipalUI extends JFrame {
 	private JMenu mnLocais;
 
 	private JMenu mnCategorias;
+
+	private JMenu mnRequerimentos;
 	public static JMenuItem mntmSair;
 
 	public PrincipalUI() {
@@ -93,12 +95,10 @@ public class PrincipalUI extends JFrame {
 		});
 		mnCategorias.add(mntmListaDeCategoria);
 
-		JMenu mnRequerimentos = new JMenu("Requerimentos");
+		 mnRequerimentos = new JMenu("Requerimentos");
 		menuBar.add(mnRequerimentos);
 
-		JMenuItem mntmRequisiccoes = new JMenuItem("Requisic\u00F5es");
-		mnRequerimentos.add(mntmRequisiccoes);
-
+	
 		JMenuItem mntmMeusRequerimentos = new JMenuItem("Meus Requerimentos");
 		mntmMeusRequerimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -108,12 +108,7 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnRequerimentos.add(mntmMeusRequerimentos);
-		mntmRequisiccoes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
-				contentPane.add(consultaRequisicaoUI,0);
-			}
-		});
+	
 
 		mnLocais = new JMenu("Locais");
 		menuBar.add(mnLocais);
@@ -196,6 +191,15 @@ public class PrincipalUI extends JFrame {
 	}
 
 	private void funcoesAdmin() {
+		JMenuItem mntmRequisiccoes = new JMenuItem("Requisic\u00F5es");
+		mnRequerimentos.add(mntmRequisiccoes);
+		mntmRequisiccoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
+				contentPane.add(consultaRequisicaoUI, 0);
+			}
+		});
+		
 		JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimonio");
 		mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
