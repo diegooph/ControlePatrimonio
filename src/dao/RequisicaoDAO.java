@@ -46,15 +46,7 @@ public class RequisicaoDAO {
 
 	private void update(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
-			if (local!=null) {
-				String sqlLocal = "INSERT INTO `controlepatrimonio`.`local_has_patrimonio`"
-						+ "(`local_idLocal`,`patrimonio_idPatrimonio`)VALUES(?,?)";
-						PreparedStatement pstmtLocal = con.prepareStatement(sqlLocal);
-				pstmtLocal.setInt(2, local.getIdLocal());
-				pstmtLocal.setInt(1, requisicao.getPatrimonio().getIdPatrimonio());
-				pstmtLocal.execute();
-			}
-			
+
 			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -88,7 +80,7 @@ public class RequisicaoDAO {
 
 	private void updateDatafinalizacaoRequisicao(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
-System.out.println("entro aki sapora");
+
 			String sql = "call upDataFinalizadoRequisisao(?)";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -103,7 +95,7 @@ System.out.println("entro aki sapora");
 	private void insert(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
-			String sql = "INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento` ) VALUES (?, ? ,?,?)";
+			String sql = "CALL `controlepatrimonio`.`incert_requisicao_npn`(?, ?, ?, ?, ?,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, requisicao.getTitulo());
@@ -111,9 +103,12 @@ System.out.println("entro aki sapora");
 			pstmt.setInt(3, requisicao.getStatusRequerimento().getCodigo());
 
 			pstmt.setInt(4, requisicao.getTipoRequerimento().getCodigo());
+			pstmt.setInt(5, local.getIdLocal());
+			pstmt.setInt(6, patrimonio.getIdPatrimonio());
+			pstmt.setInt(7, UsuarioController.getUsuario().getIdUsuario());
 
 			pstmt.execute();
-			insertTabelaPatrimonio_has(patrimonio, requisicao, local);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -379,51 +374,4 @@ System.out.println("entro aki sapora");
 		}
 	}
 
-	private void insertTabelaPatrimonio_has(Patrimonio patrimonio, Requisicao requisicao, Local local) {
-		Usuario usuario = UsuarioController.getUsuario();
-		if (local == null) {
-			try {
-				String sql = "INSERT INTO `controlepatrimonio`.`patrimonio_has_usuario` (`Patrimonio_idPatrimonio`, "
-						+ "`Requisicao_idRequisicao`, `Usuario_idUsuario`) VALUES (?, ?, ?);";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-
-				pstmt.setInt(1, patrimonio.getIdPatrimonio());
-				pstmt.setInt(2, buscarIdincertRequisicao());
-				pstmt.setInt(3, usuario.getIdUsuario());
-				pstmt.execute();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} else {
-
-			try {
-				String sql = "INSERT INTO `controlepatrimonio`.`patrimonio_has_local` (`Usuario_idUsuario`, `Local_idLocal`,"
-						+ " `Patrimonio_idPatrimonio`, `Requisicao_idRequisicao`) VALUES (? , ?  ,? , ?)";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-
-				pstmt.setInt(1, usuario.getIdUsuario());
-				pstmt.setInt(2, local.getIdLocal());
-				pstmt.setInt(3, patrimonio.getIdPatrimonio());
-				pstmt.setInt(4, buscarIdincertRequisicao());
-				pstmt.execute();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	private int buscarIdincertRequisicao() {
-		int id = 0;
-		try {
-			Statement stmt = con.createStatement();
-			String sql = "SELECT idRequisicao FROM controlepatrimonio.requisicao order by idRequisicao desc LIMIT 1 ; ";
-			ResultSet rs = stmt.executeQuery(sql);
-			rs.next();
-			id = rs.getInt("idRequisicao");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return id;
-	}
 }

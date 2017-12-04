@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`usuario` (
   `username` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 25
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -57,6 +57,48 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local` (
   CONSTRAINT `fk_Local_Usuario1`
     FOREIGN KEY (`Usuario_idUsuario`)
     REFERENCES `controlepatrimonio`.`usuario` (`idUsuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `controlepatrimonio`.`requisicao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
+  `idRequisicao` INT(11) NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(500) NOT NULL,
+  `mensagem` VARCHAR(500) NULL DEFAULT NULL,
+  `statusrequerimento` INT(11) NOT NULL,
+  `tipoRequerimento` INT(11) NOT NULL,
+  `dataRequisicao` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dataParecer` DATETIME NULL DEFAULT NULL,
+  `dataFinalizacao` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`idRequisicao`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 66
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `controlepatrimonio`.`local_has_patrimonio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local_has_patrimonio` (
+  `local_idLocal` INT(11) NOT NULL,
+  `requisicao_idRequisicao` INT(11) NOT NULL,
+  PRIMARY KEY (`local_idLocal`, `requisicao_idRequisicao`),
+  INDEX `fk_local_has_patrimonio_local1_idx` (`local_idLocal` ASC),
+  INDEX `fk_local_has_patrimonio_requisicao1_idx` (`requisicao_idRequisicao` ASC),
+  CONSTRAINT `fk_local_has_patrimonio_local1`
+    FOREIGN KEY (`local_idLocal`)
+    REFERENCES `controlepatrimonio`.`local` (`idLocal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_local_has_patrimonio_requisicao1`
+    FOREIGN KEY (`requisicao_idRequisicao`)
+    REFERENCES `controlepatrimonio`.`requisicao` (`idRequisicao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -80,48 +122,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 13
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `controlepatrimonio`.`local_has_patrimonio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local_has_patrimonio` (
-  `local_idLocal` INT(11) NOT NULL,
-  `patrimonio_idPatrimonio` INT(11) NOT NULL,
-  PRIMARY KEY (`local_idLocal`, `patrimonio_idPatrimonio`),
-  INDEX `fk_local_has_patrimonio_patrimonio1_idx` (`patrimonio_idPatrimonio` ASC),
-  INDEX `fk_local_has_patrimonio_local1_idx` (`local_idLocal` ASC),
-  CONSTRAINT `fk_local_has_patrimonio_local1`
-    FOREIGN KEY (`local_idLocal`)
-    REFERENCES `controlepatrimonio`.`local` (`idLocal`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_local_has_patrimonio_patrimonio1`
-    FOREIGN KEY (`patrimonio_idPatrimonio`)
-    REFERENCES `controlepatrimonio`.`patrimonio` (`idPatrimonio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `controlepatrimonio`.`requisicao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
-  `idRequisicao` INT(11) NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(500) NOT NULL,
-  `mensagem` VARCHAR(500) NULL DEFAULT NULL,
-  `statusrequerimento` INT(11) NOT NULL,
-  `tipoRequerimento` INT(11) NOT NULL,
-  `dataRequisicao` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dataParecer` DATETIME NULL DEFAULT NULL,
-  `dataFinalizacao` DATETIME NULL DEFAULT NULL,
-  PRIMARY KEY (`idRequisicao`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 47
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -129,12 +130,11 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `controlepatrimonio`.`patrimonio_has_usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio_has_usuario` (
-  `Patrimonio_has_Usuario` INT(11) NOT NULL AUTO_INCREMENT,
   `Patrimonio_idPatrimonio` INT(11) NOT NULL,
   `Requisicao_idRequisicao` INT(11) NOT NULL,
   `Usuario_idUsuario` INT(11) NOT NULL,
   `Status` TINYINT(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`Patrimonio_has_Usuario`, `Patrimonio_idPatrimonio`, `Requisicao_idRequisicao`),
+  PRIMARY KEY (`Patrimonio_idPatrimonio`, `Requisicao_idRequisicao`),
   INDEX `fk_Patrimonio_has_Requisicao_Requisicao1_idx` (`Requisicao_idRequisicao` ASC),
   INDEX `fk_Patrimonio_has_Requisicao_Patrimonio1_idx` (`Patrimonio_idPatrimonio` ASC),
   INDEX `fk_Patrimonio_has_Requisicao_Usuario1_idx` (`Usuario_idUsuario` ASC),
@@ -154,7 +154,6 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio_has_usuario` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8;
 
 USE `controlepatrimonio` ;
@@ -174,6 +173,26 @@ set verificarexclusao = 1;
  select verificarexclusao;
  
  
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure incert_requisicao_npn
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `incert_requisicao_npn`(in tituloinc varchar(500) , in mensageminc varchar(500) , in statusquerimentoinc int , in tipoRequisicaoinc int , in idLocalinc int)
+BEGIN
+INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento` ) VALUES ( tituloinc , mensageminc  , statusquerimentoinc ,  tipoRequisicaoinc  );
+set @idRequisicaoInc =  LAST_INSERT_ID();
+
+INSERT INTO `controlepatrimonio`.`patrimonio_has_usuario`(`Patrimonio_idPatrimonio`,`Requisicao_idRequisicao`,`Usuario_idUsuario`)VALUES(idpatrimonioinc, @idRequisicaoInc , idusuarioinc);
+
+if idlocalinc != 0 then
+INSERT INTO `controlepatrimonio`.`local_has_patrimonio`(`local_idLocal`,`requisicao_idRequisicao`)VALUES(idlocalinc ,@idRequisicaoInc);
+end if ;
 END$$
 
 DELIMITER ;
@@ -209,7 +228,27 @@ UPDATE `controlepatrimonio`.`requisicao` SET `dataFinalizacao` = now() WHERE `id
 END$$
 
 DELIMITER ;
-INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES ('Administrador', '0', 'admin', 'admin');
+USE `controlepatrimonio`;
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `controlepatrimonio`.`requisicao_AFTER_UPDATE`
+AFTER UPDATE ON `controlepatrimonio`.`requisicao`
+FOR EACH ROW
+BEGIN
+set @idPatrimonio = (select patrimonio_idpatrimonio from patrimonio_has_usuario join requisicao on idrequisicao = requisicao_idrequisicao where new.idrequisicao = idrequisicao limit 1);
+
+if NEW.dataFinalizacao is not null then
+DELETE FROM `controlepatrimonio`.`local_has_patrimonio`
+WHERE @idPatrimonio = patrimonio_idpatrimonio ;
+end if;
+END$$
+
+
+DELIMITER ;
+INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES ('administrador', '0', 'admin', 'ADMIN');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

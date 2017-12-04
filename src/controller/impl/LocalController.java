@@ -5,6 +5,7 @@ import java.util.List;
 import controler.ILocalControler;
 import dao.LocalDAO;
 import entity.Local;
+import entity.Requisicao;
 
 public class LocalController implements ILocalControler {
 
@@ -21,6 +22,11 @@ public class LocalController implements ILocalControler {
 	public List<Local> listarLocais() {
 		LocalDAO ldao = new LocalDAO();
 		return ldao.listarTodos();
+	}
+	@Override
+	public Local BuscarLocalPorRequisicao(Requisicao req) {
+		LocalDAO ldao = new LocalDAO();
+		return ldao.BuscarLocalPorRequisicao( req);
 	}
 
 	@Override

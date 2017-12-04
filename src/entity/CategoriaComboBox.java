@@ -25,6 +25,7 @@ public class CategoriaComboBox extends AbstractListModel<Categoria> implements C
 
 	@Override
 	public Categoria getElementAt(int index) {
+
 		return lista.get(index);
 	}
 

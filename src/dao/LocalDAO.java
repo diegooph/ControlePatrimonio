@@ -8,9 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.PermisaoEnum;
-import entity.Usuario;
 import entity.Local;
+import entity.PermisaoEnum;
+import entity.Requisicao;
+import entity.Usuario;
 import util.ConnectionUtil;
 
 public class LocalDAO {
@@ -105,6 +106,35 @@ public class LocalDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Local BuscarLocalPorRequisicao(Requisicao req) {
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select * from local join usuario on usuario.idusuario = local.usuario_idusuario join local_has_patrimonio on local_idLocal = idlocal;";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				Local local = new Local();
+				local.setIdLocal(rs.getInt("idLocal"));
+				local.setNomeLocal(rs.getString("nomeLocal"));
+				// Setar usuario
+
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("Usuario_idUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+				usuario.setSenha(rs.getString("senhaUsuario"));
+				usuario.setUsername(rs.getString("username"));
+				// concatenar usuario
+				local.setUsuarioGestor(usuario);
+
+				return local;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

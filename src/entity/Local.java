@@ -46,4 +46,9 @@ public class Local {
 		this.usuarioGestor = usuarioGestor;
 	}
 
+	@Override
+	public String toString() {
+		return NomeLocal ;
+	}
+
 }

@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -10,8 +9,8 @@ import java.util.Date;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -27,13 +26,12 @@ import javax.swing.border.TitledBorder;
 import controller.impl.RequisicaoController;
 import controller.impl.UsuarioController;
 import entity.Local;
+import entity.LocalComboBox;
 import entity.Patrimonio;
 import entity.Requisicao;
 import entity.StatusRequerimentoEnum;
 import entity.TipoRequerimentoEnum;
 import entity.Usuario;
-
-import javax.swing.DropMode;
 
 public class CadastrarRequisicaoUI extends JInternalFrame {
 	/**
@@ -47,6 +45,8 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	JRadioButton rdbtnDevolucao;
 	JRadioButton rdbtnRequirirPatrimonio;
 	private JEditorPane jtfMensagem;
+	private JComboBox<Local> jcbLocal;
+	private Local local;
 
 	/**
 	 * Launch the application.
@@ -58,7 +58,8 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 	 * 
 	 * /** Create the frame.
 	 */
-	public CadastrarRequisicaoUI(TipoRequerimentoEnum tipoRequerimentoEnum , Patrimonio patrimonio, Requisicao requisicao, Local local) {
+	public CadastrarRequisicaoUI(TipoRequerimentoEnum tipoRequerimentoEnum, Patrimonio patrimonio,
+			Requisicao requisicao, Local local) {
 		this.requisicaoUpdate = requisicao;
 		setMaximizable(true);
 		setClosable(true);
@@ -66,7 +67,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		setBounds(100, 100, 661, 389);
 		usuario = UsuarioController.getUsuario();
 		setVisible(true);
-
+		this.local = local;
 		JPanel jpNovoModeloPatrimonio = new JPanel();
 		jpNovoModeloPatrimonio.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
 				"Nova Requisi\u00E7\u00E3o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -85,7 +86,9 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 					requisicaoUpdate.setMensagem(jtfMensagem.getText());
 					requisicaoUpdate.setDataRequisicao(new Date());
 					requisicaoUpdate.setStatusRequerimento(StatusRequerimentoEnum.PENDENTE);
-					rcon.salvar(patrimonio, requisicaoUpdate, local);
+					CadastrarRequisicaoUI.this.local = (Local) jcbLocal.getSelectedItem();
+				
+					rcon.salvar(patrimonio, requisicaoUpdate, 	CadastrarRequisicaoUI.this.local);
 					JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
@@ -141,45 +144,63 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 		buttonGroup.add(rdbtnRequirirPatrimonio);
 
 		JLabel lblTipoDeRequisio = new JLabel("Tipo de Requisi\u00E7\u00E3o:");
+
+		JLabel lblDetinado = new JLabel("Detinado \u00E0:");
+
+		jcbLocal = new JComboBox<Local>();
+		jcbLocal.setModel(new LocalComboBox());
+
 		GroupLayout gl_jpNovoModeloPatrimonio = new GroupLayout(jpNovoModeloPatrimonio);
-		gl_jpNovoModeloPatrimonio.setHorizontalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(
-				Alignment.LEADING)
-				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGroup(
-						gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGap(48)
-										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-												.addComponent(lblNome).addComponent(lblMensagem)))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
-										.addComponent(lblTipoDeRequisio)))
-						.addGap(4)
-						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
+		gl_jpNovoModeloPatrimonio.setHorizontalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGroup(gl_jpNovoModeloPatrimonio
+						.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGap(73).addComponent(lblNome)
+								.addGap(4).addComponent(jtfTitulo, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE))
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
+								.addComponent(lblTipoDeRequisio).addGap(4)
 								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addComponent(rdbtnDevolucao)
 										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(rdbtnRequirirPatrimonio))
-								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE))
-						.addGap(19)));
+										.addComponent(rdbtnRequirirPatrimonio)))
+						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGap(48)
+								.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblDetinado).addComponent(lblMensagem))
+								.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addGap(4)
+												.addComponent(jtfMensagem, GroupLayout.DEFAULT_SIZE, 513,
+														Short.MAX_VALUE))
+										.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
+												.addPreferredGap(ComponentPlacement.RELATED).addComponent(jcbLocal,
+														GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))))
+						.addContainerGap()));
 		gl_jpNovoModeloPatrimonio.setVerticalGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addContainerGap()
-						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup().addComponent(lblNome)
-										.addGap(41))
-								.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-										.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(18)
-										.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
-												.addComponent(rdbtnDevolucao).addComponent(lblTipoDeRequisio)
-												.addComponent(rdbtnRequirirPatrimonio))))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
-								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblMensagem))
-						.addGap(32)));
+								.addGroup(Alignment.TRAILING,
+										gl_jpNovoModeloPatrimonio.createSequentialGroup().addComponent(lblNome)
+												.addPreferredGap(ComponentPlacement.UNRELATED))
+								.addGroup(Alignment.TRAILING,
+										gl_jpNovoModeloPatrimonio.createSequentialGroup()
+												.addComponent(jtfTitulo, GroupLayout.PREFERRED_SIZE, 20,
+														GroupLayout.PREFERRED_SIZE)
+												.addGap(7)))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
+								.addComponent(rdbtnDevolucao).addComponent(lblTipoDeRequisio)
+								.addComponent(rdbtnRequirirPatrimonio))
+						.addGap(11)
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDetinado).addComponent(jcbLocal, GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(18)
+						.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMensagem)
+								.addComponent(jtfMensagem, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap()));
 		jpNovoModeloPatrimonio.setLayout(gl_jpNovoModeloPatrimonio);
 		getContentPane().setLayout(groupLayout);
 		preencherCamposParaEdicao();
-		RadioButonSelected();
+
+		jcbLocal.setSelectedIndex(0);
 	}
 
 	public TipoRequerimentoEnum RadioButonSelect() {
@@ -211,8 +232,8 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 
 			jtfTitulo.setText(requisicaoUpdate.getTitulo());
 			jtfMensagem.setText(requisicaoUpdate.getMensagem());
+			jcbLocal.setSelectedItem(this.local);
 			RadioButonSelect();
 		}
 	}
-
 }

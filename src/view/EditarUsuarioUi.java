@@ -137,7 +137,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 						}
 					}
 				}
-
+				dispose();
 			}
 		});
 		btnCadastrarse.setBounds(83, 322, 113, 23);
@@ -218,7 +218,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 							JOptionPane.showInternalMessageDialog(getParent(),
 									"Você Deletou Sua conta \n Fassa Outro cadastro para Acessar novamente o Sistema!");
 							UsuarioController.setUsuario(null);
-						PrincipalUI.mntmSair.doClick();
+							PrincipalUI.mntmSair.doClick();
 						}
 					} catch (Exception es) {
 

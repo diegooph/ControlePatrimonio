@@ -45,6 +45,7 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 	 */
 
 	public ConsultaUsuarioUI() {
+		setClosable(true);
 		setTitle("Consulta de Usuarios");
 		setBounds(100, 100, 630, 468);
 		AtualizarTablemodel();
