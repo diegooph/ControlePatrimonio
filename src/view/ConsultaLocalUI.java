@@ -69,14 +69,12 @@ public class ConsultaLocalUI extends JInternalFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				getParent().add(
-						new CadastrarLocalUI(tmodel.getLocal(jtListalocais.getSelectedRow())),
-						0);
+				getParent().add(new CadastrarLocalUI(tmodel.getLocal(jtListalocais.getSelectedRow())), 0);
 
 			}
 		});
 
-	btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LocalController lcont = new LocalController();
@@ -85,47 +83,40 @@ public class ConsultaLocalUI extends JInternalFrame {
 				JOptionPane.showMessageDialog(null, "Local excluído com sucesso");
 			}
 		});
-		
+
 		JButton btnVisualizarPatrimonios = new JButton("Visualizar Patrimonios");
 		btnVisualizarPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultaPatrimoniosLocalUI consultaMeusPatrimonioUI = new ConsultaPatrimoniosLocalUI(tmodel.getLocal(jtListalocais.getSelectedRow()));
-				getParent().add(consultaMeusPatrimonioUI,0);
-				
+				ConsultaPatrimoniosLocalUI consultaMeusPatrimonioUI = new ConsultaPatrimoniosLocalUI(
+						tmodel.getLocal(jtListalocais.getSelectedRow()));
+				getParent().add(consultaMeusPatrimonioUI, 0);
+
 			}
 		});
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addContainerGap())
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(41)
-					.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
-					.addGap(28)
-					.addComponent(btnVisualizarPatrimonios)
-					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-					.addComponent(btnExcluir)
-					.addGap(41))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-					.addGap(47)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnEditar)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnExcluir)
-							.addComponent(btnVisualizarPatrimonios)))
-					.addContainerGap())
-		);
-		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] {btnEditar, btnExcluir, btnVisualizarPatrimonios});
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnEditar, btnExcluir, btnVisualizarPatrimonios});
+		groupLayout
+				.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+								.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addContainerGap())
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup().addGap(41)
+								.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+								.addGap(28).addComponent(btnVisualizarPatrimonios)
+								.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+								.addComponent(btnExcluir).addGap(41)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE).addGap(47)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnEditar).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnExcluir).addComponent(btnVisualizarPatrimonios)))
+						.addContainerGap()));
+		groupLayout.linkSize(SwingConstants.VERTICAL,
+				new Component[] { btnEditar, btnExcluir, btnVisualizarPatrimonios });
+		groupLayout.linkSize(SwingConstants.HORIZONTAL,
+				new Component[] { btnEditar, btnExcluir, btnVisualizarPatrimonios });
 
 		JScrollPane jspTabelaProduto = new JScrollPane();
 
@@ -144,14 +135,16 @@ public class ConsultaLocalUI extends JInternalFrame {
 						.addContainerGap()));
 		jpPesquisa.setLayout(gl_jpPesquisa);
 		getContentPane().setLayout(groupLayout);
-if (UsuarioController.getUsuario().getPermisaoUsuario()==PermisaoEnum.USUARIO) {
-	 funcaoadmin();
-}
+		if (UsuarioController.getUsuario().getPermisaoUsuario() == PermisaoEnum.USUARIO) {
+			funcaoadmin();
+		}
 	}
-private void funcaoadmin(){
-	btnEditar.setVisible(false);
-	btnExcluir.setVisible(false);
-}
+
+	private void funcaoadmin() {
+		btnEditar.setVisible(false);
+		btnExcluir.setVisible(false);
+	}
+
 	private TableModel AtualizarTablemodel() {
 		tmodel = new LocalTableModel();
 
