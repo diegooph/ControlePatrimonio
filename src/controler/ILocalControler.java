@@ -15,4 +15,6 @@ public interface ILocalControler {
 
 	Local BuscarLocalPorRequisicao(Requisicao req);
 
+	List<Local> listarLocaisPorUsuario();
+
 }

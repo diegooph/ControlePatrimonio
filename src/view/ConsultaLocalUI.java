@@ -26,11 +26,16 @@ import controller.impl.PatrimonioController;
 import controller.impl.UsuarioController;
 import entity.CategoriaTableModel;
 import entity.LocalTableModel;
+import entity.PermisaoEnum;
 
 public class ConsultaLocalUI extends JInternalFrame {
 	private JTable jtListalocais;
 
 	private LocalTableModel tmodel;
+
+	private JButton btnExcluir;
+
+	private JButton btnEditar;
 
 	/**
 	 * Launch the application.
@@ -60,7 +65,7 @@ public class ConsultaLocalUI extends JInternalFrame {
 		jpPesquisa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista Locais",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JButton btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -71,7 +76,7 @@ public class ConsultaLocalUI extends JInternalFrame {
 			}
 		});
 
-		JButton btnExcluir = new JButton("Excluir");
+	btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LocalController lcont = new LocalController();
@@ -92,37 +97,35 @@ public class ConsultaLocalUI extends JInternalFrame {
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(146)
-							.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
-							.addGap(22)
-							.addComponent(btnExcluir)))
+					.addContainerGap()
+					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addContainerGap())
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(269, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(41)
+					.addComponent(btnEditar, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+					.addGap(28)
 					.addComponent(btnVisualizarPatrimonios)
-					.addGap(264))
+					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+					.addComponent(btnExcluir)
+					.addGap(41))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnVisualizarPatrimonios)
-					.addGap(13)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(jpPesquisa, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+					.addGap(47)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnEditar)
-						.addComponent(btnExcluir))
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnExcluir)
+							.addComponent(btnVisualizarPatrimonios)))
 					.addContainerGap())
 		);
-		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnEditar, btnExcluir});
+		groupLayout.linkSize(SwingConstants.VERTICAL, new Component[] {btnEditar, btnExcluir, btnVisualizarPatrimonios});
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnEditar, btnExcluir, btnVisualizarPatrimonios});
 
 		JScrollPane jspTabelaProduto = new JScrollPane();
 
@@ -141,9 +144,14 @@ public class ConsultaLocalUI extends JInternalFrame {
 						.addContainerGap()));
 		jpPesquisa.setLayout(gl_jpPesquisa);
 		getContentPane().setLayout(groupLayout);
-
+if (UsuarioController.getUsuario().getPermisaoUsuario()==PermisaoEnum.USUARIO) {
+	 funcaoadmin();
+}
 	}
-
+private void funcaoadmin(){
+	btnEditar.setVisible(false);
+	btnExcluir.setVisible(false);
+}
 	private TableModel AtualizarTablemodel() {
 		tmodel = new LocalTableModel();
 

@@ -23,6 +23,12 @@ public class LocalController implements ILocalControler {
 		LocalDAO ldao = new LocalDAO();
 		return ldao.listarTodos();
 	}
+	
+	@Override
+	public List<Local> listarLocaisPorUsuario() {
+		LocalDAO ldao = new LocalDAO();
+		return ldao.listarLocaisPorUsuario();
+	}
 	@Override
 	public Local BuscarLocalPorRequisicao(Requisicao req) {
 		LocalDAO ldao = new LocalDAO();

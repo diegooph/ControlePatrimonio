@@ -102,33 +102,35 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout
-								.createParallelGroup(Alignment.LEADING).addGroup(
-										groupLayout.createSequentialGroup().addContainerGap().addComponent(
-												jpPatrimonios, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
-								.addGroup(groupLayout.createSequentialGroup().addGap(75)
-										.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 95,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(btnSolicitarPatrimonio)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnExcluirPatrimonio,
-												GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-						.addGap(8)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnExcluirPatrimonio, Alignment.TRAILING)
-								.addComponent(btnSolicitarPatrimonio, Alignment.TRAILING)
-								.addComponent(btnEditarPatrimonio, Alignment.TRAILING))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		groupLayout.linkSize(SwingConstants.VERTICAL,
-				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
-		groupLayout.linkSize(SwingConstants.HORIZONTAL,
-				new Component[] { btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio });
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(jpPatrimonios, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(58)
+							.addComponent(btnEditarPatrimonio, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnSolicitarPatrimonio)
+							.addGap(18)
+							.addComponent(btnExcluirPatrimonio, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addGap(8)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnEditarPatrimonio)
+						.addComponent(btnSolicitarPatrimonio)
+						.addComponent(btnExcluirPatrimonio))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSolicitarPatrimonio, btnEditarPatrimonio, btnExcluirPatrimonio});
 
 		jspTabelaPatrimonio = new JScrollPane();
 

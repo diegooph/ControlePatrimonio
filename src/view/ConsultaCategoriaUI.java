@@ -24,11 +24,16 @@ import controller.impl.CategoriaController;
 import controller.impl.PatrimonioController;
 import controller.impl.UsuarioController;
 import entity.CategoriaTableModel;
+import entity.PermisaoEnum;
 
 public class ConsultaCategoriaUI extends JInternalFrame {
 	private JTable jtListaCategoria;
 
 	private CategoriaTableModel pModel;
+
+	private JButton btnEditar;
+
+	private JButton btnExcluir;
 
 	/**
 	 * Launch the application.
@@ -58,18 +63,15 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 		jpPesquisa.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Lista Categorias",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JButton btnEditar = new JButton("Editar");
+		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				getParent().add(
-						new CadastrarCategoriaUI( pModel.getCategoria(jtListaCategoria.getSelectedRow())),
-						0);
+				getParent().add(new CadastrarCategoriaUI(pModel.getCategoria(jtListaCategoria.getSelectedRow())), 0);
 
 			}
 		});
-
-		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CategoriaController Ccont = new CategoriaController();
@@ -114,7 +116,10 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 						.addContainerGap()));
 		jpPesquisa.setLayout(gl_jpPesquisa);
 		getContentPane().setLayout(groupLayout);
-
+		if (UsuarioController.getUsuario().getPermisaoUsuario() == PermisaoEnum.USUARIO) {
+			btnEditar.setVisible(false);
+			btnExcluir.setVisible(false);
+		}
 	}
 
 	private TableModel AtualizarTablemodel() {

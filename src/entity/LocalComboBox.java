@@ -20,7 +20,7 @@ public class LocalComboBox extends AbstractListModel<Local> implements ComboBoxM
 	public LocalComboBox() {
 		super();
 		this.localControler = new LocalController();
-		this.lista = localControler.listarLocais();
+		this.lista = localControler.listarLocaisPorUsuario();
 		Local localdeff = new Local();
 		localdeff.setNomeLocal("Uso particular ");
 		lista.add(0, localdeff);

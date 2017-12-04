@@ -17,9 +17,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import controller.impl.PatrimonioController;
+import controller.impl.UsuarioController;
 import entity.Local;
 import entity.LocalPatrimonioTableModel;
 import entity.Patrimonio;
+import entity.PermisaoEnum;
 import entity.Requisicao;
 import entity.TipoRequerimentoEnum;
 
@@ -31,6 +33,8 @@ public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 	private JTable jtListaClientes;
 	private JScrollPane jspTabelaPatrimonio;
 	private Local local;
+	private JButton btnSolicitarPatrimonio;
+
 	/**
 	 * Launch the application.
 	 *
@@ -56,43 +60,36 @@ public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JButton btnSolicitarPatrimonio = new JButton("Solicitar Devolução");
+		btnSolicitarPatrimonio = new JButton("Solicitar Devolução");
 		btnSolicitarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcon = new PatrimonioController();
 				Patrimonio patrimonio = lModel.getPatrimonio(jtListaClientes.getSelectedRow());
 				try {
-				
-					getParent().add(new CadastrarRequisicaoUI(TipoRequerimentoEnum.DEVOLUCAO , patrimonio, new Requisicao(), null), 0);
+
+					getParent().add(new CadastrarRequisicaoUI(TipoRequerimentoEnum.DEVOLUCAO, patrimonio,
+							new Requisicao(), null), 0);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
-				
+
 				}
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(jpPatrimonios, GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(193)
-							.addComponent(btnSolicitarPatrimonio, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-					.addGap(8)
-					.addComponent(btnSolicitarPatrimonio)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(jpPatrimonios,
+								GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup().addGap(193).addComponent(btnSolicitarPatrimonio,
+								GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(jpPatrimonios, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+						.addGap(8).addComponent(btnSolicitarPatrimonio)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jspTabelaPatrimonio = new JScrollPane();
 
@@ -111,14 +108,16 @@ public class ConsultaPatrimoniosLocalUI extends JInternalFrame {
 						.addContainerGap()));
 		jpPatrimonios.setLayout(gl_jpPatrimonios);
 		getContentPane().setLayout(groupLayout);
-
+		if (UsuarioController.getUsuario().getPermisaoUsuario() == PermisaoEnum.USUARIO) {
+			btnSolicitarPatrimonio.setVisible(false);
+		}
 	}
 
 	LocalPatrimonioTableModel lModel;
 
 	private TableModel AtualizarTablemodel() {
 		lModel = new LocalPatrimonioTableModel(local);
-System.out.println(local.getIdLocal());
+
 		return lModel;
 	}
 }

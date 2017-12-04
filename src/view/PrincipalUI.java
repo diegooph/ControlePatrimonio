@@ -59,7 +59,7 @@ public class PrincipalUI extends JFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		mnPatrimonios = new JMenu("Patrimonios");
 		menuBar.add(mnPatrimonios);
 
@@ -67,12 +67,12 @@ public class PrincipalUI extends JFrame {
 		mntmListaPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaPatrimonioUI cadastrarPatrimonioUI = new ConsultaPatrimonioUI();
-				
-				contentPane.add(cadastrarPatrimonioUI,0);
+
+				contentPane.add(cadastrarPatrimonioUI, 0);
 			}
 		});
 		mnPatrimonios.add(mntmListaPatrimonios);
-		
+
 		JMenuItem mntmMeusPatrimonios = new JMenuItem("Meus Patrimonios");
 		mntmMeusPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -89,26 +89,24 @@ public class PrincipalUI extends JFrame {
 		mntmListaDeCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaCategoriaUI consultaCategoriaUI = new ConsultaCategoriaUI();
-				contentPane.add(consultaCategoriaUI,0);
+				contentPane.add(consultaCategoriaUI, 0);
 
 			}
 		});
 		mnCategorias.add(mntmListaDeCategoria);
 
-		 mnRequerimentos = new JMenu("Requerimentos");
+		mnRequerimentos = new JMenu("Requerimentos");
 		menuBar.add(mnRequerimentos);
 
-	
 		JMenuItem mntmMeusRequerimentos = new JMenuItem("Meus Requerimentos");
 		mntmMeusRequerimentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(false);
-				contentPane.add(consultaRequisicaoUI,0);
+				contentPane.add(consultaRequisicaoUI, 0);
 
 			}
 		});
 		mnRequerimentos.add(mntmMeusRequerimentos);
-	
 
 		mnLocais = new JMenu("Locais");
 		menuBar.add(mnLocais);
@@ -116,8 +114,8 @@ public class PrincipalUI extends JFrame {
 		JMenuItem mntmListaDeLocais = new JMenuItem("Lista de Locais");
 		mntmListaDeLocais.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			ConsultaLocalUI consultaLocalUI = new ConsultaLocalUI();
-			contentPane.add(consultaLocalUI, 0);
+				ConsultaLocalUI consultaLocalUI = new ConsultaLocalUI();
+				contentPane.add(consultaLocalUI, 0);
 			}
 		});
 		mnLocais.add(mntmListaDeLocais);
@@ -139,9 +137,9 @@ public class PrincipalUI extends JFrame {
 		mntmConfiguraes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EditarUsuarioUi editarUsuarioUi = new EditarUsuarioUi();
-				contentPane.add(editarUsuarioUi,0);
-				
-				if (UsuarioController.getUsuario()==null) {
+				contentPane.add(editarUsuarioUi, 0);
+
+				if (UsuarioController.getUsuario() == null) {
 					mntmSair.doClick();
 				}
 
@@ -154,7 +152,7 @@ public class PrincipalUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				ConsultaUsuarioUI consultaUsuarioUI = new ConsultaUsuarioUI();
-				contentPane.add(consultaUsuarioUI,0);
+				contentPane.add(consultaUsuarioUI, 0);
 			}
 		});
 		mnUsuario.add(mntmListaDeUsuarios);
@@ -182,60 +180,55 @@ public class PrincipalUI extends JFrame {
 		gl_contentPane.setVerticalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING).addGap(0, 368, Short.MAX_VALUE));
 		contentPane.setLayout(gl_contentPane);
+		funcoesAdmin();
 
-		if (usuario.getPermisaoUsuario() == PermisaoEnum.ADMIN) {
-			funcoesAdmin();
-		}
-		
-		
 	}
 
 	private void funcoesAdmin() {
-		JMenuItem mntmRequisiccoes = new JMenuItem("Requisic\u00F5es");
-		mnRequerimentos.add(mntmRequisiccoes);
-		mntmRequisiccoes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
-				contentPane.add(consultaRequisicaoUI, 0);
-			}
-		});
-		
-		JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimonio");
-		mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				CadastrarPatrimonioUI cadastrarPatrimonioUI
-				= new CadastrarPatrimonioUI(usuario);
-				contentPane.add(cadastrarPatrimonioUI,0);
+		if (usuario.getPermisaoUsuario() == PermisaoEnum.ADMIN) {
+			JMenuItem mntmRequisiccoes = new JMenuItem("Requisic\u00F5es");
+			mnRequerimentos.add(mntmRequisiccoes);
+			mntmRequisiccoes.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ConsultaRequisicaoUI consultaRequisicaoUI = new ConsultaRequisicaoUI(true);
+					contentPane.add(consultaRequisicaoUI, 0);
+				}
+			});
 
-			}
-		});
-		mnPatrimonios.add(mntmAdicionarNovoPatrimonio);
+			JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimonio");
+			mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					CadastrarPatrimonioUI cadastrarPatrimonioUI = new CadastrarPatrimonioUI(usuario);
+					contentPane.add(cadastrarPatrimonioUI, 0);
 
-		JMenuItem mntmAdicionarLocal = new JMenuItem("Adicionar Local");
-		mntmAdicionarLocal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				CadastrarLocalUI cll = new CadastrarLocalUI(usuario);
-				contentPane.add(cll, 0);
-			}
-		});
-		mnLocais.add(mntmAdicionarLocal);
-		JMenuItem mntmAdicionarNovaCategoria = new JMenuItem("Adicionar Nova Categoria");
-		mntmAdicionarNovaCategoria.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				CadastrarCategoriaUI cadastrarCategoriaUI = new CadastrarCategoriaUI();
-				contentPane.add(cadastrarCategoriaUI,0);
+				}
+			});
+			mnPatrimonios.add(mntmAdicionarNovoPatrimonio);
 
-			}
+			JMenuItem mntmAdicionarLocal = new JMenuItem("Adicionar Local");
+			mntmAdicionarLocal.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					CadastrarLocalUI cll = new CadastrarLocalUI(usuario);
+					contentPane.add(cll, 0);
+				}
+			});
+			mnLocais.add(mntmAdicionarLocal);
+			JMenuItem mntmAdicionarNovaCategoria = new JMenuItem("Adicionar Nova Categoria");
+			mntmAdicionarNovaCategoria.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					CadastrarCategoriaUI cadastrarCategoriaUI = new CadastrarCategoriaUI();
+					contentPane.add(cadastrarCategoriaUI, 0);
 
-		});
-		mnCategorias.add(mntmAdicionarNovaCategoria,0);
+				}
 
+			});
+			mnCategorias.add(mntmAdicionarNovaCategoria, 0);
+
+		}
 	}
 
 	public JMenuItem getMntmSair() {
 		return mntmSair;
 	}
-
-
 
 }

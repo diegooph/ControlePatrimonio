@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.impl.UsuarioController;
 import entity.Local;
 import entity.PermisaoEnum;
 import entity.Requisicao;
@@ -135,6 +136,39 @@ public class LocalDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public List<Local> listarLocaisPorUsuario() {
+		try {
+			
+			String sql = "select * from local join usuario on usuario.idusuario = local.usuario_idusuario where idusuario= ? ";
+			PreparedStatement pmtmt = con.prepareStatement(sql);
+			pmtmt.setInt(1, UsuarioController.getUsuario().getIdUsuario());
+			ResultSet rs = pmtmt.executeQuery();
+
+			while (rs.next()) {
+				Local local = new Local();
+				local.setIdLocal(rs.getInt("idLocal"));
+				local.setNomeLocal(rs.getString("nomeLocal"));
+				// Setar usuario
+
+				Usuario usuario = new Usuario();
+				usuario.setIdUsuario(rs.getInt("Usuario_idUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
+				usuario.setSenha(rs.getString("senhaUsuario"));
+				usuario.setUsername(rs.getString("username"));
+				// concatenar usuario
+				local.setUsuarioGestor(usuario);
+
+				listaLocals.add(local);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaLocals;
 	}
 
 }
