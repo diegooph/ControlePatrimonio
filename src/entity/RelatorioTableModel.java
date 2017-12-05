@@ -14,17 +14,10 @@ public class RelatorioTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Date datainicio;
+	private Date datafim;
 	private ArrayList<Relatorio> listaDeRelatorios;
 	private String[] colunas = new String[] { "Modelo Categoria", "Quantidade Solicitada", "Quantidade Deferidas",
 			"QuantidadeIndeferidas", "Quantidade destinadas para Locais" };
-	private Date datafim;
-
-	public RelatorioTableModel() {
-		datafim = new Date();
-		datainicio = new Date(00);
-		listarRelatorios();
-
-	}
 
 	public RelatorioTableModel(Date datainicio, Date datafim) {
 		super();

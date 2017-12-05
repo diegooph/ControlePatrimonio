@@ -167,7 +167,7 @@ public class PatrimonioDAO {
 			String sql = "select `idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico`, `Categoria_idCategoria`, `idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`, "
 					+ " `idCategoria`, `descricao`, `modelo`" + "from patrimonio "
 					+ "join categoria on categoria.idCategoria = patrimonio.Categoria_idCategoria "
-					+ "left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) where usuario.idUsuario = ? ;";
+					+ " left join usuario on usuario.idUsuario =`controlepatrimonio`.`selecionarusuario`(idPatrimonio) where usuario.idUsuario = ? ;";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, UsuarioController.getUsuario().getIdUsuario());
 			

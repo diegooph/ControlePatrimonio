@@ -3,8 +3,8 @@ package entity;
 public enum PermisaoEnum {
 
 	ADMIN 		("Administrador",0),
-	USUARIO	 	("Usuario",1),
-	VISITANTE	("Visitante",2);
+	USUARIO	 	("Usuario",1);
+	
 
 	private final String descricao;
 	private final int codigo;
@@ -25,8 +25,7 @@ public enum PermisaoEnum {
 			return PermisaoEnum.ADMIN;
 		case 1:
 			return PermisaoEnum.USUARIO;
-		case 2:
-			return PermisaoEnum.VISITANTE;
+	
 		default:
 			return null;
 		}

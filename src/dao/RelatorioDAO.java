@@ -24,6 +24,8 @@ public class RelatorioDAO {
 			PreparedStatement pmtmt = con.prepareStatement(sql);
 			pmtmt.setDate(1, new java.sql.Date(datainicio.getTime()));
 			pmtmt.setDate(2, new java.sql.Date(datafim.getTime()));
+			
+			
 			ResultSet rs = pmtmt.executeQuery();
 			
 			while (rs.next()) {
@@ -55,7 +57,7 @@ public class RelatorioDAO {
 
 			Relatorio.setQuantidadePatrimonios(rs.getInt("QuantidadePatrimonios"));
 			Relatorio.setQuantidadeUsados(rs.getInt("QuantosUsados"));
-			Relatorio.setQuantidadeLivres(Relatorio.getQuantidadeUsados() - Relatorio.getQuantidadePatrimonios());
+			Relatorio.setQuantidadeLivres(  Relatorio.getQuantidadePatrimonios()-Relatorio.getQuantidadeUsados());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

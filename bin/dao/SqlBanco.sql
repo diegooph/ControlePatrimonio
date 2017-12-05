@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`usuario` (
   `username` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 29
+AUTO_INCREMENT = 32
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
   `dataFinalizacao` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`idRequisicao`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 66
+AUTO_INCREMENT = 82
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 18
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -159,6 +159,33 @@ DEFAULT CHARACTER SET = utf8;
 USE `controlepatrimonio` ;
 
 -- -----------------------------------------------------
+-- Placeholder table for view `controlepatrimonio`.`listarrelatoriostatico`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`listarrelatoriostatico` (`QuantidadePatrimonios` INT, `QuantosUsados` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `controlepatrimonio`.`selecionarpatrimoniolocais`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`selecionarpatrimoniolocais` (`idPatrimonio` INT, `nomePatrimonio` INT, `codigo` INT, `detalhamentoTecnico` INT, `Categoria_idCategoria` INT, `idCategoria` INT, `descricao` INT, `modelo` INT, `local_idlocal` INT);
+
+-- -----------------------------------------------------
+-- procedure RelatorioCategorias
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RelatorioCategorias`(dataInicio date , dataFim date)
+BEGIN
+SELECT modelo , getQuantidadeSolicitada(idCategoria, dataInicio , dataFim) as QuantidadeSolicitada ,
+				GetquantidadeIndeferida(idCategoria, dataInicio , dataFim) as quantidadeIndeferida,
+				getQuantidadeDeferidas (idCategoria, dataInicio , dataFim) as QuantidadeDeferida,
+                getQuantidadeParaLocais(idCategoria, dataInicio , dataFim) as quantidadeParaLocais
+FROM controlepatrimonio.categoria ;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- procedure VerificarExclusaoUsuario
 -- -----------------------------------------------------
 
@@ -178,12 +205,86 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
+-- function getQuantidadeDeferidas
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `getQuantidadeDeferidas`(idcategoriainc int,dataInicio date , dataFim date) RETURNS int(11)
+BEGIN
+set @quantidadeParaLocais = (select count(idpatrimonio) from categoria 
+join patrimonio on idcategoria = categoria_idcategoria 
+join patrimonio_has_usuario on idpatrimonio = patrimonio_idpatrimonio 
+join requisicao on idrequisicao = patrimonio_has_usuario.requisicao_idRequisicao 
+where statusrequerimento = 0 and idcategoria = idcategoriainc and datafinalizacao between datainicio and datafim );
+RETURN @quantidadeParaLocais;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- function getQuantidadeIndeferida
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `getQuantidadeIndeferida`(idcategoriainc int,dataInicio date , dataFim date) RETURNS int(11)
+BEGIN
+set @quantidadeParaLocais = (select count(idpatrimonio) from categoria 
+join patrimonio on idcategoria = categoria_idcategoria 
+join patrimonio_has_usuario on idpatrimonio = patrimonio_idpatrimonio 
+join requisicao on idrequisicao = patrimonio_has_usuario.requisicao_idRequisicao 
+where statusrequerimento = 1 and idcategoria = idcategoriainc and datafinalizacao between datainicio and datafim);
+RETURN @quantidadeParaLocais;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- function getQuantidadeParaLocais
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `getQuantidadeParaLocais`(idcategoriaInc int,dataInicio date , dataFim date) RETURNS int(11)
+BEGIN
+set @quantidadeParaLocais = (select count(idpatrimonio) from categoria 
+join patrimonio on idcategoria = categoria_idcategoria 
+join patrimonio_has_usuario on idpatrimonio = patrimonio_idpatrimonio 
+join requisicao on idrequisicao = patrimonio_has_usuario.requisicao_idRequisicao 
+join local_has_patrimonio on local_has_patrimonio.requisicao_idRequisicao = idrequisicao 
+where statusrequerimento = 0 and idcategoria = idcategoriainc and datafinalizacao between datainicio and datafim);
+RETURN @quantidadeParaLocais
+;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- function getQuantidadeSolicitada
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `controlepatrimonio`$$
+CREATE DEFINER=`root`@`localhost` FUNCTION `getQuantidadeSolicitada`(idCategoriainc int,dataInicio date , dataFim date) RETURNS int(11)
+BEGIN
+set @quantidadeSolicitada = (select count(idpatrimonio) from categoria 
+join patrimonio on idcategoria = categoria_idcategoria 
+join patrimonio_has_usuario on idpatrimonio = patrimonio_idpatrimonio 
+join requisicao on idrequisicao = requisicao_idrequisicao 
+where idcategoria = idcategoriainc and datafinalizacao between datainicio and datafim); 
+RETURN @quantidadeSolicitada;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- procedure incert_requisicao_npn
 -- -----------------------------------------------------
 
 DELIMITER $$
 USE `controlepatrimonio`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `incert_requisicao_npn`(in tituloinc varchar(500) , in mensageminc varchar(500) , in statusquerimentoinc int , in tipoRequisicaoinc int , in idLocalinc int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `incert_requisicao_npn`(in tituloinc varchar(500) , in mensageminc varchar(500) , in statusquerimentoinc int , in tipoRequisicaoinc int , in idLocalinc int ,in idpatrimonioInc int , in idusuarioinc int)
 BEGIN
 INSERT INTO `controlepatrimonio`.`requisicao` (`titulo`, `mensagem`, `statusrequerimento`, `tipoRequerimento` ) VALUES ( tituloinc , mensageminc  , statusquerimentoinc ,  tipoRequisicaoinc  );
 set @idRequisicaoInc =  LAST_INSERT_ID();
@@ -191,7 +292,7 @@ set @idRequisicaoInc =  LAST_INSERT_ID();
 INSERT INTO `controlepatrimonio`.`patrimonio_has_usuario`(`Patrimonio_idPatrimonio`,`Requisicao_idRequisicao`,`Usuario_idUsuario`)VALUES(idpatrimonioinc, @idRequisicaoInc , idusuarioinc);
 
 if idlocalinc != 0 then
-INSERT INTO `controlepatrimonio`.`local_has_patrimonio`(`local_idLocal`,`requisicao_idRequisicao`)VALUES(idlocalinc ,@idRequisicaoInc);
+INSERT INTO `controlepatrimonio`.`local_has_patrimonio`(`local_idLocal`,`Requisicao_idRequisicao`)VALUES(idlocalinc ,@idRequisicaoInc);
 end if ;
 END$$
 
@@ -222,32 +323,26 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `upDataFinalizadoRequisisao`(in idre
 BEGIN
 
 set @idPatrimonio = (select patrimonio_idpatrimonio from  patrimonio_has_usuario  join requisicao on idrequisicao = requisicao_idrequisicao where idrequisicao = idrequisicaoinc );
-set @idrequisicaoReferente = (select idrequisicao from  patrimonio_has_usuario  join requisicao on idrequisicao = requisicao_idrequisicao where tiporequerimento = 1 and datafinalizacao is null and patrimonio_idpatrimonio = @idPatrimonio order by dataparecer limit 1);
+set @idrequisicaoReferente = (select idrequisicao from  patrimonio_has_usuario  join requisicao on idrequisicao = requisicao_idrequisicao where tiporequerimento = 1 and datafinalizacao is null and patrimonio_has_usuario.patrimonio_idPatrimonio = @idPatrimonio order by dataparecer limit 1);
 UPDATE `controlepatrimonio`.`requisicao` SET `dataFinalizacao` = now() WHERE `idRequisicao` =  @idrequisicaoReferente ;
 
 END$$
 
 DELIMITER ;
+
+-- -----------------------------------------------------
+-- View `controlepatrimonio`.`listarrelatoriostatico`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `controlepatrimonio`.`listarrelatoriostatico`;
 USE `controlepatrimonio`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `controlepatrimonio`.`listarrelatoriostatico` AS select (select count(`controlepatrimonio`.`patrimonio`.`idPatrimonio`) from `controlepatrimonio`.`patrimonio`) AS `QuantidadePatrimonios`,(select count(`controlepatrimonio`.`requisicao`.`idRequisicao`) from `controlepatrimonio`.`requisicao` where ((`controlepatrimonio`.`requisicao`.`statusrequerimento` = 0) and isnull(`controlepatrimonio`.`requisicao`.`dataFinalizacao`))) AS `QuantosUsados`;
 
-DELIMITER $$
-USE `controlepatrimonio`$$
-CREATE
-DEFINER=`root`@`localhost`
-TRIGGER `controlepatrimonio`.`requisicao_AFTER_UPDATE`
-AFTER UPDATE ON `controlepatrimonio`.`requisicao`
-FOR EACH ROW
-BEGIN
-set @idPatrimonio = (select patrimonio_idpatrimonio from patrimonio_has_usuario join requisicao on idrequisicao = requisicao_idrequisicao where new.idrequisicao = idrequisicao limit 1);
-
-if NEW.dataFinalizacao is not null then
-DELETE FROM `controlepatrimonio`.`local_has_patrimonio`
-WHERE @idPatrimonio = patrimonio_idpatrimonio ;
-end if;
-END$$
-
-
-DELIMITER ;
+-- -----------------------------------------------------
+-- View `controlepatrimonio`.`selecionarpatrimoniolocais`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `controlepatrimonio`.`selecionarpatrimoniolocais`;
+USE `controlepatrimonio`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `controlepatrimonio`.`selecionarpatrimoniolocais` AS select `controlepatrimonio`.`patrimonio`.`idPatrimonio` AS `idPatrimonio`,`controlepatrimonio`.`patrimonio`.`nomePatrimonio` AS `nomePatrimonio`,`controlepatrimonio`.`patrimonio`.`codigo` AS `codigo`,`controlepatrimonio`.`patrimonio`.`detalhamentoTecnico` AS `detalhamentoTecnico`,`controlepatrimonio`.`patrimonio`.`Categoria_idCategoria` AS `Categoria_idCategoria`,`controlepatrimonio`.`categoria`.`idCategoria` AS `idCategoria`,`controlepatrimonio`.`categoria`.`descricao` AS `descricao`,`controlepatrimonio`.`categoria`.`modelo` AS `modelo`,`controlepatrimonio`.`local_has_patrimonio`.`local_idLocal` AS `local_idlocal` from ((((`controlepatrimonio`.`patrimonio` join `controlepatrimonio`.`categoria` on((`controlepatrimonio`.`categoria`.`idCategoria` = `controlepatrimonio`.`patrimonio`.`Categoria_idCategoria`))) join `controlepatrimonio`.`patrimonio_has_usuario` on((`controlepatrimonio`.`patrimonio_has_usuario`.`Patrimonio_idPatrimonio` = `controlepatrimonio`.`patrimonio`.`idPatrimonio`))) join `controlepatrimonio`.`requisicao` on((`controlepatrimonio`.`patrimonio_has_usuario`.`Requisicao_idRequisicao` = `controlepatrimonio`.`requisicao`.`idRequisicao`))) join `controlepatrimonio`.`local_has_patrimonio` on((`controlepatrimonio`.`local_has_patrimonio`.`requisicao_idRequisicao` = `controlepatrimonio`.`requisicao`.`idRequisicao`))) where ((`controlepatrimonio`.`requisicao`.`statusrequerimento` = 0) and isnull(`controlepatrimonio`.`requisicao`.`dataFinalizacao`));
 INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES ('administrador', '0', 'admin', 'ADMIN');
 
 SET SQL_MODE=@OLD_SQL_MODE;
