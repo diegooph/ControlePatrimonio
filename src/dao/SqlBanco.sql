@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`categoria` (
   `modelo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`local` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`requisicao` (
   `dataFinalizacao` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`idRequisicao`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 82
+AUTO_INCREMENT = 90
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `controlepatrimonio`.`patrimonio` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
+AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -306,7 +306,13 @@ DELIMITER $$
 USE `controlepatrimonio`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `selecionarusuario`(idpatrimonio int) RETURNS int(11)
 BEGIN
-set @id =(SELECT Usuario_idUsuario from patrimonio_has_usuario join requisicao on requisicao.idrequisicao = patrimonio_has_usuario.Requisicao_idRequisicao where statusrequerimento = 0 and dataFinalizacao is null and patrimonio_has_usuario.Patrimonio_idPatrimonio = idpatrimonio order by dataparecer asc limit 1 );
+set @id =(SELECT Usuario_idUsuario from patrimonio_has_usuario 
+join requisicao on requisicao.idrequisicao = patrimonio_has_usuario.Requisicao_idRequisicao 
+left join local_has_patrimonio on local_has_patrimonio.requisicao_idRequisicao = idRequisicao 
+where local_has_patrimonio.requisicao_idRequisicao is null 
+and statusrequerimento = 0 and dataFinalizacao is null 
+and patrimonio_has_usuario.Patrimonio_idPatrimonio = idpatrimonio 
+order by dataparecer asc limit 1 );
 
 RETURN @id;
 END$$
