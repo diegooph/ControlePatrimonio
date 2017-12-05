@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controller.impl.UsuarioController;
 import entity.Categoria;
 import entity.Local;
@@ -281,8 +283,9 @@ public class PatrimonioDAO {
 			pstmt.setInt(1, patrimonio.getIdPatrimonio());
 
 			pstmt.execute();
+			JOptionPane.showMessageDialog(null, "Patrimônio excluído com sucesso");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Certifique-se que esse patrimônio e não tenha nenhum registro sobre ele");
 		}
 	}
 

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import entity.Categoria;
 import util.ConnectionUtil;
 
@@ -90,8 +93,9 @@ public class CategoriaDAO {
 			pstmt.setInt(1, categoria.getIdCategoria());
 
 			pstmt.execute();
+			JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "certifique-se que esta categoria não está relacionada ao nenhum patrimônio");
 		}
 	}
 

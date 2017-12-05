@@ -2,6 +2,8 @@ package controller.impl;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controler.IPatrimonioControler;
 import dao.PatrimonioDAO;
 import entity.Local;
@@ -51,9 +53,11 @@ public class PatrimonioController implements IPatrimonioControler {
 	}
 
 	@Override
-	public void remover(Patrimonio patrimonio) {
+	public void remover(Patrimonio patrimonio)  {
 		PatrimonioDAO patrimonioDAO = new PatrimonioDAO();
+	
 		patrimonioDAO.excluir(patrimonio);
+
 
 	}
 

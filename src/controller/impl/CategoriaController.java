@@ -2,6 +2,8 @@ package controller.impl;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import controler.ICategoriaControler;
 import dao.CategoriaDAO;
 import entity.Categoria;
@@ -26,7 +28,10 @@ public class CategoriaController implements ICategoriaControler {
 	@Override
 	public void remover(Categoria categoria) {
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		categoriaDAO.excluir(categoria);
+	
+		
+			categoriaDAO.excluir(categoria);
+	
 
 	}
 

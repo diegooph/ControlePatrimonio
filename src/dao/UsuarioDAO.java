@@ -113,14 +113,14 @@ public class UsuarioDAO {
 		List<Requisicao> listaRequisicaos = new ArrayList<>();
 
 		try {
-			Statement stmt = con.createStatement();
+			
 			String sql = "SELECT `idRequisicao` , `titulo` , `mensagem`,`tipoRequerimento` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
 					+ "join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ "join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ "join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio where idUsuario= ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, usuario.getIdUsuario());
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = pstmt.executeQuery(sql);
 
 			while (rs.next()) {
 
@@ -183,7 +183,7 @@ public class UsuarioDAO {
 				usuario.setPermisaoUsuario(PermisaoEnum.getPermisaoByCodigo(rs.getInt("permisaoUsuario")));
 				usuario.setSenha(rs.getString("senhaUsuario"));
 				usuario.setUsername(rs.getString("username"));
-				System.out.println(usuario.getIdUsuario());
+		
 			}
 
 		} catch (SQLException e) {

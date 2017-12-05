@@ -77,7 +77,7 @@ public class ConsultaCategoriaUI extends JInternalFrame {
 				CategoriaController Ccont = new CategoriaController();
 				Ccont.remover(pModel.getCategoria(jtListaCategoria.getSelectedRow()));
 				AtualizarTablemodel();
-				JOptionPane.showMessageDialog(null, "Produto excluído com sucesso");
+				
 			}
 		});
 

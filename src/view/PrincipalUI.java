@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -157,6 +158,24 @@ public class PrincipalUI extends JFrame {
 		});
 		mnUsuario.add(mntmListaDeUsuarios);
 		mnUsuario.add(mntmSair);
+		
+		JMenu mnRelatorio = new JMenu("Relatorio");
+		menuBar.add(mnRelatorio);
+		
+		JMenuItem mntmRelatorioDePatrimonios = new JMenuItem("Relatorio de Patrimonios");
+		mntmRelatorioDePatrimonios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RelatorioUI relatorioUI = null;
+				try {
+					relatorioUI = new RelatorioUI();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				contentPane.add(relatorioUI, 0);
+			}
+		});
+		mnRelatorio.add(mntmRelatorioDePatrimonios);
 
 		JMenu mnSobre = new JMenu("Sobre");
 		menuBar.add(mnSobre);
