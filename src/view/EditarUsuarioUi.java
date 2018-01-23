@@ -186,7 +186,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 		rdbtnAdmin.setBounds(192, 236, 94, 23);
 		panel.add(rdbtnAdmin);
 
-		rdbtnUsuario = new JRadioButton("Usuario");
+		rdbtnUsuario = new JRadioButton("Usu\u00E1rio");
 		buttonGroup.add(rdbtnUsuario);
 		rdbtnUsuario.setBounds(323, 236, 61, 23);
 		panel.add(rdbtnUsuario);
@@ -216,7 +216,7 @@ public class EditarUsuarioUi extends JInternalFrame {
 
 						if (autodelete) {
 							JOptionPane.showInternalMessageDialog(getParent(),
-									"Você Deletou Sua conta \n Fassa Outro cadastro para Acessar novamente o Sistema!");
+									"Você Deletou Sua conta \n Faça Outro cadastro para Acessar novamente o Sistema!");
 							UsuarioController.setUsuario(null);
 							PrincipalUI.mntmSair.doClick();
 						}

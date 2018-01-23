@@ -39,7 +39,7 @@ public class CategoriaDAO {
 
 	private void insert(Categoria categoria) {
 		try {
-			String sql = "INSERT INTO `controlepatrimonio`.`categoria` (`descricao`, `modelo`) VALUES (?, ?)";
+			String sql = "INSERT INTO `controlepatrimonioDGM`.`categoria` (`descricao`, `modelo`) VALUES (?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, categoria.getDescricao());
 			pstmt.setString(2, categoria.getModelo());
@@ -52,7 +52,7 @@ public class CategoriaDAO {
 
 	private void update(Categoria categoria) {
 		try {
-			String sql = "UPDATE `controlepatrimonio`.`categoria` SET `descricao`=?, `modelo`=? WHERE `idCategoria`=?";
+			String sql = "UPDATE `controlepatrimonioDGM`.`categoria` SET `descricao`=?, `modelo`=? WHERE `idCategoria`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, categoria.getDescricao());
@@ -88,7 +88,7 @@ public class CategoriaDAO {
 
 	public void excluir(Categoria categoria) {
 		try {
-			String sql = "DELETE FROM `controlepatrimonio`.`categoria` WHERE `idCategoria`=?";
+			String sql = "DELETE FROM `controlepatrimonioDGM`.`categoria` WHERE `idCategoria`=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, categoria.getIdCategoria());
 

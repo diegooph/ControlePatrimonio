@@ -56,7 +56,7 @@ public class RelatorioUI extends JInternalFrame {
 	public RelatorioUI() throws ParseException {
 		setClosable(true);
 
-		setTitle("Relat\u00F3rio");
+		setTitle("Consulta Local");
 		setBounds(100, 100, 1132, 681);
 
 		setVisible(true);

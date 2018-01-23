@@ -43,7 +43,7 @@ public class UsuarioDAO {
 	private void insert(Usuario usuario) {
 		try {
 		
-			String sql = "INSERT INTO `controlepatrimonio`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO `controlepatrimonioDGM`.`usuario` (`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`) VALUES (?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, usuario.getNomeUsuario());
 			pstmt.setInt(2, usuario.getPermisaoUsuario().getCodigo());
@@ -83,7 +83,7 @@ public class UsuarioDAO {
 
 	private void update(Usuario usuario) {
 		try {
-			String sql = "UPDATE `controlepatrimonio`.`usuario` SET `nomeUsuario`=?, `permisaoUsuario`=?, `senhaUsuario`=?, `username`=? WHERE `idUsuario`=?";
+			String sql = "UPDATE `controlepatrimonioDGM`.`usuario` SET `nomeUsuario`=?, `permisaoUsuario`=?, `senhaUsuario`=?, `username`=? WHERE `idUsuario`=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, usuario.getNomeUsuario());
 			pstmt.setInt(2, usuario.getPermisaoUsuario().getCodigo());
@@ -98,7 +98,7 @@ public class UsuarioDAO {
 
 	public void excluir(Usuario usuario) {
 		try {
-			String sql = "DELETE FROM `controlepatrimonio`.`usuario` WHERE `idUsuario`=?";
+			String sql = "DELETE FROM `controlepatrimonioDGM`.`usuario` WHERE `idUsuario`=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, usuario.getIdUsuario());
 
@@ -114,7 +114,7 @@ public class UsuarioDAO {
 
 		try {
 			
-			String sql = "SELECT `idRequisicao` , `titulo` , `mensagem`,`tipoRequerimento` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+			String sql = "SELECT `idRequisicao` , `titulo` , `mensagem`,`tipoRequerimento` ,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonioDGM.requisicao"
 					+ "join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ "join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ "join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio where idUsuario= ?";
@@ -198,7 +198,7 @@ public class UsuarioDAO {
 		boolean verificacao = false;
 		try {
 		
-			String sql = " call controlepatrimonio.VerificarExclusaoUsuario( @verificarexclusao , ? ) ";
+			String sql = " call controlepatrimonioDGM.VerificarExclusaoUsuario( @verificarexclusao , ? ) ";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, usuario.getIdUsuario());

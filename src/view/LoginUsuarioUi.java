@@ -18,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import controller.impl.UsuarioController;
 import entity.Usuario;
+import javax.swing.border.EtchedBorder;
 
 public class LoginUsuarioUi extends JFrame {
 
@@ -75,8 +76,6 @@ public class LoginUsuarioUi extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(204, 204, 204));
-		panel.setBorder(new TitledBorder(null, "Login", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
 		panel.setBounds(20, 162, 672, 256);
 		contentPane.add(panel);
 		panel.setLayout(null);

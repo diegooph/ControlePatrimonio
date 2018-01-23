@@ -125,7 +125,7 @@ public class CadastrarRequisicaoUI extends JInternalFrame {
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnSalvar, btnCancelar });
 
-		JLabel lblNome = new JLabel("Titulo:");
+		JLabel lblNome = new JLabel("T\u00EDtulo:");
 
 		jtfTitulo = new JTextField();
 		jtfTitulo.setColumns(10);

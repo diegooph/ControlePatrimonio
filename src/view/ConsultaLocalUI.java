@@ -84,7 +84,7 @@ public class ConsultaLocalUI extends JInternalFrame {
 			}
 		});
 
-		JButton btnVisualizarPatrimonios = new JButton("Visualizar Patrimonios");
+		JButton btnVisualizarPatrimonios = new JButton("Visualizar Patrim\u00F4nios");
 		btnVisualizarPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultaPatrimoniosLocalUI consultaMeusPatrimonioUI = new ConsultaPatrimoniosLocalUI(

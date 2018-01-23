@@ -47,7 +47,7 @@ public class RequisicaoDAO {
 	private void update(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
-			String sql = "UPDATE `controlepatrimonio`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
+			String sql = "UPDATE `controlepatrimonioDGM`.`requisicao` SET `titulo`=?, `mensagem`=?, `statusrequerimento`=?, `tipoRequerimento`=? ,`dataParecer`=?,`dataFinalizacao`=? WHERE `idRequisicao`=?";
 
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, requisicao.getTitulo());
@@ -96,7 +96,7 @@ public class RequisicaoDAO {
 	private void insert(Patrimonio patrimonio, Requisicao requisicao, Local local) {
 		try {
 
-			String sql = "CALL `controlepatrimonio`.`incert_requisicao_npn`(?, ?, ?, ?, ?,?,?)";
+			String sql = "CALL `controlepatrimonioDGM`.`incert_requisicao_npn`(?, ?, ?, ?, ?,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, requisicao.getTitulo());
@@ -180,7 +180,7 @@ public class RequisicaoDAO {
 			Statement stmt = con.createStatement();
 
 			String sql = "SELECT `idRequisicao`,statusrequerimento, `titulo`, `mensagem` ,`idcategoria`,`dataParecer`,`dataFinalizacao`,`dataRequisicao` ,`descricao` ,`modelo` ,`tiporequerimento`,"
-					+ "`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+					+ "`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonioDGM.requisicao"
 					+ " join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ " join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ " join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
@@ -292,7 +292,7 @@ public class RequisicaoDAO {
 				}
 				filtros += "))";
 			}
-			String sql = "SELECT `idRequisicao` ,`idcategoria`,`dataParecer`,`dataFinalizacao`,`dataRequisicao` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`tiporequerimento`,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonio.requisicao"
+			String sql = "SELECT `idRequisicao` ,`idcategoria`,`dataParecer`,`dataFinalizacao`,`dataRequisicao` ,`descricao` ,`modelo` , `titulo` , `mensagem` ,`tiporequerimento`,`statusrequerimento`,`idUsuario`,`nomeUsuario`, `permisaoUsuario`, `senhaUsuario`, `username`,`idPatrimonio`,`nomePatrimonio`, `codigo`, `detalhamentoTecnico` FROM controlepatrimonioDGM.requisicao"
 					+ " join patrimonio_has_usuario on Patrimonio_has_Usuario.Requisicao_idRequisicao = requisicao.idRequisicao"
 					+ " join usuario on usuario.idUsuario = Patrimonio_has_Usuario.Usuario_idUsuario "
 					+ " join patrimonio on patrimonio_has_usuario.Patrimonio_idPatrimonio = patrimonio.idPatrimonio"
@@ -365,7 +365,7 @@ public class RequisicaoDAO {
 
 	public void excluir(Requisicao requisicao) {
 		try {
-			String sql = "DELETE FROM `controlepatrimonio`.`requisicao` WHERE `idRequisicao`='?'";
+			String sql = "DELETE FROM `controlepatrimonioDGM`.`requisicao` WHERE `idRequisicao`='?'";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, requisicao.getIdRequisicao());
 

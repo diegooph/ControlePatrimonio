@@ -163,7 +163,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		);
 		groupLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnSalvar, btnCancelar});
 
-		JLabel lblNome = new JLabel("Titulo:");
+		JLabel lblNome = new JLabel("T\u00EDtulo:");
 		lblNome.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		jtfTitulo = new JTextField();
@@ -181,7 +181,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		rdbtnDevolucao.setEnabled(false);
 		buttonGroup.add(rdbtnDevolucao);
 
-		rdbtnRequirirPatrimonio = new JRadioButton("Requirir Patrimonio");
+		rdbtnRequirirPatrimonio = new JRadioButton("Requirir Patrimônio");
 		rdbtnRequirirPatrimonio.setEnabled(false);
 		rdbtnRequirirPatrimonio.setSelected(true);
 		buttonGroup.add(rdbtnRequirirPatrimonio);
@@ -189,10 +189,10 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 		JLabel lblTipoDeRequisio = new JLabel("Tipo de Requisi\u00E7\u00E3o:");
 		lblTipoDeRequisio.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		JLabel label = new JLabel("Detinado \u00E0:");
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		JLabel lblDestinado_1 = new JLabel("Destinado \u00E0:");
+		lblDestinado_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		lblDestinado = new JLabel("Detinado \u00E0:");
+		lblDestinado = new JLabel("Destinado \u00E0:");
 		GroupLayout gl_jpNovoModeloPatrimonio = new GroupLayout(jpNovoModeloPatrimonio);
 		gl_jpNovoModeloPatrimonio.setHorizontalGroup(
 			gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.TRAILING)
@@ -203,7 +203,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 						.addComponent(lblTipoDeRequisio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lblMensagem, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
-							.addComponent(label, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+							.addComponent(lblDestinado_1, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_jpNovoModeloPatrimonio.createSequentialGroup()
@@ -238,7 +238,7 @@ public class EditarStatusRequisicaoUI extends JInternalFrame {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDestinado)
-						.addComponent(label))
+						.addComponent(lblDestinado_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_jpNovoModeloPatrimonio.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblMensagem)

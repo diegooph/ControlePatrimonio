@@ -53,15 +53,15 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 	public ConsultaPatrimonioUI() {
 
 		setClosable(true);
-		setTitle("Consulta de Patrimonios");
+		setTitle("Consulta de Patrim\u00F4nios");
 		setBounds(100, 100, 630, 468);
 		AtualizarTablemodel();
 		setVisible(true);
 		JPanel jpPatrimonios = new JPanel();
-		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
+		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimônios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JButton btnSolicitarPatrimonio = new JButton("Solicitar Patrimonio");
+		JButton btnSolicitarPatrimonio = new JButton("Solicitar Patrim\u00F4nio");
 		btnSolicitarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcon = new PatrimonioController();
@@ -77,7 +77,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 			}
 		});
 
-		btnEditarPatrimonio = new JButton("Editar Patrimonio");
+		btnEditarPatrimonio = new JButton("Editar Patrim\u00F4nio");
 		btnEditarPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcon = new PatrimonioController();
@@ -93,7 +93,7 @@ public class ConsultaPatrimonioUI extends JInternalFrame {
 			}
 		});
 
-		JButton btnExcluirPatrimonio = new JButton("Excluir Patrimonio");
+		JButton btnExcluirPatrimonio = new JButton("Excluir Patrim\u00F4nio");
 		btnExcluirPatrimonio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PatrimonioController pcont = new PatrimonioController();

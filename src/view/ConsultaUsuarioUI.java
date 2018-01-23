@@ -51,10 +51,10 @@ public class ConsultaUsuarioUI extends JInternalFrame {
 		AtualizarTablemodel();
 		setVisible(true);
 		JPanel jpUsuarios = new JPanel();
-		jpUsuarios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Usuarios",
+		jpUsuarios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Usuários",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		btnEditarUsuario = new JButton("Editar Usuario");
+		btnEditarUsuario = new JButton("Editar Usu\u00E1rio");
 		btnEditarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 

@@ -11,8 +11,8 @@ public class ConnectionUtil {
     public static Connection getConnection(){
         try { 
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/controlepatrimonio";
-            con = DriverManager.getConnection(url,"root","admin");
+            String url = "jdbc:mysql://localhost:3306/controlepatrimonioDGM";
+            con = DriverManager.getConnection(url,"root","");
             con.setAutoCommit(true);
             
             return con;
@@ -32,6 +32,6 @@ public class ConnectionUtil {
         }
     }
     public static void main(String[] args) {
-		System.out.println(getConnection());
+		System.out.println();
 	}
 }

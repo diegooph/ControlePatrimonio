@@ -26,6 +26,7 @@ import entity.Categoria;
 import entity.CategoriaComboBox;
 import entity.Patrimonio;
 import entity.Usuario;
+import javax.swing.border.EtchedBorder;
 
 public class CadastrarPatrimonioUI extends JInternalFrame {
 	/**
@@ -88,12 +89,11 @@ public class CadastrarPatrimonioUI extends JInternalFrame {
 	private void construirTela() {
 		setClosable(true);
 
-		setTitle("Cadastro de Patrimonio");
+		setTitle("Cadastro de Patrim\u00F4nio");
 		setBounds(100, 100, 599, 378);
 
 		jpCadastroProdutos = new JPanel();
-		jpCadastroProdutos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dados do Patrimonio",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		jpCadastroProdutos.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Dados do Patrim\u00F4nio", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
@@ -105,7 +105,7 @@ public class CadastrarPatrimonioUI extends JInternalFrame {
 				patrimonio.setDetalhamentoTecnico(jtfDetalhamentoTecnico.getText());
 				patrimonio.setNomePatrimonio(jtfNome.getText());
 				pdao.salvar(patrimonio);
-				JOptionPane.showMessageDialog(null, "Patrimonio Salvo com Sucesso");
+				JOptionPane.showMessageDialog(null, "Patrimônio Salvo com Sucesso");
 				dispose();
 			}
 		});

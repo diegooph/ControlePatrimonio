@@ -20,7 +20,7 @@ public class RelatorioDAO {
 	public List<Relatorio> listarRelatorio(Date datainicio, Date datafim) {
 
 		try {
-			String sql = "call controlepatrimonio.RelatorioCategorias(?, ?);";
+			String sql = "call controlepatrimonioDGM.RelatorioCategorias(?, ?);";
 			PreparedStatement pmtmt = con.prepareStatement(sql);
 			pmtmt.setDate(1, new java.sql.Date(datainicio.getTime()));
 			pmtmt.setDate(2, new java.sql.Date(datafim.getTime()));
@@ -51,7 +51,7 @@ public class RelatorioDAO {
 
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "SELECT * FROM controlepatrimonio.listarrelatoriostatico;";
+			String sql = "SELECT * FROM controlepatrimonioDGM.listarrelatoriostatico;";
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 

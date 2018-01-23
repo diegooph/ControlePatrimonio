@@ -54,17 +54,17 @@ public class PrincipalUI extends JFrame {
 	public PrincipalUI() {
 		usuario = UsuarioController.getUsuario();
 
-		setTitle("Sistema de Controle de Patrimonios");
+		setTitle("Sistema de Controle de Patrim\u00F4nios");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1286, 795);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		mnPatrimonios = new JMenu("Patrimonios");
+		mnPatrimonios = new JMenu("Patrim\u00F4nios");
 		menuBar.add(mnPatrimonios);
 
-		JMenuItem mntmListaPatrimonios = new JMenuItem("Lista de Patrimonios");
+		JMenuItem mntmListaPatrimonios = new JMenuItem("Lista de Patrim\u00F4nios");
 		mntmListaPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaPatrimonioUI cadastrarPatrimonioUI = new ConsultaPatrimonioUI();
@@ -74,7 +74,7 @@ public class PrincipalUI extends JFrame {
 		});
 		mnPatrimonios.add(mntmListaPatrimonios);
 
-		JMenuItem mntmMeusPatrimonios = new JMenuItem("Meus Patrimonios");
+		JMenuItem mntmMeusPatrimonios = new JMenuItem("Meus Patrim\u00F4nios");
 		mntmMeusPatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ConsultaMeusPatrimonioUI consultaMeusPatrimonioUI = new ConsultaMeusPatrimonioUI();
@@ -121,7 +121,7 @@ public class PrincipalUI extends JFrame {
 		});
 		mnLocais.add(mntmListaDeLocais);
 
-		JMenu mnUsuario = new JMenu("Usuario");
+		JMenu mnUsuario = new JMenu("Usu\u00E1rio");
 		menuBar.add(mnUsuario);
 
 		mntmSair = new JMenuItem("Sair");
@@ -148,7 +148,7 @@ public class PrincipalUI extends JFrame {
 		});
 		mnUsuario.add(mntmConfiguraes);
 
-		JMenuItem mntmListaDeUsuarios = new JMenuItem("Lista de Usuarios");
+		JMenuItem mntmListaDeUsuarios = new JMenuItem("Lista de Usu\u00E1rios");
 		mntmListaDeUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -159,10 +159,10 @@ public class PrincipalUI extends JFrame {
 		mnUsuario.add(mntmListaDeUsuarios);
 		mnUsuario.add(mntmSair);
 		
-		JMenu mnRelatorio = new JMenu("Relatorio");
+		JMenu mnRelatorio = new JMenu("Relat\u00F3rio");
 		menuBar.add(mnRelatorio);
 		
-		JMenuItem mntmRelatorioDePatrimonios = new JMenuItem("Relatorio de Patrimonios");
+		JMenuItem mntmRelatorioDePatrimonios = new JMenuItem("Relatório de Patrimônios");
 		mntmRelatorioDePatrimonios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				RelatorioUI relatorioUI = null;
@@ -176,20 +176,6 @@ public class PrincipalUI extends JFrame {
 			}
 		});
 		mnRelatorio.add(mntmRelatorioDePatrimonios);
-
-		JMenu mnSobre = new JMenu("Sobre");
-		menuBar.add(mnSobre);
-
-		JMenuItem mntmSobreODGM = new JMenuItem("Sobre o DGM");
-		mntmSobreODGM.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-		mnSobre.add(mntmSobreODGM);
-
-		JMenuItem mntmAjuda = new JMenuItem("Ajuda");
-		mnSobre.add(mntmAjuda);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -214,7 +200,7 @@ public class PrincipalUI extends JFrame {
 				}
 			});
 
-			JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimonio");
+			JMenuItem mntmAdicionarNovoPatrimonio = new JMenuItem("Adicionar Novo Patrimônio");
 			mntmAdicionarNovoPatrimonio.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					CadastrarPatrimonioUI cadastrarPatrimonioUI = new CadastrarPatrimonioUI(usuario);

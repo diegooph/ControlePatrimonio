@@ -46,12 +46,12 @@ public class ConsultaMeusPatrimonioUI extends JInternalFrame {
 	public ConsultaMeusPatrimonioUI() {
 
 		setClosable(true);
-		setTitle("Consulta de Patrimonios");
+		setTitle("Consulta de Patrim\u00F4nios");
 		setBounds(100, 100, 630, 468);
 		AtualizarTablemodel();
 		setVisible(true);
 		JPanel jpPatrimonios = new JPanel();
-		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimonios",
+		jpPatrimonios.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Patrimônios",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		JButton btnSolicitarPatrimonio = new JButton("Solicitar Devolução");
